@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "48959489246",
+    "project_id": "tship-f258c",
+    "storage_bucket": "tship-f258c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48959489246:android:59522672a2518faed82e4f",
+        "android_client_info": {
+          "package_name": "com.tship.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2XvxeCZCujsybuu9KiVkK3oTNYGW5aOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

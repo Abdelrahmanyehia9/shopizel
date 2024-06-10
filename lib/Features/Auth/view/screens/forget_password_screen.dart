@@ -39,7 +39,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   const FormfeildLabel(
                     label: "email",
