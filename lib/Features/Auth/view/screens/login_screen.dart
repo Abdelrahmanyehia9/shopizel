@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoppizel/Features/Auth/controller/authentication_cubit.dart';
-import 'package:shoppizel/Features/Auth/controller/authentication_state.dart';
 import 'package:shoppizel/Features/Auth/view/screens/forget_password_screen.dart';
 import 'package:shoppizel/Features/Auth/view/screens/sigup_screen.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
-import 'package:shoppizel/core/app_constants.dart';
-import 'package:shoppizel/core/screen_dimentions.dart';
-import 'package:shoppizel/core/utils/snackbars.dart';
-import 'package:shoppizel/core/utils/validation.dart';
+import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/utils/screen_dimentions.dart';
+import 'package:shoppizel/core/function/snackbars.dart';
+import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../controller/login_cubit.dart';
+import '../../controller/login_state.dart';
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';
 import '../widgets/formfeild_label.dart';
@@ -59,7 +59,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       RemeberMe(
-                        onChanged: (bool? value) {},
+                        onChanged: (bool? value) {
+
+                               setState(() {
+                                 rememberMeIsChecked = value! ;
+                                 print(rememberMeIsChecked) ;
+                               });
+
+                        },
                         isChecked: rememberMeIsChecked,
                       ),
                       InkWell(
@@ -83,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  BlocConsumer<LoginCubit, SignUpState>(
+                  BlocConsumer<LoginCubit, LoginState>(
                       builder: (context, state) {
                     if (state is LoginLoading) {
                       return const CircularProgressIndicator();
@@ -101,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }, listener: (context, state) {
                     if (state is LoginSuccess) {
                      SnackBars.CustomSnackBar(context: context, desc: "good", tittle: "good", type: AnimatedSnackBarType.success) ;
+                     print(state.toString());
 
                     }
                     else if (state is LoginFailure) {
@@ -150,8 +158,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 6,
                   ),
-                  SizedBox(
-                      width: screenWidth(context) * 0.7, child: socialIcons())
+                  BlocListener<LoginCubit , LoginState>(
+                    listener: (context , state){
+                      if (state is LoginSuccess){
+
+                        print ("sucess") ;
+                      }else if( state is LoginFailure){
+                        print(state.errorCode);
+                      }
+
+
+
+                    },
+                    child: SizedBox(
+                        width: screenWidth(context) * 0.7, child: socialIcons(
+                      fbTap: (){
+                        context.read<LoginCubit>().signInWithFacebook();
+                      } ,
+                      GoogleTap: (){
+                        context.read<LoginCubit>().signInWithGoogle() ;
+                      }
+                    )),
+                  )
                 ],
               ),
             ),
@@ -173,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const FormfeildLabel(
             label: "email",
           ),
-          AuthTextfeild(
+          AuthTextField(
             validator: (String? value) {
               if (!Validation.emailValidation(value!)) {
                 return "email bad Formatted";
@@ -188,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const FormfeildLabel(
             label: "password",
           ),
-          AuthTextfeild(
+          AuthTextField(
             controller: passwordController,
             initialValue: "**********",
             isPassword: true,
@@ -198,18 +226,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget socialIcons() {
+  Widget socialIcons({GestureTapCallback? fbTap , GestureTapCallback? GoogleTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SvgPicture.asset(
-          "assets/images/Facebook.svg",
+        InkWell(
+          onTap: fbTap,
+          child: SvgPicture.asset(
+
+            "assets/images/Facebook.svg",
+            fit: BoxFit.cover,width: 45,
+          ),
         ),
-        SvgPicture.asset(
-          "assets/images/Twitter.svg",
+        InkWell( onTap: GoogleTap,
+          child: SvgPicture.asset(
+            "assets/images/Google.svg",
+            fit: BoxFit.cover,width: 45,
+          ),
         ),
         SvgPicture.asset(
           "assets/images/Apple.svg",
+          fit: BoxFit.cover,width: 45,
         )
       ],
     );

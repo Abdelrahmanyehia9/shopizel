@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../../core/screen_dimentions.dart';
+import '../../../../core/utils/screen_dimentions.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';

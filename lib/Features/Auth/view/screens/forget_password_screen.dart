@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/Auth/view/screens/confirm_otp.dart';
 
-import '../../../../core/screen_dimentions.dart';
+import '../../../../core/utils/screen_dimentions.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';
@@ -44,7 +44,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   const FormfeildLabel(
                     label: "email",
                   ),
-                  AuthTextfeild(
+                  AuthTextField(
                     controller: emailController,
                     initialValue: "example@gmail.com",
                   ),

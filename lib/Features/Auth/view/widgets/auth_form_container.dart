@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/screen_dimentions.dart';
+import '../../../../core/utils/screen_dimentions.dart';
 
 class AuthFormContainer extends StatelessWidget {
   const AuthFormContainer({super.key, required this.form});

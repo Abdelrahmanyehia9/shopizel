@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoppizel/core/app_constants.dart';
-import 'package:shoppizel/core/screen_dimentions.dart';
+import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({super.key, required this.label, this.onTap});

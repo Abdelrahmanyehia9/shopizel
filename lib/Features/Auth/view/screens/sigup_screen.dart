@@ -1,14 +1,13 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoppizel/Features/Auth/controller/authentication_cubit.dart';
-import 'package:shoppizel/Features/Auth/controller/authentication_state.dart';
-import 'package:shoppizel/core/app_constants.dart';
-import 'package:shoppizel/core/utils/validation.dart';
-
-import '../../../../core/screen_dimentions.dart';
-import '../../../../core/utils/snackbars.dart';
+import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/function/validation.dart';
+import '../../../../core/utils/screen_dimentions.dart';
+import '../../../../core/function/snackbars.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../controller/sign_up_cubit.dart';
+import '../../controller/sign_up_state.dart';
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';
 import '../widgets/auth_textfeild.dart';
@@ -78,7 +77,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     listener: (context, state) {
                       if (state is SignUpSuccess) {
-                        print("success");
                         SnackBars.CustomSnackBar(
                             context: context,
                             desc: "your account has been submitted",
@@ -113,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           const FormfeildLabel(
             label: "Name",
           ),
-          AuthTextfeild(
+          AuthTextField(
             controller: nameController,
             initialValue: "John doe",
           ),
@@ -123,8 +121,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           const FormfeildLabel(
             label: "Email",
           ),
-          AuthTextfeild(
+          AuthTextField(
             validator:  (value){
+              if(value!.isEmpty){
+                return 'this field is required' ;
+
+              }
               if (!Validation.emailValidation(emailController.text.trim()!)){
                 return "email badly formated" ;
 
@@ -139,9 +141,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           const FormfeildLabel(
             label: "Psssword",
           ),
-          AuthTextfeild(
+          AuthTextField(
             validator: (value) {
-              if (!Validation.passwordValidation(value!)) {
+
+              if (value!.isEmpty){
+                return 'this field is required' ;
+              }
+              else if (!Validation.passwordValidation(value!)) {
                 return "Password Easy to Guess , Use Stronger Password";
               }
             },
@@ -155,9 +161,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           const FormfeildLabel(
             label: "Re-Type Password",
           ),
-          AuthTextfeild(
+          AuthTextField(
             validator: (value) {
-              if (value! != passwordController.text) {
+              if(value!.isEmpty){
+                return 'this field is required' ;
+
+              }
+              else if (value! != passwordController.text) {
                 return "Password doesn't Match ";
               }
             },

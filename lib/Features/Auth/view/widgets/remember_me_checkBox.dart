@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../core/app_constants.dart';
+import '../../../../core/utils/app_constants.dart';
 
 class RemeberMe extends StatefulWidget {
   RemeberMe({super.key, required this.isChecked, required this.onChanged});

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">tship</string>
+    <string name="facebook_app_id">778162421128663</string>
+    <string name="fb_login_protocol_scheme">fb34e026c61c04a0fc1380cfd24d01d036</string>
+</resources>

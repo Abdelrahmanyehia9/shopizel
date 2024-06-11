@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "48959489246",
+    "project_id": "tship-f258c",
+    "storage_bucket": "tship-f258c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48959489246:android:59522672a2518faed82e4f",
+        "android_client_info": {
+          "package_name": "com.tship.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48959489246-ob07rp606fl5r32nnmlg9p642ntndaba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tship.app",
+            "certificate_hash": "62ea2ab540e1551562e207d4f453496255783916"
+          }
+        },
+        {
+          "client_id": "48959489246-l2ldr96nsdtkd6u4caknj28g2953hssk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2XvxeCZCujsybuu9KiVkK3oTNYGW5aOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48959489246-l2ldr96nsdtkd6u4caknj28g2953hssk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "48959489246-bef3ov3149dttnfr9lpsln92edosoen7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shoppizel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

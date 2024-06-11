@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
 import 'package:shoppizel/Features/Auth/view/screens/sigup_screen.dart';
+import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 
 
 
@@ -10,7 +11,7 @@ import 'package:shoppizel/Features/Auth/view/screens/sigup_screen.dart';
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) =>  HomeScreen(),
       ),
       GoRoute(
         path: signUpScreen,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoppizel/core/screen_dimentions.dart';
+import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
-import '../../../../core/app_constants.dart';
+import '../../../../core/utils/app_constants.dart';
 
 class AuthContainer extends StatelessWidget {
   const AuthContainer(
