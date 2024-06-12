@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/utils/app_constants.dart';
 
@@ -24,9 +23,9 @@ class _RemeberMeState extends State<RemeberMe> {
           value: widget.isChecked,
           onChanged: widget.onChanged,
         ),
-        Text(
+        const Text(
           "Remember me",
-          style: GoogleFonts.sen(fontSize: 13, color: const Color(0xff7E8A97)),
+          style: TextStyle(fontSize: 13, color: Color(0xff7E8A97)),
         )
       ],
     );

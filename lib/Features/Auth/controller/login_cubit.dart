@@ -35,7 +35,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
     emit(LoginFailure(errorCode: error));
   }
-
+/// facebook
   Future<void> signInWithFacebook() async {
     emit(LoginLoading());
     try {
@@ -49,7 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFailure(errorCode: "Error has occurred try again later"));
     }
   }
-
+///google
   Future<void> signInWithGoogle() async {
     try {
       emit(LoginLoading());

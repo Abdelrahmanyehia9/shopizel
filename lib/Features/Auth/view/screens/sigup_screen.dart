@@ -82,12 +82,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             desc: "your account has been submitted",
                             tittle: "Sign Up successed",
                             type: AnimatedSnackBarType.success);
+                      } else if (state is SignUpFailure) {
+                        SnackBars.CustomSnackBar(
+                            context: context,
+                            desc: state.errorCode,
+                            tittle: "Sign Up error",
+                            type: AnimatedSnackBarType.error);
                       }
-                      else if (state is SignUpFailure) {
-
-                        SnackBars.CustomSnackBar(context: context, desc: state.errorCode, tittle: "Sign Up error", type: AnimatedSnackBarType.error) ;
-                      }
-
                     },
                   ),
                 ],
@@ -109,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             height: 24,
           ),
           const FormfeildLabel(
-            label: "Name",
+            label: "Full Name",
           ),
           AuthTextField(
             controller: nameController,
@@ -122,14 +123,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             label: "Email",
           ),
           AuthTextField(
-            validator:  (value){
-              if(value!.isEmpty){
-                return 'this field is required' ;
-
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'this field is required';
               }
-              if (!Validation.emailValidation(emailController.text.trim()!)){
-                return "email badly formated" ;
-
+              if (!Validation.emailValidation(emailController.text.trim()!)) {
+                return "email badly formatted";
               }
             },
             controller: emailController,
@@ -143,11 +142,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           AuthTextField(
             validator: (value) {
-
-              if (value!.isEmpty){
-                return 'this field is required' ;
-              }
-              else if (!Validation.passwordValidation(value!)) {
+              if (value!.isEmpty) {
+                return 'this field is required';
+              } else if (!Validation.passwordValidation(value!)) {
                 return "Password Easy to Guess , Use Stronger Password";
               }
             },
@@ -163,11 +160,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           AuthTextField(
             validator: (value) {
-              if(value!.isEmpty){
-                return 'this field is required' ;
-
-              }
-              else if (value! != passwordController.text) {
+              if (value!.isEmpty) {
+                return 'this field is required';
+              } else if (value! != passwordController.text) {
                 return "Password doesn't Match ";
               }
             },

@@ -55,7 +55,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     label: "Send Code",
                     onTap: () {
                       ///checking here if email is valid
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>ConfirmOtp(email: emailController.text))) ;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  ConfirmOtp(email: emailController.text)));
                     },
                   ),
                 ],
@@ -66,10 +70,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       ],
     ));
   }
-@override
-  void dispose() {
-emailController.dispose();
-super.dispose();
-  }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 }

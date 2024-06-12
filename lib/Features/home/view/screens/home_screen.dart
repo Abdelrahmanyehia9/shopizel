@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-
-import '../widgets/home_body.dart';
+import '../widgets/home/home_body.dart';
 
 class HomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -14,7 +13,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: homeAppBar(context) ,
+
+        appBar: homeAppBar(context) ,
       drawer: Drawer(
         child: ListView(
 
@@ -29,17 +29,17 @@ class HomeScreen extends StatelessWidget {
 
   PreferredSizeWidget homeAppBar(BuildContext context){
     return AppBar(
-
+scrolledUnderElevation: 0,
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text('DELIVER TO' , style:  TextStyle(fontFamily: AppConstants.fontFamily , color: AppConstants.btnColor , fontSize: 12 , fontWeight: FontWeight.bold),),
-          Text('haram , giza' , style:  TextStyle(fontFamily: AppConstants.fontFamily  , fontSize: 14 ),),
+           Text('DELIVER TO' , style:  TextStyle( color: AppConstants.btnColor , fontSize: 12 , fontWeight: FontWeight.bold),),
+          Text('haram , giza' , style:  TextStyle(  fontSize: 14 ),),
 
         ],
       ),
       leading:Padding(
-        padding: EdgeInsets.only(left: 16 , right: 8),
+        padding: const EdgeInsets.only(left: 16 , right: 8),
         child: InkWell(onTap: (){
 
             _scaffoldKey.currentState?.openDrawer();

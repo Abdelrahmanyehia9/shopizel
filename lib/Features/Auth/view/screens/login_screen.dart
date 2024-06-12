@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppizel/Features/Auth/view/screens/forget_password_screen.dart';
 import 'package:shoppizel/Features/Auth/view/screens/sigup_screen.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
@@ -60,12 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       RemeberMe(
                         onChanged: (bool? value) {
-
-                               setState(() {
-                                 rememberMeIsChecked = value! ;
-                                 print(rememberMeIsChecked) ;
-                               });
-
+                          setState(() {
+                            rememberMeIsChecked = value!;
+                            print(rememberMeIsChecked);
+                          });
                         },
                         isChecked: rememberMeIsChecked,
                       ),
@@ -80,9 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           "Forget Password",
                           style: TextStyle(
-                              fontFamily: AppConstants.fontFamily,
-                              fontSize: 14,
-                              color: AppConstants.btnColor),
+                              fontSize: 14, color: AppConstants.btnColor),
                         ),
                       )
                     ],
@@ -99,19 +94,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: "Log in",
                         onTap: () {
                           if (_globalKey.currentState!.validate()) {
-                            context
-                                .read<LoginCubit>()
-                                .loginByEmailAndPassword(emailController.text,
-                                    passwordController.text);
+                            context.read<LoginCubit>().loginByEmailAndPassword(
+                                emailController.text, passwordController.text);
                           }
                         });
                   }, listener: (context, state) {
                     if (state is LoginSuccess) {
-                     SnackBars.CustomSnackBar(context: context, desc: "good", tittle: "good", type: AnimatedSnackBarType.success) ;
-                     print(state.toString());
-
-                    }
-                    else if (state is LoginFailure) {
+                      SnackBars.CustomSnackBar(
+                          context: context,
+                          desc: "good",
+                          tittle: "good",
+                          type: AnimatedSnackBarType.success);
+                      print(state.toString());
+                    } else if (state is LoginFailure) {
                       SnackBars.CustomSnackBar(
                           context: context,
                           tittle: "Login error",
@@ -124,10 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Don’t have an account?",
-                          style: GoogleFonts.sen(
-                              color: const Color(0xff646982), fontSize: 16),
+                          style:
+                              TextStyle(color: Color(0xff646982), fontSize: 16),
                         ),
                         const SizedBox(
                           width: 12,
@@ -141,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             "Sign up".toUpperCase(),
-                            style: GoogleFonts.sen(
+                            style: const TextStyle(
                                 color: AppConstants.btnColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
@@ -150,35 +145,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Or",
-                    style: GoogleFonts.sen(
-                        fontSize: 16, color: const Color(0xff646982)),
+                    style: TextStyle(fontSize: 16, color: Color(0xff646982)),
                   ),
                   const SizedBox(
                     height: 6,
                   ),
-                  BlocListener<LoginCubit , LoginState>(
-                    listener: (context , state){
-                      if (state is LoginSuccess){
-
-                        print ("sucess") ;
-                      }else if( state is LoginFailure){
-                        print(state.errorCode);
+                  BlocListener<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginSuccess) {
+                      } else if (state is LoginFailure) {
                       }
-
-
-
                     },
                     child: SizedBox(
-                        width: screenWidth(context) * 0.7, child: socialIcons(
-                      fbTap: (){
-                        context.read<LoginCubit>().signInWithFacebook();
-                      } ,
-                      GoogleTap: (){
-                        context.read<LoginCubit>().signInWithGoogle() ;
-                      }
-                    )),
+                        width: screenWidth(context) * 0.7,
+                        child: socialIcons(fbTap: () {
+                          context.read<LoginCubit>().signInWithFacebook();
+                        }, googleTap: () {
+                          context.read<LoginCubit>().signInWithGoogle();
+                        })),
                   )
                 ],
               ),
@@ -205,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
             validator: (String? value) {
               if (!Validation.emailValidation(value!)) {
                 return "email bad Formatted";
-              }
+              }else{return null ; }
             },
             controller: emailController,
             initialValue: "example@gmail.com",
@@ -226,27 +212,31 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget socialIcons({GestureTapCallback? fbTap , GestureTapCallback? GoogleTap}) {
+  Widget socialIcons(
+      {GestureTapCallback? fbTap, GestureTapCallback? googleTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
           onTap: fbTap,
           child: SvgPicture.asset(
-
             "assets/images/Facebook.svg",
-            fit: BoxFit.cover,width: 45,
+            fit: BoxFit.cover,
+            width: 45,
           ),
         ),
-        InkWell( onTap: GoogleTap,
+        InkWell(
+          onTap: googleTap,
           child: SvgPicture.asset(
             "assets/images/Google.svg",
-            fit: BoxFit.cover,width: 45,
+            fit: BoxFit.cover,
+            width: 45,
           ),
         ),
         SvgPicture.asset(
           "assets/images/Apple.svg",
-          fit: BoxFit.cover,width: 45,
+          fit: BoxFit.cover,
+          width: 45,
         )
       ],
     );

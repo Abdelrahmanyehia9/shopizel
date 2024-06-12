@@ -1,30 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
+import '../../../data/model/store_model.dart';
+
 class StoresList extends StatelessWidget {
-  const StoresList({super.key});
+  const StoresList({super.key, required this.stores});
+
+  final List<StoreModel> stores;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView(
-        children: [
-          storeItem(context: context, features: ["jeans , shirts , jackets"], storeName: "Lc waikiki", shippingFees: "0", time: "20", rating: "3.7", urlImage: "https://eg.jumia.is/cms/5-22/LC_Waikiki_-_730x292.jpg")
-,          storeItem(context: context, features: ["mens , woman , kids" , "baby"], storeName: "Zara", shippingFees: "40", time: "35", rating: "2.7", urlImage: "https://logomakerr.ai/blog/wp-content/uploads/2022/08/2019-to-Present-Zara-logo-design-1024x538.jpg")
-
-
-
-
-        ],
-      ),
+      child: ListView.builder(
+          itemCount: stores.length,
+          itemBuilder: (context, index) {
+            StoreModel item = stores[index];
+            return storeItem(
+                context: context,
+                features: item.features,
+                storeName: item.name,
+                shippingFees: item.deliveryFees,
+                time: item.deliveryTime,
+                rating: item.rate,
+                urlImage: item.image);
+          }),
     );
   }
 
   Widget storeItem(
       {required BuildContext context,
-      required List<String> features,
+      required List<dynamic> features,
       required String storeName,
       required String shippingFees,
       required String time,
@@ -44,8 +50,9 @@ class StoresList extends StatelessWidget {
               Container(
                 width: screenWidth(context),
                 height: screenHeight(context) * 0.185,
-                decoration:  BoxDecoration(
-                  image: DecorationImage(image: NetworkImage(urlImage) , fit: BoxFit.cover),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(urlImage), fit: BoxFit.cover),
                   color: Colors.black,
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(16),
@@ -61,10 +68,11 @@ class StoresList extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                     Text(
+                    Text(
                       storeName,
                       style: const TextStyle(
-                          fontSize: 20, fontFamily: AppConstants.fontFamily),
+                        fontSize: 20,
+                      ),
                     ),
                     SizedBox(
                       height: screenHeight(context) * 0.03,
@@ -76,16 +84,14 @@ class StoresList extends StatelessWidget {
                             if (index + 1 == features.length) {
                               return Text(
                                 "${features[index]}  ",
-                                style: const TextStyle(
-                                    fontFamily: AppConstants.fontFamily,
-                                    color: Color(0xffA0A5BA)),
+                                style:
+                                    const TextStyle(color: Color(0xffA0A5BA)),
                               );
                             } else {
                               return Text(
                                 "${features[index]} - ",
-                                style: const TextStyle(
-                                    fontFamily: AppConstants.fontFamily,
-                                    color: Color(0xffA0A5BA)),
+                                style:
+                                    const TextStyle(color: Color(0xffA0A5BA)),
                               );
                             }
                           }),
@@ -94,7 +100,11 @@ class StoresList extends StatelessWidget {
                     SizedBox(
                         width: screenWidth(context) * 0.65,
                         child: ratings(
-                            rating: rating, shipping: shippingFees == "0" ? "free" : "${shippingFees}\$", delivery: "$time min"))
+                            rating: rating,
+                            shipping: shippingFees == "0"
+                                ? "free"
+                                : "$shippingFees\$",
+                            delivery: "$time min"))
                   ],
                 ),
               )
@@ -130,7 +140,6 @@ class StoresList extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-              fontFamily: AppConstants.fontFamily,
               fontSize: isBold == null ? 14 : 16,
               fontWeight: isBold != null ? FontWeight.bold : FontWeight.normal),
         )
