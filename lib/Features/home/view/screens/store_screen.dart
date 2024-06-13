@@ -1,48 +1,63 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:shoppizel/Features/home/view/widgets/store/offers.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/utils/app_router.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
-import '../widgets/store/list_store_category.dart';
-import '../widgets/store/search_product.dart';
-import '../widgets/store/shop_gallery.dart';
+import '../widgets/store/store_collection.dart';
 
 class StoreScreen extends StatelessWidget {
+
   const StoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:
-        SafeArea(
-            child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          CategorySelectionBar(),
-          const SizedBox(
-            height: 24,
-          ),
-          const SearchProduct(),
-          const SizedBox(
-            height: 12,
-          ),
-              const Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    Offers() ,
-                    SliverToBoxAdapter(
-                      child: SizedBox(height: 8), // Adjust the space as needed
-                    ),
-                    ShopGallery()
-
-                  ],
-                ),
-              )
-        ],
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent.shade700,
+         iconTheme: IconThemeData(color: Colors.white),
+        title : Text("Lc Waikiki" , style: TextStyle(color: Colors.white),) , centerTitle: true,
       ),
-    )));
+body: ContainedTabBarView(
+  tabBarProperties:  TabBarProperties(
+
+indicatorSize: TabBarIndicatorSize.tab,
+    indicatorColor: Colors.transparent ,
+      labelColor: Colors.blueAccent.shade700 ,
+  ),
+  tabs: const [
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text('All', style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold)),
+    ),
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text('Men', style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold)),
+    ),
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text('Women', style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold)),
+    ) ,
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text('Kids', style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold)),
+    ),
+
+  ],
+  views: const [
+    StoreCollection () ,
+    StoreCollection () ,
+    StoreCollection () ,
+    StoreCollection () ,
+
+
+  ],
+  onChange: (index) => print("--------------------"+ index.toString()),
+),
+
+    );
   }
 
 

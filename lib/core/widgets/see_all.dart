@@ -9,33 +9,37 @@ class SeeAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          tittle,
-          style: const TextStyle(
-            color: Color(0xff32343E),
-            fontSize: 18,
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            tittle,
+            style: const TextStyle(
+              fontSize: 18,
+
+            ),
           ),
-        ),
-        const Row(
-          children: [
-            Text(
-              "See All",
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(
-              width: 6,
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Color(0xffA0A5BA),
-              size: 16,
-            ),
-          ],
-        )
-      ],
+           const Row(
+            children: [
+              Text(
+                "See All",
+                style: TextStyle(fontSize: 16 ,
+                color: Colors.grey),
+              ),
+              SizedBox(
+                width: 6,
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey,
+                size: 16,
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

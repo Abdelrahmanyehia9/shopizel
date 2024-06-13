@@ -11,7 +11,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0 , horizontal: 5),
       child: SizedBox(
         height: screenHeight(context) * 0.22,
         child: ListView.builder(
