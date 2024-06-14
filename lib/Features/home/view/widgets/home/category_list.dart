@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import '../../../../../core/utils/app_constants.dart';
 import '../../../data/model/category_model.dart';
 
 class CategoryList extends StatelessWidget {
@@ -11,29 +10,22 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0 , horizontal: 5),
-      child: SizedBox(
-        height: screenHeight(context) * 0.22,
-        child: ListView.builder(
-          itemCount: 4,
-          clipBehavior: Clip.none,
-          padding: EdgeInsets.zero,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => categoryItem(
-              context: context,
-              tittle: categories[index].tittle,
-              startingPrice: categories[index].startPrice.toString(),
-              imageUrl: categories[index].imageUrl),
-        ),
-      ),
-    );
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
+        child: SizedBox(
+          height: screenHeight(context) * 0.22,
+          child: ListView.builder(
+            itemCount: 4,
+            clipBehavior: Clip.none,
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) =>
+                categoryItem(context: context, model: categories[index]),
+          ),
+        ));
   }
 
   Widget categoryItem(
-      {required BuildContext context,
-      required String tittle,
-      required String startingPrice,
-      required imageUrl}) {
+      {required CategoryModel model, required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.only(right: 14.0),
       child: Stack(
@@ -67,7 +59,7 @@ class CategoryList extends StatelessWidget {
                     height: screenHeight(context) * 0.09,
                   ),
                   Text(
-                    tittle,
+                    model.tittle,
                     style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -87,7 +79,7 @@ class CategoryList extends StatelessWidget {
                             letterSpacing: 0),
                       ),
                       Text(
-                        "$startingPrice\$",
+                        "${model.startPrice}\$",
                         style: const TextStyle(
                             fontSize: 12, color: Color(0xff646982)),
                       ),
@@ -114,7 +106,7 @@ class CategoryList extends StatelessWidget {
                   ],
                   image: DecorationImage(
                       image: NetworkImage(
-                        imageUrl,
+                        model.imageUrl,
                       ),
                       fit: BoxFit.cover)),
             ),

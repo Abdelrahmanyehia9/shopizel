@@ -28,7 +28,6 @@ class HomeBody extends StatelessWidget {
                 height: screenHeight(context) * 0.035,
               ),
               greetingText(),
-
               const SizedBox(
                 height: 12,
               ),
@@ -52,7 +51,7 @@ class HomeBody extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              StoresList(stores: state.stores)
+              StoresList(stores: state.stores , allProducts: state.products,)
             ],
           ),
         );
@@ -60,7 +59,7 @@ class HomeBody extends StatelessWidget {
         print(state.errorMessage);
         return const LoadingFailure();
       } else {
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       }
     });
   }

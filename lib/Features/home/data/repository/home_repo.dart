@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shoppizel/Features/home/data/model/category_model.dart';
+import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/Features/home/data/model/store_model.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
+
 
 class HomeRepo{
   final FirebaseFirestore _fireStore =  FirebaseFirestore.instance ;
@@ -26,5 +28,30 @@ return model  ;
     }
     return model;
   }
+  Future<List<ProductModel>> getAllProduct()async{
+    QuerySnapshot<Map<String, dynamic>> allProduct = await  _fireStore.collection(FirebaseConstant.productsCollections).get() ;
+    List<ProductModel> model = [] ;
+    for(int i = 0 ; i< allProduct.docs.length ; i++){
+
+      model.add(ProductModel.fromJson(allProduct.docs[i].data())) ;
+
+
+    }
+    return model ;
+  }
+  List<ProductModel> getStoreProducts(List<ProductModel> allProduct , String storeName ){
+    List<ProductModel> storeProducts  =[]  ;
+    for(int i =  0  ; i<allProduct.length ; i++){
+      if(allProduct[i].madeBy == storeName){
+
+        storeProducts.add(allProduct[i]) ;
+
+      }
+
+    }
+
+    return storeProducts ;
+  }
+
 
 }

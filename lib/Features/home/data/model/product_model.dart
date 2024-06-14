@@ -1,6 +1,7 @@
 class ProductModel {
   final int id;
   final String name;
+  final String desc;
   final String imageCover;
   final List<dynamic>? images;
   final List<dynamic> sizes;
@@ -11,11 +12,13 @@ class ProductModel {
   final String? price;
   final String? category;
   final String? sale;
-  final String? type;
+  final String type;
+  final String? dateTime ;
 
   ProductModel({
     required this.id,
     required this.name,
+    required this.desc,
     required this.imageCover,
     required this.images,
     required this.sizes,
@@ -27,22 +30,27 @@ class ProductModel {
     required this.category,
     required this.sale,
     required this.type,
+    this.dateTime
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-      id: json['id'],
-      name: json['name'],
-      imageCover: json['imageCover'],
-      images: json['images'],
-      sizes: json['sizes'],
-      colors: json['colors'],
-      madeBy: json['madeBy'],
-      rate: json['rate'],
-      count: json['count'],
-      price: json['price'],
-      category: json['category'],
-      sale: json['sale'],
-      type: json['type']);
+      id: json['id']??"",
+      name: json['name']??"",
+      imageCover: json['imageCover']??"",
+      images: json['images']??"",
+      sizes: json['sizes']??"",
+      colors: json['colors']??"",
+      madeBy: json['madeBy']??"",
+      rate: json['rate']??"",
+      count: json['count']??"",
+      price: json['price']??"",
+      category: json['category']??"",
+      sale: json['sale']??"",
+      type: json['type'] ??"",
+  desc: json['desc']??"" ,
+  dateTime: json['dateTime']
+
+  );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -57,6 +65,8 @@ class ProductModel {
         "price": price,
         "category": category,
         "sale": sale,
-        "type": type
+        "type": type ,
+         "desc"  : desc ,
+    "dateTime":dateTime
       };
 }

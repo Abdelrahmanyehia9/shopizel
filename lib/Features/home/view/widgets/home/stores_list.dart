@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shoppizel/Features/home/data/model/product_model.dart';
+import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/view/screens/store_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/app_router.dart';
@@ -8,9 +10,9 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../data/model/store_model.dart';
 
 class StoresList extends StatelessWidget {
-  const StoresList({super.key, required this.stores});
-
+  const StoresList({super.key, required this.stores , required this.allProducts});
   final List<StoreModel> stores;
+  final List<ProductModel> allProducts ;
 
   @override
   Widget build(BuildContext context) {
@@ -20,36 +22,33 @@ class StoresList extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
         itemCount: stores.length,
         itemBuilder: (context, index) {
-          StoreModel item = stores[index];
           return storeItem(
               context: context,
-              f: item.shopCategory ,
-              storeName: item.name,
-              shippingFees: item.deliveryFees,
-              time: item.deliveryTime,
-              rating: item.rate,
-              urlImage: item.image);
+            storeModel:  stores[index] ,
+          products: allProducts);
         });
   }
 
   Widget storeItem(
       {required BuildContext context,
-      required List<ShopCategory> f,
-      required String storeName,
-      required String shippingFees,
-      required String time,
-      required String rating,
-      required String urlImage}) {
-
+      required StoreModel storeModel ,
+      required List<ProductModel> products}) {
     List<String> features = []  ;
-     for (int i = 0 ; i < f.length ; i ++ ){
-       features.add(f[i].name) ;
+     for (int i = 0 ; i < storeModel.shopCategory.length ; i ++ ){
+       features.add(storeModel.shopCategory[i].name) ;
      }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0 , horizontal: 4),
       child: InkWell(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>const StoreScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+          List<ProductModel> collections =   HomeRepo().getStoreProducts(allProducts, storeModel.name) ;
+
+           return StoreScreen(storeModel : storeModel , storeCollection: collections,  ) ;
+          }));
+
+
+
         },
         child: Container(
             width: screenWidth(context),
@@ -65,7 +64,7 @@ class StoresList extends StatelessWidget {
                   height: screenHeight(context) * 0.185,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(urlImage), fit: BoxFit.cover),
+                        image: NetworkImage(storeModel.image), fit: BoxFit.cover),
                     color: Colors.black,
                     borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(16),
@@ -82,7 +81,7 @@ class StoresList extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        storeName,
+                        storeModel.name,
                         style: const TextStyle(
                           fontSize: 20,
                         ),
@@ -113,11 +112,11 @@ class StoresList extends StatelessWidget {
                       SizedBox(
                           width: screenWidth(context) * 0.65,
                           child: ratings(
-                              rating: rating,
-                              shipping: shippingFees == "0"
+                              rating: storeModel.rate,
+                              shipping: storeModel.deliveryFees == "0"
                                   ? "free"
-                                  : "$shippingFees\$",
-                              delivery: "$time min"))
+                                  : "${storeModel.deliveryFees}\$",
+                              delivery: "${storeModel.deliveryTime} min"))
                     ],
                   ),
                 )

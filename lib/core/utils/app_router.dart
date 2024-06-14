@@ -33,12 +33,6 @@ import 'package:shoppizel/core/utils/app_constants.dart';
         path: signUpScreen,
           pageBuilder: (context , state) => AppConstants.buildPageWithDefaultTransition<void>(context: context, state: state, child:  SignUpScreen())
       ),
-      GoRoute(
-
-          path: storeScreen,
-          pageBuilder: (context , state) => AppConstants.buildPageWithDefaultTransition<void>(context: context, state: state,duration: const Duration(milliseconds: 800), child:   StoreScreen(
-          ))
-      ),
 
 
     ],

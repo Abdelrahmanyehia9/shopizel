@@ -7,69 +7,70 @@ import '../widgets/home/home_body.dart';
 class HomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+        key: _scaffoldKey,
 
-        appBar: homeAppBar(context) ,
-      drawer: Drawer(
-        child: ListView(
+        appBar: homeAppBar(context),
+        drawer: Drawer(
+          child: ListView(
 
+          ),
         ),
-      ),
-      body: const HomeBody(
-
-      )
+        body: const HomeBody()
     );
   }
 
-  PreferredSizeWidget homeAppBar(BuildContext context){
+  PreferredSizeWidget homeAppBar(BuildContext context) {
     return AppBar(
-scrolledUnderElevation: 0,
+      scrolledUnderElevation: 0,
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text('DELIVER TO' , style:  TextStyle( color: AppConstants.btnColor , fontSize: 12 , fontWeight: FontWeight.bold),),
-          Text('haram , giza' , style:  TextStyle(  fontSize: 14 ),),
+          Text('DELIVER TO', style: TextStyle(color: AppConstants.btnColor,
+              fontSize: 12,
+              fontWeight: FontWeight.bold),),
+          Text('haram , giza', style: TextStyle(fontSize: 14),),
 
         ],
       ),
-      leading:Padding(
-        padding: const EdgeInsets.only(left: 16 , right: 8),
-        child: InkWell(onTap: (){
-
-            _scaffoldKey.currentState?.openDrawer();
-
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 8),
+        child: InkWell(onTap: () {
+          _scaffoldKey.currentState?.openDrawer();
         },
-            child: SvgPicture.asset("assets/images/Menu.svg" , )),
-      ) ,
+            child: SvgPicture.asset("assets/images/Menu.svg",)),
+      ),
       actions: [
-           Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 28.0),
-             child: Stack(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+          child: Stack(
 
-             alignment: AlignmentDirectional.topEnd,
-               children: [
-
-
-                       SvgPicture.asset("assets/images/Ellipse 1294.svg" , fit: BoxFit.cover,),
-                 const CircleAvatar(
-                   backgroundColor: AppConstants.btnColor,
-                   radius: 12,
-                   child: Text("2" , style: TextStyle(color: Colors.white , fontSize: 16 , fontWeight: FontWeight.bold , fontFamily: AppConstants.fontFamily),),
-                 ) ,
+            alignment: AlignmentDirectional.topEnd,
+            children: [
 
 
-               ],
-             ),
-           )
+              SvgPicture.asset(
+                "assets/images/Ellipse 1294.svg", fit: BoxFit.cover,),
+              const CircleAvatar(
+                backgroundColor: AppConstants.btnColor,
+                radius: 12,
+                child: Text("2", style: TextStyle(color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppConstants.fontFamily),),
+              ),
+
+
+            ],
+          ),
+        )
       ],
-      leadingWidth: screenWidth(context)*0.2,
+      leadingWidth: screenWidth(context) * 0.2,
 
-    ) ;
-
+    );
   }
 }

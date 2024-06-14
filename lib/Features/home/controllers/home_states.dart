@@ -1,3 +1,4 @@
+import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/Features/home/data/model/store_model.dart';
 
 import '../data/model/category_model.dart';
@@ -11,7 +12,8 @@ class HomeStateSuccess extends HomeStates{
 
   final List<CategoryModel> categories ;
   final List<StoreModel> stores ;
-  HomeStateSuccess({required this.categories , required this.stores}) ;
+  final List<ProductModel> products ;
+  HomeStateSuccess({required this.categories , required this.stores  , required this.products}) ;
 }
 class HomeStateFailure extends HomeStates{
 

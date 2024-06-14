@@ -71,51 +71,54 @@ Widget offerCard1() =>
 
 
 Widget offerCard2() =>
-    Card(
-      elevation: 8,
-      clipBehavior: Clip.antiAlias,
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Card(
+        elevation: 8,
+        clipBehavior: Clip.antiAlias,
 
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent.shade700, Colors.blueAccent.shade200],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Special offer',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'This card is rounded and has a gradient',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-
-                  ),
-
-
-                ),
-              ],
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blueAccent.shade700, Colors.blueAccent.shade200],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            Container(
-              padding: EdgeInsets.all(4),
-              child: Icon(Icons.alarm , color: Colors.white, ),
-            )
-          ],
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Special offer',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'This card is rounded and has a gradient',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+
+                    ),
+
+
+                  ),
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.all(4),
+                child: Icon(Icons.alarm , color: Colors.white, ),
+              )
+            ],
+          ),
         ),
       ),
     );
