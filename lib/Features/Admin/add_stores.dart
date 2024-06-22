@@ -27,22 +27,24 @@ class AddStores extends StatelessWidget {
             Center(
               child: ElevatedButton(onPressed: () async {
                 ProductModel model = ProductModel(id: 1,
-                    name: "SATIN FLORAL PRINT SHIRT",
-                    desc: "Collared shirt with long sleeves. Front button fastening.",
-                    imageCover: "https://static.zara.net/assets/public/3235/9a17/88964e60ae4e/f6c5a62546b2/02378109330-p/02378109330-p.jpg?ts=1706799628793&w=750",
-                    images: ["https://static.zara.net/assets/public/926e/898e/54cf47b3a1fe/e72013059e62/02378109330-a2/02378109330-a2.jpg?ts=1706799634593&w=750" ,
-                    "https://static.zara.net/assets/public/e312/1320/200b40728f63/092d78cde0ea/02378109330-a4/02378109330-a4.jpg?ts=1706799632663&w=750" ,
-                    "https://static.zara.net/assets/public/5902/18d5/86f54719a3cc/81471c2a07ca/02378109330-e1/02378109330-e1.jpg?ts=1706798733263&w=750"],
-                    sizes: ["Xs" ,"S" , "M" , "L" , "XL" , "XXL" ],
+                    name: "LCW Kids Crew Neck Short Sleeve Girl's Dress",
+                    desc: "Above Knee Pattern dress with cotton 100%",
+                    imageCover: "https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a3.jpg",
+                    images: ["https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a1.jpg" ,
+                    "https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a3.jpg" ,
+                  ],
+                    sizes: ["4" ,"5" , "6" , "7" , ],
                     colors: [
-                    "0xFF1976D2"],
-                    madeBy: "Zara",
-                    rate: "4.3",
-                    count: "13",
-                    price: "6400",
-                    category: "Women",
-                    sale: "30",
-                     type: 't-shirt' ,
+                    "0xffe1c4ff"
+                    ],
+                    madeBy: "Lc Waikiki",
+                    rate: "2.5",
+                    count: "100",
+                    price: "1000",
+                    category: "Kids",
+                    sale: "50" ,
+                     type: 'kids' ,
+                  dateTime: DateTime.now().toString()
                 ) ;
                 FirebaseFirestore firebase = FirebaseFirestore.instance;
                 await firebase.collection(FirebaseConstant.productsCollections).add(

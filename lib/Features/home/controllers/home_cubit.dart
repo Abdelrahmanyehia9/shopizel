@@ -17,9 +17,8 @@ class HomeCubit extends Cubit<HomeStates>{
     try{
      List<CategoryModel> models = await repo.getCategories() ;
      List<StoreModel> storeModel = await repo.getStores() ;
-     List<ProductModel> products = await repo.getAllProduct() ;
 
-     emit(HomeStateSuccess(categories: models , stores: storeModel , products: products)) ;
+     emit(HomeStateSuccess(categories: models , stores: storeModel )) ;
     }catch(e){
 
       emit(HomeStateFailure(e.toString())) ;

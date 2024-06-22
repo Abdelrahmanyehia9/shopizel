@@ -12,8 +12,7 @@ class HomeStateSuccess extends HomeStates{
 
   final List<CategoryModel> categories ;
   final List<StoreModel> stores ;
-  final List<ProductModel> products ;
-  HomeStateSuccess({required this.categories , required this.stores  , required this.products}) ;
+  HomeStateSuccess({required this.categories , required this.stores  }) ;
 }
 class HomeStateFailure extends HomeStates{
 

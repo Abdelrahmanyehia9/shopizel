@@ -6,6 +6,8 @@ import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/core/utils/app_router.dart';
 import 'Features/Auth/controller/sign_up_cubit.dart';
+import 'Features/home/controllers/store_cubit.dart';
+import 'Features/home/data/repository/store_repo.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
 
@@ -31,7 +33,8 @@ class Tship extends StatelessWidget {
       providers: [
         BlocProvider(create: (context)=> LoginCubit()) ,
         BlocProvider(create: (context)=> SignUpCubit()) ,
-        BlocProvider(create: (context)=> HomeCubit(HomeRepo())..fetch() )
+        BlocProvider(create: (context)=> HomeCubit(HomeRepo())..fetch() ) ,
+        BlocProvider(create:(context)=> StoreCubit(StoreRepo())) ,
 
 
       ],

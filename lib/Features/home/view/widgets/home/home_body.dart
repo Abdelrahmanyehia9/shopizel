@@ -13,6 +13,8 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../../../core/widgets/loading_failure.dart';
 
 class HomeBody extends StatelessWidget {
+
+  /// offer of the week
   const HomeBody({super.key});
 
   @override
@@ -24,14 +26,18 @@ class HomeBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /// space
               SizedBox(
                 height: screenHeight(context) * 0.035,
               ),
+              ///greeting
               greetingText(),
               const SizedBox(
                 height: 12,
               ),
+              ///search product
               const SearchTextField(),
+               /// offer of the week in database
               offerCard3("https://newgirlsfashion.com/wp-content/uploads/2022/11/Kayseria-Featured-Image.jpg") ,
               const SizedBox(
                 height: 12,
@@ -42,6 +48,7 @@ class HomeBody extends StatelessWidget {
               const SizedBox(
                 height: 6,
               ),
+              /// category List (men -women - jewellery - kids)
               CategoryList(
                 categories: state.categories.reversed.toList(),
               ),
@@ -51,7 +58,7 @@ class HomeBody extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              StoresList(stores: state.stores , allProducts: state.products,)
+              StoresList(stores: state.stores)
             ],
           ),
         );

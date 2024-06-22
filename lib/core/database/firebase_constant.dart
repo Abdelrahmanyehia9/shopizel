@@ -5,6 +5,18 @@ class FirebaseConstant{
   static const  storeCollections = "Stores" ;
   static const  productsCollections = "products" ;
   static const  usersCollection = "users" ;
+  static const menClothes = "Men" ;
+  static const womenClothes = "Women" ;
+  static const kidsClothes = "Kids" ;
+  static const jewellery = "Jewellery" ;
+  static const productMadeBy = "madeBy" ;
+static const tShirt = "t-shirt";
+static const shirt = "shirt";
+static const dress = "dress";
+static const pants = "pants";
+static const babyClothes = "baby";
+  static const classic = "classic";
+
   // categoryItem(
   // context: context,
   // startingPrice: "40",

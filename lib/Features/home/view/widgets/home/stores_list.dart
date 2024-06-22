@@ -10,9 +10,8 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../data/model/store_model.dart';
 
 class StoresList extends StatelessWidget {
-  const StoresList({super.key, required this.stores , required this.allProducts});
+  const StoresList({super.key, required this.stores });
   final List<StoreModel> stores;
-  final List<ProductModel> allProducts ;
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +24,14 @@ class StoresList extends StatelessWidget {
           return storeItem(
               context: context,
             storeModel:  stores[index] ,
-          products: allProducts);
+          );
         });
   }
 
   Widget storeItem(
       {required BuildContext context,
       required StoreModel storeModel ,
-      required List<ProductModel> products}) {
+      }) {
     List<String> features = []  ;
      for (int i = 0 ; i < storeModel.shopCategory.length ; i ++ ){
        features.add(storeModel.shopCategory[i].name) ;
@@ -41,14 +40,7 @@ class StoresList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0 , horizontal: 4),
       child: InkWell(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-          List<ProductModel> collections =   HomeRepo().getStoreProducts(allProducts, storeModel.name) ;
-
-           return StoreScreen(storeModel : storeModel , storeCollection: collections,  ) ;
-          }));
-
-
-
+             Navigator.push(context, MaterialPageRoute(builder: (_) => StoreScreen(storeModel: storeModel,))) ;
         },
         child: Container(
             width: screenWidth(context),
@@ -111,7 +103,7 @@ class StoresList extends StatelessWidget {
                       const SizedBox(height: 8),
                       SizedBox(
                           width: screenWidth(context) * 0.65,
-                          child: ratings(
+                          child: storeRatings(
                               rating: storeModel.rate,
                               shipping: storeModel.deliveryFees == "0"
                                   ? "free"
@@ -125,8 +117,8 @@ class StoresList extends StatelessWidget {
       ),
     );
   }
-
-  Widget ratings(
+ /// shipping fees , rate , delivery time
+  Widget storeRatings(
       {required String rating, required String shipping, required delivery}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +130,7 @@ class StoresList extends StatelessWidget {
       ],
     );
   }
-
+ /// icon with text
   Widget customTile(
       {required String text, required IconData icon, bool? isBold}) {
     return Row(

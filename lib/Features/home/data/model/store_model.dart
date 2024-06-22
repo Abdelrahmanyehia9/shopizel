@@ -3,7 +3,6 @@ class StoreModel {
   final String name;
   final String image;
   final List<ShopCategory> shopCategory;
-  final List<ClothesCategory> clothesCategory;
   final String rate;
   final String count;
   final String deliveryFees;
@@ -17,7 +16,6 @@ class StoreModel {
       {required this.name,
       required this.image,
       required this.shopCategory,
-        required this.clothesCategory,
         required this.rate,
       required this.count,
       required this.deliveryFees,
@@ -30,9 +28,6 @@ class StoreModel {
   factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
       name: json['name'],
       image: json['image'],
-      clothesCategory: (json['categories'] as List<dynamic>?)!.map((e) {
-        return ClothesCategory.fromJson(e as Map<String, dynamic>);
-      }).toList(),
       shopCategory: (json['features'] as List<dynamic>?)!.map((e) {
         return ShopCategory.fromJson(e as Map<String, dynamic>);
       }).toList(),
@@ -40,7 +35,6 @@ class StoreModel {
       count: json['count'],
       deliveryFees: json['deliveryFees'],
       deliveryTime: json['deliveryTime'],
-
       lat: json['lat'],
       long: json['long'],
       backgroundImg: json['backgroundImg'],
@@ -50,7 +44,6 @@ class StoreModel {
   Map<String, dynamic> toJson() => {
     'name': name,
     'image': image,
-    'categories': clothesCategory.map((e) => e.toJson()).toList(),
     'features': shopCategory.map((e) => e.toJson()).toList(),
     'rate': rate,
     'count': count,
@@ -77,26 +70,6 @@ class ShopCategory {
     "image":image ,
     "name":name
 
-
   } ;
-}
-class ClothesCategory {
-  final String name;
-  final String image;
-  final String gender ;
-
-  ClothesCategory({required this.image, required this.name , required this.gender});
-
-  factory ClothesCategory.fromJson(Map<String, dynamic> json) =>
-      ClothesCategory(image: json["image"], name: json['name'] , gender: json['gender']);
-
-  Map<String , dynamic> toJson()=>{
-    "image":image ,
-    "name":name ,
-    "gender":gender
-
-
-  } ;
-
 }
 

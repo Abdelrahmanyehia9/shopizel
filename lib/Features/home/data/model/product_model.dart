@@ -70,3 +70,22 @@ class ProductModel {
     "dateTime":dateTime
       };
 }
+
+
+
+class ClothesCategory {
+  final String name;
+  final String image;
+
+  ClothesCategory({required this.image, required this.name});
+
+  factory ClothesCategory.fromJson(Map<String, dynamic> json) =>
+      ClothesCategory(image: json["image"], name: json['name']);
+
+
+  Map<String , dynamic> toJson()=>{
+    "image":image ,
+    "name":name
+
+  } ;
+}

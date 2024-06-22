@@ -25,7 +25,7 @@ class ProductItem extends StatelessWidget {
               ,        children: [
                 Container(
                   decoration:  BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(18) , topLeft: Radius.circular(18))
-                  ,image: DecorationImage(image: NetworkImage(model?.imageCover ?? "https://cdn.suitdirect.co.uk/upload/siteimages/medium/ar24141mj_021_b.jpg" )  , fit: BoxFit.fill)
+                  ,image: DecorationImage(image: NetworkImage(model?.imageCover ?? "https://cdn.suitdirect.co.uk/upload/siteimages/medium/ar24141mj_021_b.jpg" )  , fit: BoxFit.cover)
                   ),
 
                   height: 220, width: 180,
@@ -41,7 +41,7 @@ class ProductItem extends StatelessWidget {
 
                         text: model!.sale != "0" ?"${model?.price}\$  " : ""  , style: TextStyle(color: Colors.black38 , decoration: TextDecoration.lineThrough , fontSize: 12),
                         children: [
-                          TextSpan(text:model!.sale != "0" ? "${(double.parse(model!.price!) * (1-int.parse(model!.sale!)/100.0)).toStringAsFixed(2)  }\$" : "${model!.price!}\$" , style: TextStyle(fontSize: 15 , decoration: TextDecoration.none , color: Colors.red))
+                          TextSpan(text:model!.sale != "0" ? "${(double.parse(model!.price!) * (0.99999-double.parse(model!.sale!)/100.0)).toStringAsFixed(2) }\$" : "${model!.price!}\$" , style: TextStyle(fontSize: 15 , decoration: TextDecoration.none , color: Colors.red))
                         ]
                     ) ,
 
@@ -57,7 +57,20 @@ class ProductItem extends StatelessWidget {
               ],
             ),
           ),
-          addToFavourite()
+          addToFavourite(),
+          Positioned(
+            right: 0,
+            child: double.parse(model!.sale!) > 20 ?Container(
+              padding: EdgeInsets.all(2),
+              color: double.parse(model!.sale!) < 49 ? Colors.green :Colors.red,
+              child: Column(
+                children: [
+                  Text("${model!.sale!}%" , style: TextStyle(color: Colors.yellow , fontWeight: FontWeight.bold),) ,
+                  Text("Sale" , style: TextStyle(color: Colors.white , fontSize: 12),),
+                ],
+              ),
+            ) : const SizedBox(),
+          )
         ],
       ),
     );

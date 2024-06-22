@@ -1,12 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
+import 'package:shoppizel/core/database/firebase_constant.dart';
 
 import '../model/store_model.dart';
 
 class StoreRepo {
-  final List<ProductModel> storeCollection ;
-  StoreRepo({required this.storeCollection});
 
-List<ProductModel> getGenderClothes( String gender)  {
+  final FirebaseFirestore _firebaseFireStore = FirebaseFirestore.instance ;
+  Future<List<ProductModel>>getStoreCollection({required String storeName})async{
+List<ProductModel> collection = []  ;
+    QuerySnapshot<Map<String, dynamic>> response = await _firebaseFireStore.collection(FirebaseConstant.productsCollections).where(FirebaseConstant.productMadeBy ,isEqualTo:  storeName).get() ;
+    
+    for(int i = 0 ; i< response.docs.length ; i++){
+
+
+      collection.add(ProductModel.fromJson(response.docs[i].data()));
+
+
+    }
+    
+    
+    
+    
+    return  collection ;
+    
+    
+  }
+List<ProductModel> getGenderClothes( String gender , List<ProductModel>storeCollection)  {
 
   List<ProductModel> model = [] ;
   for(int i = 0 ; i < storeCollection.length ; i++){
@@ -18,7 +38,6 @@ List<ProductModel> getGenderClothes( String gender)  {
 
 
   return model ;
-
 
 
 }
@@ -48,42 +67,14 @@ List<ProductModel>topRatedProducts(List<ProductModel> model){
 
 
   }
-  List<ProductModel> getSpecificTypeOfClothes({required String type}){
-  List<ProductModel> model  = []  ;
-  for(int i = 0 ; i < model.length ; i++ ){
+  List<String>getGenderClothCategories( List<ProductModel> collection){
+    List<String> a = [] ;
+    for(int i = 0 ; i  < collection.length ; i ++ )
+    {
+      a.add(collection[i].type) ;
 
-    if (storeCollection[i].type == type){
-
-      model.add(storeCollection[i])  ;
     }
-
-
-
-
-
-  }
-  return model ;
-  }
-  List<ClothesCategory> getClothesCategoryOfGender({ String? gender , required StoreModel model}){
-  List<ClothesCategory> cat =[] ;
-
-
-  for(int i =  0  ; i< model.clothesCategory.length  ; i++ ){
-    if(model.clothesCategory[i].gender == gender){
-      cat.add(model.clothesCategory[i]) ;
-    }
-    else if (gender == null){
-
-      cat.add(model.clothesCategory[i]) ;
-    }
-
-
-
-  }
-
-  return cat ;
-
-
+    return a.toSet().toList() ;
   }
 
 }

@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         body: const HomeBody()
     );
   }
-
+/// appbar of home
   PreferredSizeWidget homeAppBar(BuildContext context) {
     return AppBar(
       scrolledUnderElevation: 0,

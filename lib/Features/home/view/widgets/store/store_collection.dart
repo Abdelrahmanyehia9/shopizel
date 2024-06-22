@@ -1,23 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/home/data/model/store_model.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
+import 'package:shoppizel/Features/home/view/widgets/store/constants.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/product_item.dart';
+import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/see_all.dart';
 import '../../../../../core/widgets/offer_card.dart';
 import '../../../data/model/product_model.dart';
 
-class GenderShop extends StatelessWidget {
+class StoreCollection extends StatelessWidget {
   final List<ProductModel> collections;
-  final StoreRepo repo;
   final StoreModel storeInfo;
-  final String? gender ;
 
-  const GenderShop(
+  StoreRepo repo = StoreRepo();
+
+   StoreCollection(
       {super.key,
       required this.collections,
-      required this.repo,
-      required this.storeInfo ,
-      this.gender});
+      required this.storeInfo,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +35,16 @@ class GenderShop extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
+
+          ///categories
           SizedBox(
-            height: 120,
+            height: screenHeight(context)*0.19,
             child: ListView.builder(
-              itemCount: repo.getClothesCategoryOfGender(gender: gender??"Men", model: storeInfo).length ,
+              itemCount: repo.getGenderClothCategories(collections).length,
               itemBuilder: (context, index) => clothCat(
+                context: context,
                   color: storeInfo.color,
-                  categories: repo.getClothesCategoryOfGender(gender: collections.first.category!, model: storeInfo)[index]),
+                  text: repo.getGenderClothCategories(collections)[index]),
               scrollDirection: Axis.horizontal,
             ),
           ),
@@ -46,13 +52,15 @@ class GenderShop extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: SeeAll(tittle: "Popular"),
           ),
+
+          ///popular clothes
           SizedBox(
             height: 280,
             child: ListView.builder(
-              itemCount: repo.getPopularClothes(collections)?.length,
+              itemCount: repo.getPopularClothes(collections).length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
-                model: repo.getPopularClothes(collections)?[index],
+                model: repo.getPopularClothes(collections)[index],
               ),
             ),
           ),
@@ -61,6 +69,8 @@ class GenderShop extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: SeeAll(tittle: "Sale"),
           ),
+
+          ///sale
           SizedBox(
             height: 280,
             child: ListView.builder(
@@ -75,6 +85,8 @@ class GenderShop extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: SeeAll(tittle: "Top Rated"),
           ),
+
+          ///topRated
           SizedBox(
             height: 280,
             child: ListView.builder(
@@ -91,28 +103,38 @@ class GenderShop extends StatelessWidget {
     );
   }
 
-  Widget clothCat({required ClothesCategory categories, required String color}) {
+  Widget clothCat({required String color, required String text , required BuildContext context}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Column(
-        children: [
-          CircleAvatar(
-            backgroundColor: Color(int.parse(color)),
-            radius: 32,
-            child: Center(
-              child: CircleAvatar(
-                radius: 24,
-                backgroundImage: NetworkImage(categories.image),
-                backgroundColor: Colors.transparent,
-              ),
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Container(
+          decoration: BoxDecoration(
+color: Color(int.parse(color)).withOpacity(0.75),              borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric( horizontal: 18),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                 Padding(
+                   padding: const EdgeInsets.only(top:2.0),
+                   child: Text(text,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16)),
+                 ),
+
+                SizedBox(width: screenWidth(context) *0.19, height: screenHeight(context)*0.126,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: GenerateImg.getImg(text),
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
-          Text(
-            categories.name,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
