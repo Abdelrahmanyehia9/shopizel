@@ -16,8 +16,15 @@ static const dress = "dress";
 static const pants = "pants";
 static const babyClothes = "baby";
   static const classic = "classic";
+  static const skirt = "skirt" ;
+  static const blazer = "blazer";
+  static const shoes = "shoes";
+  static const boyKidsClothes = "boy" ;
+  static const girlKidsClothes = "girl" ;
+  static const top = "top" ;
 
-  // categoryItem(
+
+// categoryItem(
   // context: context,
   // startingPrice: "40",
   // tittle: "Men",

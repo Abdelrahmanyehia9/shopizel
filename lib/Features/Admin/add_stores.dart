@@ -26,25 +26,30 @@ class AddStores extends StatelessWidget {
             const SizedBox(height: 250,) ,
             Center(
               child: ElevatedButton(onPressed: () async {
-                ProductModel model = ProductModel(id: 1,
-                    name: "LCW Kids Crew Neck Short Sleeve Girl's Dress",
-                    desc: "Above Knee Pattern dress with cotton 100%",
-                    imageCover: "https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a3.jpg",
-                    images: ["https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a1.jpg" ,
-                    "https://img-lcwaikiki.mncdn.com/mnresize/1020/1360/pim/productimages/20241/6936652/v1/l_20241-s4bn58z4-fkw_a3.jpg" ,
-                  ],
-                    sizes: ["4" ,"5" , "6" , "7" , ],
-                    colors: [
-                    "0xffe1c4ff"
+                ProductModel model = ProductModel(
+                    id: 15,
+                    name: "EXTRA HEAVY WEIGHT T-SHIRT",
+                    desc: "Loose-fitting T-shirt made of compact, heavy cotton fabric. Featuring a round neck and short sleeves.",
+                    imageCover: "https://static.zara.net/assets/public/769a/bdbe/e5714fddb6a9/6db4a4fe4e29/04092414716-e1/04092414716-e1.jpg?ts=1714477466716&w=750",
+                    images: ["https://static.zara.net/assets/public/7e9c/846b/038645a1ab3e/78e72d1f84e5/04092414716-p/04092414716-p.jpg?ts=1714643814390&w=750" ,
+                      "https://static.zara.net/assets/public/2285/83e2/f55043a2beb6/a50b09fc5da3/04092414716-a1/04092414716-a1.jpg?ts=1714643816234&w=750" ,
+                      "https://static.zara.net/assets/public/1c75/72ff/d438406ab2fe/f4e1ed02752c/04092414716-a4/04092414716-a4.jpg?ts=1714643813913&w=750" ,
+                      "https://static.zara.net/assets/public/8651/561f/12594e4a8fd2/c23cedc30923/04092414716-a2/04092414716-a2.jpg?ts=1714643816701&w=750"
                     ],
-                    madeBy: "Lc Waikiki",
-                    rate: "2.5",
-                    count: "100",
-                    price: "1000",
-                    category: "Kids",
-                    sale: "50" ,
-                     type: 'kids' ,
-                  dateTime: DateTime.now().toString()
+                    sizes: [ "S" , "M" , "L"  , "XL","XXL" ],
+                    colors: [
+                      "0xff512c06" ,
+                      "0xfffff2cc"
+
+                    ],
+                    madeBy: "Zara",
+                    rate: "2.4",
+                    count: "420",
+                    price: "2190",
+                    category: "Men",
+                    sale: "0" ,
+                    type: 't-shirt' ,
+                    dateTime: DateTime.now().toString()
                 ) ;
                 FirebaseFirestore firebase = FirebaseFirestore.instance;
                 await firebase.collection(FirebaseConstant.productsCollections).add(

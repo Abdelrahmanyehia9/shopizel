@@ -16,11 +16,11 @@ class StoreCollection extends StatelessWidget {
 
   StoreRepo repo = StoreRepo();
 
-   StoreCollection(
-      {super.key,
-      required this.collections,
-      required this.storeInfo,
-    });
+  StoreCollection({
+    super.key,
+    required this.collections,
+    required this.storeInfo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class StoreCollection extends StatelessWidget {
 
           ///categories
           SizedBox(
-            height: screenHeight(context)*0.19,
+            height: screenHeight(context) * 0.19,
             child: ListView.builder(
               itemCount: repo.getGenderClothCategories(collections).length,
               itemBuilder: (context, index) => clothCat(
-                context: context,
+                  context: context,
                   color: storeInfo.color,
                   text: repo.getGenderClothCategories(collections)[index]),
               scrollDirection: Axis.horizontal,
@@ -60,6 +60,7 @@ class StoreCollection extends StatelessWidget {
               itemCount: repo.getPopularClothes(collections).length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
+                color: storeInfo.color,
                 model: repo.getPopularClothes(collections)[index],
               ),
             ),
@@ -77,6 +78,7 @@ class StoreCollection extends StatelessWidget {
               itemCount: repo.getBigSaleProducts(collections).length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
+                color: storeInfo.color,
                 model: repo.getBigSaleProducts(collections)[index],
               ),
             ),
@@ -93,6 +95,7 @@ class StoreCollection extends StatelessWidget {
               itemCount: repo.topRatedProducts(collections).length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
+                color: storeInfo.color,
                 model: repo.topRatedProducts(collections)[index],
               ),
             ),
@@ -103,29 +106,34 @@ class StoreCollection extends StatelessWidget {
     );
   }
 
-  Widget clothCat({required String color, required String text , required BuildContext context}) {
+  Widget clothCat(
+      {required String color,
+      required String text,
+      required BuildContext context}) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Container(
           decoration: BoxDecoration(
-color: Color(int.parse(color)).withOpacity(0.75),              borderRadius: BorderRadius.circular(16)),
+              color: Color(int.parse(color)).withOpacity(0.75),
+              borderRadius: BorderRadius.circular(16)),
           child: Padding(
-            padding: const EdgeInsets.symmetric( horizontal: 18),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Padding(
-                   padding: const EdgeInsets.only(top:2.0),
-                   child: Text(text,
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Text(text,
                       style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16)),
-                 ),
-
-                SizedBox(width: screenWidth(context) *0.19, height: screenHeight(context)*0.126,
+                ),
+                SizedBox(
+                  width: screenWidth(context) * 0.22,
+                  height: screenHeight(context) * 0.12,
                   child: CachedNetworkImage(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                     imageUrl: GenerateImg.getImg(text),
                     placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(),
