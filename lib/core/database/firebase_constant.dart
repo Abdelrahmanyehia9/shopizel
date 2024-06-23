@@ -2,6 +2,8 @@ class FirebaseConstant{
 
 
   static const  categoriesCollection = "categories" ;
+  static const  favouriteCollection = "favourite" ;
+  static const gender = "category" ;
   static const  storeCollections = "Stores" ;
   static const  productsCollections = "products" ;
   static const  usersCollection = "users" ;

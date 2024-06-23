@@ -1,3 +1,4 @@
+import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
@@ -32,22 +33,33 @@ class HomeBody extends StatelessWidget {
               ),
               ///greeting
               greetingText(),
-              const SizedBox(
-                height: 12,
-              ),
-              ///search product
               const SearchTextField(),
+
+              ///search product
                /// offer of the week in database
-              offerCard3("https://newgirlsfashion.com/wp-content/uploads/2022/11/Kayseria-Featured-Image.jpg") ,
-              const SizedBox(
-                height: 12,
+              FanCarouselImageSlider.sliderType1(
+
+                imagesLink: const ["https://newgirlsfashion.com/wp-content/uploads/2022/11/Kayseria-Featured-Image.jpg" , "https://wwwkcmpd.files.wordpress.com/2019/07/b1g1_desktop_banner_new.jpg" , "https://img.ltwebstatic.com/images3_ccc/2023/09/24/c6/169552199340d5f8b9560c03132bc7f1234d6d385e_thumbnail_912x.webp"],
+                indicatorDeactiveColor: Colors.transparent,
+autoPlayInterval: const Duration(seconds: 5),
+showIndicator: false,
+                isClickable: false,
+                imageRadius: 0,
+                initalPageIndex: 0,
+                slideViewportFraction: 1.2,
+                isAssets: false,
+                autoPlay: true,
+                sliderHeight: screenHeight(context)*0.3,
+                sideItemsShadow: const [],
+                currentItemShadow: const [],
+                expandedImageFitMode: BoxFit.cover,
               ),
+
+
               const SeeAll(
                 tittle: "All Category",
               ),
-              const SizedBox(
-                height: 6,
-              ),
+
               /// category List (men -women - jewellery - kids)
               CategoryList(
                 categories: state.categories.reversed.toList(),
@@ -55,9 +67,7 @@ class HomeBody extends StatelessWidget {
               const SeeAll(
                 tittle: "Open Stores",
               ),
-              const SizedBox(
-                height: 16,
-              ),
+
               StoresList(stores: state.stores)
             ],
           ),

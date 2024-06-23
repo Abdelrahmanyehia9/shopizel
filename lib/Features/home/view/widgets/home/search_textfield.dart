@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
-
+  const SearchTextField({super.key , this.productOnly});
+final bool? productOnly ;
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.0 , vertical: 4),
+    return  Padding(
+      padding: const EdgeInsets.symmetric(horizontal:  8.0 , vertical: 4),
       child: TextField(
         decoration: InputDecoration(
-            hintText: "Search Products, Store",
+            hintText: productOnly == null  ?"Search Products, Store":"Search Product",
             prefixIcon: Icon(
               Icons.search,
               color: Color(0xffA0A5BA),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shoppizel/Features/Auth/controller/login_cubit.dart';
+import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
+import 'package:shoppizel/Features/Favourite/data/repository/favourite_repository.dart';
+import 'package:shoppizel/Features/home/controllers/gender_Cubit.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/core/utils/app_router.dart';
@@ -35,6 +38,9 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context)=> SignUpCubit()) ,
         BlocProvider(create: (context)=> HomeCubit(HomeRepo())..fetch() ) ,
         BlocProvider(create:(context)=> StoreCubit(StoreRepo())) ,
+        BlocProvider(create:(context)=> GenderCubit(HomeRepo())) ,
+        BlocProvider(create:(context)=> FavouriteCubit(FavouriteRepo())) ,
+
 
 
       ],
@@ -42,6 +48,7 @@ class Tship extends StatelessWidget {
         routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+
 
             fontFamily: AppConstants.fontFamily,
           appBarTheme: const AppBarTheme(backgroundColor:Color(0xffF3F3F3) ),

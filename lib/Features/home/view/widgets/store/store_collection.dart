@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/home/data/model/store_model.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
+import 'package:shoppizel/Features/home/view/screens/all_product_view.dart';
+import 'package:shoppizel/Features/home/view/widgets/store/clothes_cat.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/constants.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/product_item.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
@@ -27,37 +29,43 @@ class StoreCollection extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          offerCard3(storeInfo.backgroundImg),
+         storeInfo.offer !=null ?  offerCard3(storeInfo.offer) :const SizedBox(),
+
           const SizedBox(
             height: 12,
           ),
-          const SeeAll(tittle: "Categories"),
-          const SizedBox(
-            height: 10,
-          ),
 
           ///categories
+          const SeeAll(tittle: "Categories"),
           SizedBox(
             height: screenHeight(context) * 0.19,
             child: ListView.builder(
-              itemCount: repo.getGenderClothCategories(collections).length,
-              itemBuilder: (context, index) => clothCat(
-                  context: context,
+              itemCount: repo.getGenderClothCategories(collections).length > 7?(repo.getGenderClothCategories(collections).length/2).round():repo.getGenderClothCategories(collections).length,
+              itemBuilder: (context, index) => ClothesCat(
                   color: storeInfo.color,
                   text: repo.getGenderClothCategories(collections)[index]),
               scrollDirection: Axis.horizontal,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: SeeAll(tittle: "Popular"),
-          ),
 
-          ///popular clothes
+          ///popular
+          SeeAll(
+            tittle: "Popular",
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => AllProductView(
+                          categories:
+                              repo.getGenderClothCategories(collections),
+                          color: storeInfo.color,
+                          collection: repo.getPopularClothes(collections))));
+            },
+          ),
           SizedBox(
-            height: 280,
+            height: screenHeight(context) * 0.38,
             child: ListView.builder(
-              itemCount: repo.getPopularClothes(collections).length,
+              itemCount: collections.length>  7 ?(repo.getPopularClothes(collections).length/3).round(): collections.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
                 color: storeInfo.color,
@@ -65,17 +73,30 @@ class StoreCollection extends StatelessWidget {
               ),
             ),
           ),
-          offerCard2(),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: SeeAll(tittle: "Sale"),
-          ),
+
+          ///special offer
+          storeInfo.specialOffer != null ?offerCard2(offer: storeInfo.specialOffer??"Big Sale See our stores"):const SizedBox(),
 
           ///sale
+          SeeAll(
+            tittle: "Sale",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AllProductView(
+                    categories: repo.getGenderClothCategories(collections),
+                    color: storeInfo.color,
+                    collection: repo.getBigSaleProducts(collections)
+                  ),
+                ),
+              );
+            },
+          ),
           SizedBox(
-            height: 280,
+            height: screenHeight(context) * 0.38,
             child: ListView.builder(
-              itemCount: repo.getBigSaleProducts(collections).length,
+              itemCount:  collections.length>7?(repo.getBigSaleProducts(collections).length/3).round():collections.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
                 color: storeInfo.color,
@@ -83,16 +104,52 @@ class StoreCollection extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: SeeAll(tittle: "Top Rated"),
-          ),
 
-          ///topRated
+          ///newest
+          SeeAll(
+            tittle: "Newest",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AllProductView(
+                    categories: repo.getGenderClothCategories(collections),
+                    color: storeInfo.color,
+                    collection: repo.getNewestClothes(collections),
+                  ),
+                ),
+              );
+            },
+          ),
           SizedBox(
-            height: 280,
+            height: screenHeight(context) * 0.38,
             child: ListView.builder(
-              itemCount: repo.topRatedProducts(collections).length,
+              itemCount: (repo.getNewestClothes(collections).length/3).round(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => ProductItem(
+                color: storeInfo.color,
+                model: repo.getNewestClothes(collections)[index],
+              ),
+            ),
+          ),
+          ///top rated
+          SeeAll(
+            tittle: "Top Rated",
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => AllProductView(
+                          categories:
+                              repo.getGenderClothCategories(collections),
+                          color: storeInfo.color,
+                          collection: repo.topRatedProducts(collections))));
+            },
+          ),
+          SizedBox(
+            height: screenHeight(context) * 0.38,
+            child: ListView.builder(
+              itemCount: collections.length>7? (repo.topRatedProducts(collections).length/3).round():collections.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
                 color: storeInfo.color,
@@ -104,45 +161,5 @@ class StoreCollection extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget clothCat(
-      {required String color,
-      required String text,
-      required BuildContext context}) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Color(int.parse(color)).withOpacity(0.75),
-              borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(text,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16)),
-                ),
-                SizedBox(
-                  width: screenWidth(context) * 0.22,
-                  height: screenHeight(context) * 0.12,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fitWidth,
-                    imageUrl: GenerateImg.getImg(text),
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
   }
 }

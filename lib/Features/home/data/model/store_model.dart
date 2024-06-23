@@ -10,7 +10,8 @@ class StoreModel {
   final String lat;
   final String long;
   final String color;
-  final String backgroundImg;
+  final String? offer;
+  final String? specialOffer ;
 
   StoreModel(
       {required this.name,
@@ -21,9 +22,10 @@ class StoreModel {
       required this.deliveryFees,
       required this.deliveryTime,
       required this.color,
-      required this.backgroundImg,
+      required this.offer,
       required this.long,
-      required this.lat});
+      required this.lat ,
+      this.specialOffer});
 
   factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
       name: json['name'],
@@ -37,8 +39,9 @@ class StoreModel {
       deliveryTime: json['deliveryTime'],
       lat: json['lat'],
       long: json['long'],
-      backgroundImg: json['backgroundImg'],
-      color: json['color']);
+      offer: json['backgroundImg'],
+      color: json['color'] ,
+      specialOffer: json['specialOffer']);
 
 
   Map<String, dynamic> toJson() => {
@@ -51,8 +54,9 @@ class StoreModel {
     'deliveryTime': deliveryTime,
     'lat': lat,
     'long': long,
-    'backgroundImg': backgroundImg,
+    'backgroundImg': offer,
     'color': color,
+    "specialOffer":specialOffer
   };}
 
 class ShopCategory {

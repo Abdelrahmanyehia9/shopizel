@@ -28,8 +28,8 @@ return model  ;
     }
     return model;
   }
-  Future<List<ProductModel>> getAllProduct()async{
-    QuerySnapshot<Map<String, dynamic>> allProduct = await  _fireStore.collection(FirebaseConstant.productsCollections).get() ;
+  Future<List<ProductModel>> getAllProduct(String gender)async{
+    QuerySnapshot<Map<String, dynamic>> allProduct = await  _fireStore.collection(FirebaseConstant.productsCollections).where(FirebaseConstant.gender , isEqualTo: gender).get() ;
     List<ProductModel> model = [] ;
     for(int i = 0 ; i< allProduct.docs.length ; i++){
 

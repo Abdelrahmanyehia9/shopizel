@@ -70,7 +70,7 @@ Widget offerCard1() =>
     );
 
 
-Widget offerCard2() =>
+Widget offerCard2({required String offer}) =>
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Card(
@@ -86,14 +86,14 @@ Widget offerCard2() =>
               end: Alignment.bottomCenter,
             ),
           ),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(vertical: 16 , horizontal: 24),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Special offer',
                     style: TextStyle(
                       fontSize: 20,
@@ -102,7 +102,7 @@ Widget offerCard2() =>
                     ),
                   ),
                   Text(
-                    'This card is rounded and has a gradient',
+                    offer,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
