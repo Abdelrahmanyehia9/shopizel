@@ -124,7 +124,7 @@ class StoreCollection extends StatelessWidget {
           SizedBox(
             height: screenHeight(context) * 0.38,
             child: ListView.builder(
-              itemCount: (repo.getNewestClothes(collections).length/3).round(),
+              itemCount: collections.length>7?(repo.getNewestClothes(collections).length/3).round():collections.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
                 color: storeInfo.color,

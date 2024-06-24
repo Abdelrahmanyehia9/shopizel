@@ -6,30 +6,30 @@ import 'package:shoppizel/Features/home/data/model/product_model.dart';
 
 class FavouriteCubit extends Cubit<FavouriteStates>{
 
-  FavouriteCubit(this.repo):super(AddFavouriteStateInitial()) ;
+  FavouriteCubit(this.repo):super(GetFavouriteStateInitial()) ;
   final FirebaseAuth _auth = FirebaseAuth.instance ;
   final FavouriteRepo repo ;
 
-  Future<void>addToFavourite(ProductModel model)
-  async{
-    if(_auth.currentUser!=null){
-     emit(AddFavouriteStateLoading()) ;
+
+
+Future<void> fetchFavourite()async{
+
+    if (_auth.currentUser == null ){
+
+      emit(GetFavouriteStateFailure(errorMsg: "You Should Sign up To See your Favourite")) ;
+
+
+    }else {
+      emit(GetFavouriteStateLoading()) ;
       try{
-        repo.addToFavourite(model: model) ;
-
-        emit(AddFavouriteStateSuccess()) ;
+       List<ProductModel> favourites =  await repo.getAllFavourite();
+emit(GetFavouriteStateSuccess(favourites: favourites)) ;
       }catch(e){
-
-        emit(AddFavouriteStateFailure(errorMsg: "This Product you have added before")) ;
-
+        emit(GetFavouriteStateFailure(errorMsg: e.toString())) ;
       }
-    }
-    else{
-      emit(AddFavouriteStateFailure(errorMsg: "you Should Sign in Before That"))  ;
+
     }
 }
-
-
 
 
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
+import 'package:shoppizel/Features/Favourite/view/screens/favourite_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../widgets/home/home_body.dart';
@@ -17,6 +20,18 @@ class HomeScreen extends StatelessWidget {
         appBar: homeAppBar(context),
         drawer: Drawer(
           child: ListView(
+            children: [
+              InkWell(
+                onTap: (){
+                  BlocProvider.of<FavouriteCubit>(context).fetchFavourite();
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>FavouriteScreen())) ;
+                },
+                child: const ListTile(
+                  leading: Icon(Icons.favorite),
+                  title: Text("Favourite"),
+                ),
+              )
+            ],
 
           ),
         ),

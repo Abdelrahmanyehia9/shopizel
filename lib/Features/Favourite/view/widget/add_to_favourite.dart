@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
-import 'package:shoppizel/Features/Favourite/controller/favourite_state.dart';
 import 'package:shoppizel/Features/Favourite/data/repository/favourite_repository.dart';
-import 'package:shoppizel/Features/home/controllers/gender_Cubit.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
+import 'package:shoppizel/core/function/favourite.dart';
 
-class AddToFavourite extends StatelessWidget {
-  final bool? isFave ;
+class AddToFavourite extends StatefulWidget {
+   bool isFave;
   final ProductModel model ;
-  const AddToFavourite({super.key ,  this.isFave , required this.model});
+   AddToFavourite({super.key ,required  this.isFave , required this.model});
 
   @override
+  State<AddToFavourite> createState() => _AddToFavouriteState();
+}
+
+class _AddToFavouriteState extends State<AddToFavourite> {
+  @override
   Widget build(BuildContext context) {
-    return BlocListener<FavouriteCubit , FavouriteStates>(
-      listener: (context , state) {
-        if(state is  AddFavouriteStateSuccess){
-          print("success") ;
-        }
-        else if (state is AddFavouriteStateFailure){
-          print(state.errorMsg) ;
-
-        }
-        else{
-          print("Loading") ;
-        }
-      }
-
-
-
-  ,  child:    Container(
+    return    Container(
         width: 40,
         height: 40,
         decoration: BoxDecoration(
@@ -39,12 +27,16 @@ class AddToFavourite extends StatelessWidget {
         child:  Center(
           child: InkWell(
               onTap: ()async{
-                await context.read<FavouriteCubit>().addToFavourite(model) ;
+        await   Favourite.favHandler(widget.isFave,widget.model) ;
+                setState(() {
 
+                  widget.isFave = !(widget.isFave) ;
+
+                });
               },
-              child: Icon(isFave != true ?Icons.favorite_border_rounded :Icons.favorite , color: isFave == true ? Colors.red : Colors.black,)),
+              child: Icon(widget.isFave != true ?Icons.favorite_border_rounded :Icons.favorite , color: widget.isFave == true ? Colors.red : Colors.black,)),
         ),
-      ),
-    );
+      );
+
   }
 }

@@ -1,9 +1,16 @@
+import '../../home/data/model/product_model.dart';
+
 abstract class FavouriteStates {}
-class AddFavouriteStateInitial extends FavouriteStates {}
-class AddFavouriteStateLoading extends FavouriteStates {}
-class AddFavouriteStateSuccess extends FavouriteStates {}
-class AddFavouriteStateFailure extends FavouriteStates {
+class GetFavouriteStateInitial extends FavouriteStates {}
+class GetFavouriteStateLoading extends FavouriteStates {}
+class GetFavouriteStateSuccess extends FavouriteStates {
+
+ final  List<ProductModel> favourites ;
+
+  GetFavouriteStateSuccess({required this.favourites});
+}
+class GetFavouriteStateFailure extends FavouriteStates {
 
   final String errorMsg ;
-  AddFavouriteStateFailure({required this.errorMsg});
+  GetFavouriteStateFailure({required this.errorMsg});
 }
