@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/controllers/home_states.dart';
+import 'package:shoppizel/Features/home/view/screens/all_categories.dart';
+import 'package:shoppizel/Features/home/view/screens/all_stores.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/category_list.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/search_textfield.dart';
 import 'package:shoppizel/core/widgets/offer_card.dart';
@@ -12,7 +14,7 @@ import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
 import '../../../../../core/widgets/loading_failure.dart';
-import '../../../../loading.dart';
+import '../../../../../core/widgets/loading.dart';
 
 class HomeBody extends StatelessWidget {
   /// offer of the week
@@ -35,18 +37,29 @@ class HomeBody extends StatelessWidget {
               ///greeting
               greetingText(),
               const SearchTextField(),
+
               ///search product
               /// offer of the week in database
-              const SeeAll(
+              SeeAll(
                 tittle: "All Category",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              AllCategories(categories: state.categories)));
+                },
               ),
 
               /// category List (men -women - jewellery - kids)
               CategoryList(
                 categories: state.categories.reversed.toList(),
               ),
-              const SeeAll(
+               SeeAll(
                 tittle: "Open Stores",
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>AllStores(stores: state.stores)   ) ) ;
+                },
               ),
 
               StoresList(stores: state.stores)
@@ -57,7 +70,7 @@ class HomeBody extends StatelessWidget {
         print(state.errorMessage);
         return const LoadingFailure();
       } else {
-        return const HomeLoadingShimmer() ;
+        return const HomeLoadingShimmer();
       }
     });
   }

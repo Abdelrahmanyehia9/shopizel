@@ -3,14 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shoppizel/Features/home/controllers/gender_Cubit.dart';
 import 'package:shoppizel/Features/home/controllers/gender_state.dart';
+import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
+import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
+import 'package:shoppizel/Features/home/view/screens/product_spacific_cat.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
 
-import '../../../../core/utils/screen_dimentions.dart';
-import '../widgets/home/search_textfield.dart';
-import '../widgets/store/clothes_cat.dart';
-import '../widgets/store/product_item.dart';
+import '../../../../../core/utils/screen_dimentions.dart';
+import '../../../../../core/widgets/loading.dart';
+import 'search_textfield.dart';
+import '../store/clothes_cat.dart';
+import '../store/product_item.dart';
 
 class AllProductCat extends StatefulWidget {
   const AllProductCat({super.key , required this.gender});
@@ -53,6 +57,9 @@ super.initState();
                           child: ListView.builder(
                             itemCount: state.cat.length ,
                             itemBuilder: (context, index) => ClothesCat(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, state.cat[index]), color: AppConstants.appColor.value.toString()) ) );
+                              },
                                 color: AppConstants.appColor.value.toString(),
                                 text: state.cat[index]),
                             scrollDirection: Axis.horizontal,
@@ -95,7 +102,7 @@ super.initState();
               else if (state is GenderStateFailure){
                 return const LoadingFailure() ;
               }else{
-                return const Center(child: CircularProgressIndicator()) ;
+                return const AllProductCatLoading() ;
               }
 
 

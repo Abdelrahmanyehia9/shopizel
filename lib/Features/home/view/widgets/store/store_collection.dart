@@ -11,6 +11,7 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/see_all.dart';
 import '../../../../../core/widgets/offer_card.dart';
 import '../../../data/model/product_model.dart';
+import '../../screens/product_spacific_cat.dart';
 
 class StoreCollection extends StatelessWidget {
   final List<ProductModel> collections;
@@ -26,10 +27,10 @@ class StoreCollection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categories = repo.getGenderClothCategories(collections) ;
     return SingleChildScrollView(
       child: Column(
         children: [
-         storeInfo.offer !=null ?  offerCard3(storeInfo.offer) :const SizedBox(),
 
           const SizedBox(
             height: 12,
@@ -41,9 +42,16 @@ class StoreCollection extends StatelessWidget {
             height: screenHeight(context) * 0.19,
             child: ListView.builder(
               itemCount: repo.getGenderClothCategories(collections).length > 7?(repo.getGenderClothCategories(collections).length/2).round():repo.getGenderClothCategories(collections).length,
-              itemBuilder: (context, index) => ClothesCat(
-                  color: storeInfo.color,
-                  text: repo.getGenderClothCategories(collections)[index]),
+              itemBuilder: (context, index) => InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(collections, categories[index]), color: storeInfo.color) ) );
+
+                },
+                child: ClothesCat(
+
+                    color: storeInfo.color,
+                    text: categories[index]),
+              ),
               scrollDirection: Axis.horizontal,
             ),
           ),

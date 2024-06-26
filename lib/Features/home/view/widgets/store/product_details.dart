@@ -52,10 +52,10 @@ class _ProductDetailsState extends State<ProductDetails> {
             indicatorActiveColor: Color(int.parse(widget.color)),
             imageRadius: 0,
             initalPageIndex: 0,
-            slideViewportFraction: 1.2,
+            slideViewportFraction: 1,
             isAssets: false,
             autoPlay: false,
-            sliderHeight: screenHeight(context) * 0.7,
+            sliderHeight: screenHeight(context) * 0.6,
             sideItemsShadow: const [],
             currentItemShadow: const [],
             expandedImageFitMode: BoxFit.cover,
@@ -87,7 +87,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Text.rich(
                       TextSpan(
                           text: widget.model!.sale != "0"
-                              ? "${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2).split(".").first}"
+                              ? (double.parse(widget.model.price!) * (0.99999 - double.parse(widget.model.sale!) / 100.0)).toStringAsFixed(2).split(".").first
                               : "${widget.model!.price!} ",
                           style: const TextStyle(
                               fontSize: 20,
@@ -95,8 +95,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               decoration: TextDecoration.none,
                               color: Colors.black),
                           children: [
-                            TextSpan(text: ".${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2).split(".").last}" , style: TextStyle(fontSize: 15)) ,
-                            TextSpan(text: " EGP " , style: TextStyle(fontSize: 14)) ,
+                            TextSpan(text: ".${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2).split(".").last}" , style: const TextStyle(fontSize: 15)) ,
+                            const TextSpan(text: " EGP " , style: TextStyle(fontSize: 14)) ,
                             TextSpan(
                               text: widget.model!.sale != "0"
                                   ? "${widget.model?.price}EGP "

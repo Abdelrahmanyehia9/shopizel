@@ -7,7 +7,7 @@ import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
-import '../../../loading.dart';
+import '../../../../core/widgets/loading.dart';
 import '../../data/model/product_model.dart';
 import '../../data/model/store_model.dart';
 import '../widgets/store/store_collection.dart';

@@ -18,14 +18,17 @@ class _AddToFavouriteState extends State<AddToFavourite> {
   @override
   Widget build(BuildContext context) {
     return    Container(
+
         width: 40,
         height: 40,
-        decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.7),
-            borderRadius: const BorderRadius.only(
+        decoration: const BoxDecoration(
+
+            color: Colors.white ,
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16), bottomRight: Radius.circular(16))),
         child:  Center(
           child: InkWell(
+
               onTap: ()async{
         await   Favourite.favHandler(widget.isFave,widget.model) ;
                 setState(() {

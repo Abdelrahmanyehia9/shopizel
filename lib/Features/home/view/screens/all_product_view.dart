@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
+import 'package:shoppizel/Features/home/view/screens/product_spacific_cat.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/search_textfield.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/clothes_cat.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/product_item.dart';
 
 import '../../../../core/utils/screen_dimentions.dart';
+import '../../data/repository/store_repo.dart';
 
 class AllProductView extends StatelessWidget {
   final List<ProductModel> collection;
@@ -34,6 +36,11 @@ class AllProductView extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: categories.length ,
                     itemBuilder: (context, index) => ClothesCat(
+                      onTap: (){
+
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(collection, categories[index]), color: color) ) );
+
+                      },
                         color: color,
                         text: categories[index]),
                     scrollDirection: Axis.horizontal,

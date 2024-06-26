@@ -8,6 +8,7 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/function/snackbars.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../../home/view/screens/home_screen.dart';
 import '../../controller/login_cubit.dart';
 import '../../controller/login_state.dart';
 import '../widgets/auth_container.dart';
@@ -105,6 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           desc: "good",
                           tittle: "good",
                           type: AnimatedSnackBarType.success);
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>HomeScreen() ),   (Route<dynamic> route) => false,) ;
+
                       print(state.toString());
                     } else if (state is LoginFailure) {
                       SnackBars.CustomSnackBar(

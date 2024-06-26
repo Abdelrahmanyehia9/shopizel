@@ -52,6 +52,14 @@ return model  ;
 
     return storeProducts ;
   }
+  List<String>getStoreShopCategories(StoreModel model ){
+    List<String> f = [] ;
+    for(var item in model.shopCategory) {
+      f.add(item.name) ;
+    }
+    return f.toSet().toList() ;
+  }
+
 
 
 }

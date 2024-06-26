@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class SnackBars {
 
 
-  static  void CustomSnackBar({required BuildContext context ,required String desc ,required String tittle ,required AnimatedSnackBarType type })=> AnimatedSnackBar.rectangle(
+  static  void CustomSnackBar({required BuildContext context ,required String desc ,required String tittle ,required AnimatedSnackBarType type })=>
+
+      AnimatedSnackBar.rectangle(
     tittle,
     desc,
     brightness: Brightness.dark,

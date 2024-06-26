@@ -1,6 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/utils/screen_dimentions.dart';
@@ -82,6 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             desc: "your account has been submitted",
                             tittle: "Sign Up successed",
                             type: AnimatedSnackBarType.success);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>HomeScreen() ),   (Route<dynamic> route) => false,) ;
                       } else if (state is SignUpFailure) {
                         SnackBars.CustomSnackBar(
                             context: context,

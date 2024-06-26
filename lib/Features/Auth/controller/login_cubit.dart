@@ -65,4 +65,8 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFailure(errorCode: "Error has occurred try again later"));
     }
   }
+
+  Future<void>signOut()async{
+  await _auth.signOut() ;
+  }
 }

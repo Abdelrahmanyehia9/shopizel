@@ -17,37 +17,45 @@ class StoresList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
         clipBehavior: Clip.hardEdge,
         itemCount: stores.length,
         itemBuilder: (context, index) {
-          return storeItem(
-            context: context,
+          return StoreItem(
+            features: HomeRepo().getStoreShopCategories(stores[index]),
             storeModel: stores[index],
           );
         });
   }
 
-  Widget storeItem({
-    required BuildContext context,
-    required StoreModel storeModel,
-  }) {
-    List<String> features = [];
-    for (int i = 0; i < storeModel.shopCategory.length; i++) {
-      features.add(storeModel.shopCategory[i].name);
-    }
-    return Padding(
+
+
+  /// shipping fees , rate , delivery time
+
+}
+class StoreItem extends StatelessWidget {
+ final  StoreModel storeModel  ;
+ final List<String> features ;
+  const StoreItem({super.key , required this.storeModel , required this.features});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
       child: InkWell(
+
         onTap: () {
+
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (_) => StoreScreen(
-                        storeModel: storeModel,
-                      )));
+                    storeModel: storeModel,
+                  )));
         },
         child: Container(
             width: screenWidth(context),
@@ -61,9 +69,9 @@ class StoresList extends StatelessWidget {
                 Container(
                   width: screenWidth(context),
                   height: screenHeight(context) * 0.185,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.black,
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(16),
                       topLeft: Radius.circular(16),
                     ),
@@ -117,13 +125,13 @@ class StoresList extends StatelessWidget {
                                 return Text(
                                   "${features[index]}  ",
                                   style:
-                                      const TextStyle(color: Color(0xffA0A5BA)),
+                                  const TextStyle(color: Color(0xffA0A5BA)),
                                 );
                               } else {
                                 return Text(
                                   "${features[index]} - ",
                                   style:
-                                      const TextStyle(color: Color(0xffA0A5BA)),
+                                  const TextStyle(color: Color(0xffA0A5BA)),
                                 );
                               }
                             }),
@@ -145,40 +153,38 @@ class StoresList extends StatelessWidget {
       ),
     );
   }
+ Widget storeRatings(
+     {required String rating, required String shipping, required delivery}) {
+   return Row(
+     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+     children: [
+       customTile(
+           icon: Icons.star_border_outlined, text: rating, isBold: true),
+       customTile(icon: Icons.local_shipping_outlined, text: shipping),
+       customTile(icon: Icons.access_time, text: delivery)
+     ],
+   );
+ }
 
-  /// shipping fees , rate , delivery time
-  Widget storeRatings(
-      {required String rating, required String shipping, required delivery}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        customTile(
-            icon: Icons.star_border_outlined, text: rating, isBold: true),
-        customTile(icon: Icons.local_shipping_outlined, text: shipping),
-        customTile(icon: Icons.access_time, text: delivery)
-      ],
-    );
-  }
-
-  /// icon with text
-  Widget customTile(
-      {required String text, required IconData icon, bool? isBold}) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: AppConstants.appColor,
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          text,
-          style: TextStyle(
-              fontSize: isBold == null ? 14 : 16,
-              fontWeight: isBold != null ? FontWeight.bold : FontWeight.normal),
-        )
-      ],
-    );
-  }
+ /// icon with text
+ Widget customTile(
+     {required String text, required IconData icon, bool? isBold}) {
+   return Row(
+     children: [
+       Icon(
+         icon,
+         color: AppConstants.appColor,
+       ),
+       const SizedBox(
+         width: 4,
+       ),
+       Text(
+         text,
+         style: TextStyle(
+             fontSize: isBold == null ? 14 : 16,
+             fontWeight: isBold != null ? FontWeight.bold : FontWeight.normal),
+       )
+     ],
+   );
+ }
 }

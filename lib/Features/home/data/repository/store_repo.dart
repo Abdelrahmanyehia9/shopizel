@@ -87,6 +87,15 @@ List<ProductModel>topRatedProducts(List<ProductModel> model){
     }
     return a.toSet().toList() ;
   }
+  List<ProductModel>getTypeOfClothes(List<ProductModel> model  , String Type) {
+    List<ProductModel>coll =  [] ;
+    for( var item in model){
+      if(item.type == Type){
+        coll.add(item) ;
+      }
+    }
+    return coll ;
+  }
 
 
 }

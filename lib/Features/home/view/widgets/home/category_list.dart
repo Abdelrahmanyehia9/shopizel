@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/gender_Cubit.dart';
 import 'package:shoppizel/Features/home/controllers/gender_state.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
-import 'package:shoppizel/Features/home/view/screens/all_product_cat.dart';
+import 'package:shoppizel/Features/home/view/widgets/home/all_product_cat.dart';
 import 'package:shoppizel/Features/home/view/screens/all_product_view.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
@@ -29,13 +29,19 @@ class CategoryList extends StatelessWidget {
             padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) =>
-                categoryItem(context: context, model: categories[index]),
+                CategoryItem(  model: categories[index]),
           ),
         ));
   }
 
-  Widget categoryItem(
-      {required CategoryModel model, required BuildContext context}) {
+
+}
+class CategoryItem extends StatelessWidget {
+  final CategoryModel model ;
+  const CategoryItem({super.key , required this.model});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 14.0),
 
@@ -105,43 +111,43 @@ class CategoryList extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 0,
-              child: Container(
-                width: screenWidth(context) * 0.28,
-                height: screenHeight(context) * 0.13,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(18)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.6),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 0), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: CachedNetworkImage(
-                    imageUrl: model.imageUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: Colors.grey[300],
-                      ///placeholder
-                      child: const Center(
-                        child: CircularProgressIndicator( color: AppConstants.appColor,),
+                top: 0,
+                child: Container(
+                  width: screenWidth(context) * 0.28,
+                  height: screenHeight(context) * 0.13,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(18)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.6),
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                        offset: const Offset(0, 0), // changes position of shadow
                       ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[300],
-                      child: const Icon(
-                        Icons.error,
-                        color: Colors.red,
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: CachedNetworkImage(
+                      imageUrl: model.imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[300],
+                        ///placeholder
+                        child: const Center(
+                          child: CircularProgressIndicator( color: AppConstants.appColor,),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[300],
+                        child: const Icon(
+                          Icons.error,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
             )
           ],
         ),

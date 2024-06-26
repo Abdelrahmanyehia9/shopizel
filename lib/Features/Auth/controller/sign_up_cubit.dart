@@ -15,7 +15,11 @@ class SignUpCubit extends Cubit<SignUpState>{
     late String error ;
     emit(SignUpLoading()) ;
     try{
-      final  credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+
+      final UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await credential.user!.updateDisplayName(name) ;
+
+
       if(credential.user != null){
         UserModel user = UserModel(uid: credential.user!.uid, email: email , username: name)  ;
         await _fireStore.collection(FirebaseConstant.usersCollection).doc(credential.user!.uid).set(user.toJson()) ;
@@ -49,7 +53,5 @@ class SignUpCubit extends Cubit<SignUpState>{
 
     emit(SignUpFailure(errorCode: error));
 
-  }
-
-
+  } 
 }
