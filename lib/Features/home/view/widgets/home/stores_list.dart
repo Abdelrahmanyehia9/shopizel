@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
@@ -10,37 +11,43 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../data/model/store_model.dart';
 
 class StoresList extends StatelessWidget {
-  const StoresList({super.key, required this.stores });
+  const StoresList({super.key, required this.stores});
+
   final List<StoreModel> stores;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      clipBehavior: Clip.hardEdge,
+        primary: false,
+        shrinkWrap: true,
+        clipBehavior: Clip.hardEdge,
         itemCount: stores.length,
         itemBuilder: (context, index) {
           return storeItem(
-              context: context,
-            storeModel:  stores[index] ,
+            context: context,
+            storeModel: stores[index],
           );
         });
   }
 
-  Widget storeItem(
-      {required BuildContext context,
-      required StoreModel storeModel ,
-      }) {
-    List<String> features = []  ;
-     for (int i = 0 ; i < storeModel.shopCategory.length ; i ++ ){
-       features.add(storeModel.shopCategory[i].name) ;
-     }
+  Widget storeItem({
+    required BuildContext context,
+    required StoreModel storeModel,
+  }) {
+    List<String> features = [];
+    for (int i = 0; i < storeModel.shopCategory.length; i++) {
+      features.add(storeModel.shopCategory[i].name);
+    }
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0 , horizontal: 4),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
       child: InkWell(
-        onTap: (){
-             Navigator.push(context, MaterialPageRoute(builder: (_) => StoreScreen(storeModel: storeModel,))) ;
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => StoreScreen(
+                        storeModel: storeModel,
+                      )));
         },
         child: Container(
             width: screenWidth(context),
@@ -55,13 +62,34 @@ class StoresList extends StatelessWidget {
                   width: screenWidth(context),
                   height: screenHeight(context) * 0.185,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(storeModel.image), fit: BoxFit.cover),
                     color: Colors.black,
                     borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(16),
-                        topLeft: Radius.circular(16)),
-                    //image: DecorationImage(image: NetworkImage(""))
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: storeModel.image,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[300],
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[300],
+                        child: Icon(
+                          Icons.error,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -117,7 +145,8 @@ class StoresList extends StatelessWidget {
       ),
     );
   }
- /// shipping fees , rate , delivery time
+
+  /// shipping fees , rate , delivery time
   Widget storeRatings(
       {required String rating, required String shipping, required delivery}) {
     return Row(
@@ -130,14 +159,15 @@ class StoresList extends StatelessWidget {
       ],
     );
   }
- /// icon with text
+
+  /// icon with text
   Widget customTile(
       {required String text, required IconData icon, bool? isBold}) {
     return Row(
       children: [
         Icon(
           icon,
-          color: AppConstants.btnColor,
+          color: AppConstants.appColor,
         ),
         const SizedBox(
           width: 4,

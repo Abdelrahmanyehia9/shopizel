@@ -40,9 +40,14 @@ class ClothesCat extends StatelessWidget {
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(),
                       ),
+                      errorWidget: (context, url, error) => const Center(
+                        child: Icon(
+                          Icons.error,
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                  )                ],
               ),
             ),
           ));

@@ -16,7 +16,7 @@ class PrimaryButton extends StatelessWidget {
         height: screenHeight(context) * 0.075,
         width: screenWidth(context),
         decoration: const BoxDecoration(
-          color: AppConstants.btnColor,
+          color: AppConstants.appColor,
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Center(

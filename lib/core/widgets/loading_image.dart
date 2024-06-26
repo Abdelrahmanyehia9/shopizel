@@ -6,6 +6,6 @@ class LoadingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator(color: AppConstants.btnColor,),);
+    return const Center(child: CircularProgressIndicator(color: AppConstants.appColor,),);
   }
 }

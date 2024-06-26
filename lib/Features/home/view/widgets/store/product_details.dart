@@ -87,21 +87,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Text.rich(
                       TextSpan(
                           text: widget.model!.sale != "0"
-                              ? "\$${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2)} "
-                              : "\$${widget.model!.price!} ",
+                              ? "${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2).split(".").first}"
+                              : "${widget.model!.price!} ",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.none,
                               color: Colors.black),
                           children: [
+                            TextSpan(text: ".${(double.parse(widget.model!.price!) * (0.99999 - double.parse(widget.model!.sale!) / 100.0)).toStringAsFixed(2).split(".").last}" , style: TextStyle(fontSize: 15)) ,
+                            TextSpan(text: " EGP " , style: TextStyle(fontSize: 14)) ,
                             TextSpan(
                               text: widget.model!.sale != "0"
-                                  ? "\$${widget.model?.price}  "
+                                  ? "${widget.model?.price}EGP "
                                   : "",
                               style: TextStyle(
                                   color: Colors.grey.shade400,
                                   decoration: TextDecoration.lineThrough,
+                                  decorationColor: Colors.grey,
                                   fontSize: 14),
                             )
                           ]),
@@ -190,9 +193,9 @@ widget.isFav = !widget.isFav ;
         Text(
           "Size Chart",
           style: TextStyle(
-              color: AppConstants.btnColor,
+              color: AppConstants.appColor,
               decoration: TextDecoration.underline,
-              decorationColor: AppConstants.btnColor),
+              decorationColor: AppConstants.appColor),
         ),
       ],
     );

@@ -19,7 +19,7 @@ class _RemeberMeState extends State<RemeberMe> {
       children: [
         Checkbox(
           side: const BorderSide(width: 2, color: Color(0xffE3EBF2)),
-          activeColor: AppConstants.btnColor,
+          activeColor: AppConstants.appColor,
           value: widget.isChecked,
           onChanged: widget.onChanged,
         ),

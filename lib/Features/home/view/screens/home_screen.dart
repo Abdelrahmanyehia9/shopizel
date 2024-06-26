@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('DELIVER TO', style: TextStyle(color: AppConstants.btnColor,
+          Text('DELIVER TO', style: TextStyle(color: AppConstants.appColor,
               fontSize: 12,
               fontWeight: FontWeight.bold),),
           Text('haram , giza', style: TextStyle(fontSize: 14),),
@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
               SvgPicture.asset(
                 "assets/images/Ellipse 1294.svg", fit: BoxFit.cover,),
               const CircleAvatar(
-                backgroundColor: AppConstants.btnColor,
+                backgroundColor: AppConstants.appColor,
                 radius: 12,
                 child: Text("2", style: TextStyle(color: Colors.white,
                     fontSize: 16,

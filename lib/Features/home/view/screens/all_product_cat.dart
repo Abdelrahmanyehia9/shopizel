@@ -53,7 +53,7 @@ super.initState();
                           child: ListView.builder(
                             itemCount: state.cat.length ,
                             itemBuilder: (context, index) => ClothesCat(
-                                color: AppConstants.btnColor.value.toString(),
+                                color: AppConstants.appColor.value.toString(),
                                 text: state.cat[index]),
                             scrollDirection: Axis.horizontal,
                           ),
@@ -79,12 +79,11 @@ super.initState();
                         itemBuilder: (BuildContext context, int index) => Center(
                             child: ProductItem(
                               model: state.collection[index],
-                              color: AppConstants.btnColor.value.toString(),
+                              color: AppConstants.appColor.value.toString(),
                             )),
                         staggeredTileBuilder: (int index) =>
                             StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                        mainAxisSpacing: 4.0,
-                        crossAxisSpacing: 0.0,
+                        mainAxisSpacing: 8.0,
                       ),
                     ],
                   ),

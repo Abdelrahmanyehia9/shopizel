@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           "Forget Password",
                           style: TextStyle(
-                              fontSize: 14, color: AppConstants.btnColor),
+                              fontSize: 14, color: AppConstants.appColor),
                         ),
                       )
                     ],
@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             "Sign up".toUpperCase(),
                             style: const TextStyle(
-                                color: AppConstants.btnColor,
+                                color: AppConstants.appColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),

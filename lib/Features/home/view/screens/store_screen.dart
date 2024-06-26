@@ -7,6 +7,7 @@ import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
+import '../../../loading.dart';
 import '../../data/model/product_model.dart';
 import '../../data/model/store_model.dart';
 import '../widgets/store/store_collection.dart';
@@ -30,38 +31,41 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
       builder:  (context , state){
         if (state is StoreStateSuccess){
 
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color(int.parse(widget.storeModel.color)),
-              iconTheme: const IconThemeData(color: Colors.white),
-              title:  Text(
-                widget.storeModel.name,
-                style: const TextStyle(color: Colors.white),
+          return RefreshIndicator(
+            onRefresh: _onRefresh,
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Color(int.parse(widget.storeModel.color)),
+                iconTheme: const IconThemeData(color: Colors.white),
+                title:  Text(
+                  widget.storeModel.name,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                centerTitle: true,
               ),
-              centerTitle: true,
-            ),
-            body: ContainedTabBarView(
-              tabBarProperties: TabBarProperties(
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: Color(int.parse(widget.storeModel.color)),
-                  labelColor: Color(int.parse(widget.storeModel.color))
+              body: ContainedTabBarView(
+                tabBarProperties: TabBarProperties(
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorColor: Color(int.parse(widget.storeModel.color)),
+                    labelColor: Color(int.parse(widget.storeModel.color))
+                ),
+                tabs: [
+                  tab(name: "All"),
+                  tab(name: "Men"),
+                  tab(name: "Women"),
+                  tab(name: "Kids"),
+                ],
+                views:  [
+                  ///all
+                  StoreCollection(collections: state.collection , storeInfo: widget.storeModel),
+                   ///men
+                  StoreCollection(collections:context.read<StoreCubit>().men , storeInfo: widget.storeModel),
+                   ///women
+                  StoreCollection(collections: context.read<StoreCubit>().women, storeInfo: widget.storeModel),
+                   ///kids
+                  StoreCollection(collections:context.read<StoreCubit>().kids , storeInfo: widget.storeModel),
+                ],
               ),
-              tabs: [
-                tab(name: "All"),
-                tab(name: "Men"),
-                tab(name: "Women"),
-                tab(name: "Kids"),
-              ],
-              views:  [
-                ///all
-                StoreCollection(collections: state.collection , storeInfo: widget.storeModel),
-                 ///men
-                StoreCollection(collections:context.read<StoreCubit>().men , storeInfo: widget.storeModel),
-                 ///women
-                StoreCollection(collections: context.read<StoreCubit>().women, storeInfo: widget.storeModel),
-                 ///kids
-                StoreCollection(collections:context.read<StoreCubit>().kids , storeInfo: widget.storeModel),
-              ],
             ),
           ) ;
 
@@ -71,7 +75,7 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
         }
         else{
 
-          return const Center(child: CircularProgressIndicator(),);
+          return const Center(child: StoreScreenLoading());
 
 
         }
@@ -80,6 +84,8 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
 
       },
     );
+
+
   }
 
   Widget tab({required String name}) => Padding(
@@ -87,4 +93,10 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
         child: Text(name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       );
+  Future<void> _onRefresh()async{
+    setState(() {
+      BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.name) ;
+    });
+  }
+
 }

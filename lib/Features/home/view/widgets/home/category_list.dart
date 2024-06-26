@@ -10,6 +10,7 @@ import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
 import '../../../data/model/category_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key, required this.categories});
@@ -109,21 +110,38 @@ class CategoryList extends StatelessWidget {
                 width: screenWidth(context) * 0.28,
                 height: screenHeight(context) * 0.13,
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(18)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.6),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                        offset: const Offset(0, 0), // changes position of shadow
+                  borderRadius: const BorderRadius.all(Radius.circular(18)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.6),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: CachedNetworkImage(
+                    imageUrl: model.imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      color: Colors.grey[300],
+                      ///placeholder
+                      child: const Center(
+                        child: CircularProgressIndicator( color: AppConstants.appColor,),
                       ),
-                    ],
-                    image: DecorationImage(
-                        image: NetworkImage(
-                          model.imageUrl,
-                        ),
-                        fit: BoxFit.cover)),
-              ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      color: Colors.grey[300],
+                      child: const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
+              )
             )
           ],
         ),

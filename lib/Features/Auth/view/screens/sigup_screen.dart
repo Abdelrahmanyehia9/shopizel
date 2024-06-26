@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     builder: (context, state) {
                       if (state is SignUpLoading) {
                         return const CircularProgressIndicator(
-                            color: AppConstants.btnColor);
+                            color: AppConstants.appColor);
                       }
 
                       return PrimaryButton(

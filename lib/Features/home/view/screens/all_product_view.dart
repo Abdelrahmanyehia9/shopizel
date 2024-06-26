@@ -64,7 +64,7 @@ class AllProductView extends StatelessWidget {
                 )),
                 staggeredTileBuilder: (int index) =>
                     StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                mainAxisSpacing: 4.0,
+                mainAxisSpacing: 8.0,
                 crossAxisSpacing: 0.0,
               ),
             ],

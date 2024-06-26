@@ -17,7 +17,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
          appBar: AppBar(
-           backgroundColor: AppConstants.btnColor, foregroundColor: Colors.white,
+           backgroundColor: AppConstants.appColor, foregroundColor: Colors.white,
            scrolledUnderElevation: 0,
            title : const Text("Favourite") ,
            centerTitle: true,
@@ -30,7 +30,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             if (state is GetFavouriteStateSuccess){
 
               return RefreshIndicator(
-                color: AppConstants.btnColor,
+                color: AppConstants.appColor,
                 onRefresh: _handleRefresh ,
                 child: ListView.builder(itemCount: state.favourites.length,
                     itemBuilder: (context , index)=> ProductItemVerticalView(
@@ -50,10 +50,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   }
 
   Future<void> _handleRefresh() async {
-    // Simulate network fetch or database query
-    // Update the list of items and refresh the UI
+
     setState(() {
-BlocProvider.of<FavouriteCubit>(context).fetchFavourite() ;
+ BlocProvider.of<FavouriteCubit>(context).fetchFavourite() ;
 
     });
   }
