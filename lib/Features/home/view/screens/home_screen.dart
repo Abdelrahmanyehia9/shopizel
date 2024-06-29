@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shoppizel/Features/Auth/controller/login_cubit.dart';
+import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
+import 'package:shoppizel/Features/Auth/view/screens/profile_screen.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
 import 'package:shoppizel/Features/Favourite/view/screens/favourite_screen.dart';
+import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
+import 'package:shoppizel/Features/cart/view/screen/cart_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../widgets/home/home_body.dart';
@@ -40,18 +43,18 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              CircleAvatar(
+              const CircleAvatar(
               radius: 36,
               backgroundColor: AppConstants.appColor,
             ),
             Text(
              _auth.currentUser!.displayName??"guest"
-            , style: TextStyle(
+            , style: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold),
           ),
           Text(
             _auth.currentUser!.email!,
-            style: TextStyle(
+            style: const TextStyle(
                 color: AppConstants.appColor, fontSize: 10),
           )
           ],
@@ -64,12 +67,11 @@ class HomeScreen extends StatelessWidget {
     ///profile
     InkWell(
     onTap: () {
-    BlocProvider.of<FavouriteCubit>(context).fetchFavourite();
     Navigator.pop(context);
     Navigator.push(
     context,
     MaterialPageRoute(
-    builder: (_) => const FavouriteScreen()));
+    builder: (_) => const ProfileScreen()));
     },
     child: const ListTile(
     leading: Icon(FontAwesomeIcons.solidUser),
@@ -79,7 +81,9 @@ class HomeScreen extends StatelessWidget {
     /// favourite
     InkWell(
     onTap: () {
+
     BlocProvider.of<FavouriteCubit>(context).fetchFavourite();
+    Navigator.pop(context) ;
     Navigator.push(
     context,
     MaterialPageRoute(
@@ -172,10 +176,10 @@ class HomeScreen extends StatelessWidget {
     print(_auth.currentUser!.email) ;
     try{
     Navigator.pop(context) ;
-    BlocProvider.of<LoginCubit>(context).signOut() ;
+    BlocProvider.of<AuthCubit>(context).signOut() ;
     Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(builder: (context) => LoginScreen()),
+    MaterialPageRoute(builder: (context) => const LoginScreen()),
     (route) => false, // Replace false with your condition to stop removing routes
     ); }catch(e){
     print(e.toString()) ;
@@ -230,26 +234,32 @@ class HomeScreen extends StatelessWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28.0),
-          child: Stack(
-            alignment: AlignmentDirectional.topEnd,
-            children: [
-              SvgPicture.asset(
-                "assets/images/Ellipse 1294.svg",
-                fit: BoxFit.cover,
-              ),
-              const CircleAvatar(
-                backgroundColor: AppConstants.appColor,
-                radius: 12,
-                child: Text(
-                  "2",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppConstants.fontFamily),
+          child: InkWell(
+            onTap: (){
+              BlocProvider.of<CartCubit>(context).fetchCartProducts() ;
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>CartScreen())) ;
+            },
+            child: Stack(
+              alignment: AlignmentDirectional.topEnd,
+              children: [
+                SvgPicture.asset(
+                  "assets/images/Ellipse 1294.svg",
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ],
+                const CircleAvatar(
+                  backgroundColor: AppConstants.appColor,
+                  radius: 12,
+                  child: Text(
+                    "2",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppConstants.fontFamily),
+                  ),
+                ),
+              ],
+            ),
           ),
         )
       ],

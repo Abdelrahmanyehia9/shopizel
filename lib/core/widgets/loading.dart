@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shoppizel/Features/shimmer/category_list_Loading.dart';
 import 'package:shoppizel/Features/shimmer/clothes_cat_shimmer.dart';
@@ -9,7 +8,6 @@ import 'package:shoppizel/Features/shimmer/search_loading.dart';
 import 'package:shoppizel/Features/shimmer/see_all_loading.dart';
 import 'package:shoppizel/Features/shimmer/store_list_loading.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import 'see_all.dart';
 
 class HomeLoadingShimmer extends StatelessWidget {
   const HomeLoadingShimmer({super.key});

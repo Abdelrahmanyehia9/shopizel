@@ -68,8 +68,6 @@ Widget offerCard1() =>
 
       ],
     );
-
-
 Widget offerCard2({required String offer}) =>
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -122,8 +120,6 @@ Widget offerCard2({required String offer}) =>
         ),
       ),
     );
-
-
 Widget offerCard3(img) =>
 Padding(
   padding: const EdgeInsets.only(bottom: 8.0),

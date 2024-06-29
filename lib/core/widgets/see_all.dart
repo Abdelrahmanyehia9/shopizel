@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shoppizel/core/utils/app_constants.dart';
-import 'package:shoppizel/core/utils/screen_dimentions.dart';
+
 
 class SeeAll extends StatelessWidget {
-  const SeeAll({super.key, required this.tittle , this.onTap});
-final GestureTapCallback? onTap ;
+  const SeeAll({super.key, required this.tittle, this.onTap});
+  final GestureTapCallback? onTap;
   final String tittle;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0 , vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -18,19 +17,17 @@ final GestureTapCallback? onTap ;
             tittle,
             style: const TextStyle(
               fontSize: 18,
-
             ),
           ),
-            Row(
+          Row(
             children: [
               InkWell(
-                onTap:onTap ,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Text(
+                onTap: onTap,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
                     "See All",
-                    style: TextStyle(fontSize: 16 ,
-                    color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                 ),
               ),

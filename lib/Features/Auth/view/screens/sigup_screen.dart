@@ -1,21 +1,22 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
+import 'package:shoppizel/Features/Auth/controller/auth_state.dart';
 import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/utils/screen_dimentions.dart';
 import '../../../../core/function/snackbars.dart';
 import '../../../../core/widgets/primary_button.dart';
-import '../../controller/sign_up_cubit.dart';
-import '../../controller/sign_up_state.dart';
+
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';
 import '../widgets/auth_textfeild.dart';
 import '../widgets/formfeild_label.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -55,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 18,
                   ),
-                  BlocConsumer<SignUpCubit, SignUpState>(
+                  BlocConsumer<AuthCubit, AuthState>(
                     builder: (context, state) {
                       if (state is SignUpLoading) {
                         return const CircularProgressIndicator(
@@ -67,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onTap: () {
                           if (_globalKey.currentState!.validate()) {
                             context
-                                .read<SignUpCubit>()
+                                .read<AuthCubit>()
                                 .signUpByEmailAndPassword(
                                     nameController.text,
                                     emailController.text,
@@ -78,14 +79,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     listener: (context, state) {
                       if (state is SignUpSuccess) {
-                        SnackBars.CustomSnackBar(
+                        SnackBars.customSnackBar(
                             context: context,
                             desc: "your account has been submitted",
                             tittle: "Sign Up successed",
                             type: AnimatedSnackBarType.success);
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>HomeScreen() ),   (Route<dynamic> route) => false,) ;
                       } else if (state is SignUpFailure) {
-                        SnackBars.CustomSnackBar(
+                        SnackBars.customSnackBar(
                             context: context,
                             desc: state.errorCode,
                             tittle: "Sign Up error",

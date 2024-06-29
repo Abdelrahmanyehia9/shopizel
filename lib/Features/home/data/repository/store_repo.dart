@@ -85,7 +85,7 @@ List<ProductModel>topRatedProducts(List<ProductModel> model){
       a.add(collection[i].type) ;
 
     }
-    return a.toSet().toList() ;
+    return a ;
   }
   List<ProductModel>getTypeOfClothes(List<ProductModel> model  , String Type) {
     List<ProductModel>coll =  [] ;

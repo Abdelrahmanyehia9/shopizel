@@ -37,14 +37,14 @@ super.initState();
 
         appBar: AppBar(
           centerTitle: true,
-          title:  Text("T-Ship ${widget.gender} Products" , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),),
+          title:  Text("T-Ship ${widget.gender} Products" , style: const TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),),
           scrolledUnderElevation: 0,
         ),
 
         body:  BlocBuilder<GenderCubit , GenderState>(
             builder: (context ,state){
               if (state is GenderStateSuccess){
-
+List<String> cat = state.cat.toSet().toList(  ) ;
                 if(state.collection.isNotEmpty){
                 return SingleChildScrollView(
                   child: Column(
@@ -55,13 +55,13 @@ super.initState();
                         child: SizedBox(
                           height: screenHeight(context) * 0.19,
                           child: ListView.builder(
-                            itemCount: state.cat.length ,
+                            itemCount: cat.length ,
                             itemBuilder: (context, index) => ClothesCat(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, state.cat[index]), color: AppConstants.appColor.value.toString()) ) );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
                               },
                                 color: AppConstants.appColor.value.toString(),
-                                text: state.cat[index]),
+                                text: cat[index]),
                             scrollDirection: Axis.horizontal,
                           ),
                         ),

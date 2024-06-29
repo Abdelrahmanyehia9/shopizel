@@ -27,7 +27,7 @@ class StoreCollection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> categories = repo.getGenderClothCategories(collections) ;
+    List<String> categories = repo.getGenderClothCategories(collections).toSet().toList() ;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -41,7 +41,7 @@ class StoreCollection extends StatelessWidget {
           SizedBox(
             height: screenHeight(context) * 0.19,
             child: ListView.builder(
-              itemCount: repo.getGenderClothCategories(collections).length > 7?(repo.getGenderClothCategories(collections).length/2).round():repo.getGenderClothCategories(collections).length,
+              itemCount: categories.length > 7?(categories.length/2).round():categories.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(collections, categories[index]), color: storeInfo.color) ) );

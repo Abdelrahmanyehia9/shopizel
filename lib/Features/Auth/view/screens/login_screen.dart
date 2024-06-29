@@ -9,8 +9,8 @@ import 'package:shoppizel/core/function/snackbars.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../home/view/screens/home_screen.dart';
-import '../../controller/login_cubit.dart';
-import '../../controller/login_state.dart';
+import '../../controller/auth_cubit.dart';
+import '../../controller/auth_state.dart';
 import '../widgets/auth_container.dart';
 import '../widgets/auth_form_container.dart';
 import '../widgets/formfeild_label.dart';
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  BlocConsumer<LoginCubit, LoginState>(
+                  BlocConsumer<AuthCubit, AuthState>(
                       builder: (context, state) {
                     if (state is LoginLoading) {
                       return const CircularProgressIndicator();
@@ -95,13 +95,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: "Log in",
                         onTap: () {
                           if (_globalKey.currentState!.validate()) {
-                            context.read<LoginCubit>().loginByEmailAndPassword(
+                            context.read<AuthCubit>().loginByEmailAndPassword(
                                 emailController.text, passwordController.text);
                           }
                         });
                   }, listener: (context, state) {
                     if (state is LoginSuccess) {
-                      SnackBars.CustomSnackBar(
+                      SnackBars.customSnackBar(
                           context: context,
                           desc: "good",
                           tittle: "good",
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       print(state.toString());
                     } else if (state is LoginFailure) {
-                      SnackBars.CustomSnackBar(
+                      SnackBars.customSnackBar(
                           context: context,
                           tittle: "Login error",
                           desc: state.errorCode,
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 6,
                   ),
-                  BlocListener<LoginCubit, LoginState>(
+                  BlocListener<AuthCubit, AuthState>(
                     listener: (context, state) {
                       if (state is LoginSuccess) {
                       } else if (state is LoginFailure) {
@@ -164,9 +164,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SizedBox(
                         width: screenWidth(context) * 0.7,
                         child: socialIcons(fbTap: () {
-                          context.read<LoginCubit>().signInWithFacebook();
+                          context.read<AuthCubit>().signInWithFacebook();
                         }, googleTap: () {
-                          context.read<LoginCubit>().signInWithGoogle();
+                          context.read<AuthCubit>().signInWithGoogle();
                         })),
                   )
                 ],
