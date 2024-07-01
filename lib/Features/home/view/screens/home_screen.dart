@@ -221,6 +221,7 @@ super.initState();
   PreferredSizeWidget homeAppBar(BuildContext context) {
     return AppBar(
       scrolledUnderElevation: 0,
+      backgroundColor: Colors.transparent,centerTitle: false,
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -233,7 +234,7 @@ super.initState();
           ),
           Text(
             'haram , giza',
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14 , color: Colors.black),
           ),
         ],
       ),

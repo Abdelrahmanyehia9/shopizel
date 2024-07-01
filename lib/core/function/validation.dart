@@ -13,6 +13,13 @@ static bool emailValidation (String email){
    final reqExp = RegExp(pattern) ;
    return reqExp.hasMatch(email) ;
 }
+static bool validationNotNull(String value){
+if (value == ""){
+  return true ;
+}   else{
+  return false ;
+}
+}
 
 
 

@@ -3,10 +3,11 @@ import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key, required this.label, this.onTap , this.color});
+  const PrimaryButton({super.key, required this.label, this.onTap , this.color , this.width});
 
   final String label;
   final Color? color ;
+  final double? width ;
   final GestureTapCallback? onTap;
 
   @override
@@ -15,7 +16,7 @@ class PrimaryButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: screenHeight(context) * 0.075,
-        width: screenWidth(context),
+        width: width?? screenWidth(context),
         decoration:  BoxDecoration(
           color: color ?? AppConstants.appColor,
           borderRadius: const BorderRadius.all(Radius.circular(12)),

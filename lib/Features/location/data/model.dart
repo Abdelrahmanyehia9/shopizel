@@ -8,6 +8,7 @@ class LocationModel {
   final String lat;
   final String long;
   final String name ;
+  final String type ;
 
   LocationModel({required this.tittle,
     required this.building,
@@ -16,7 +17,8 @@ class LocationModel {
     required this.specialMark,
     required this.lat,
     required this.long
-  ,required this.name});
+  ,required this.name ,
+  required this.type});
 
 
   factory LocationModel.fromJson(Map<String, dynamic> json){
@@ -28,7 +30,8 @@ class LocationModel {
         specialMark: json["specialMark"],
         lat: json["lat"],
         long: json["long"] ,
-    name :json['name']) ;
+    name :json['name'] ,
+    type:json["type"]) ;
   }
   Map<String , dynamic>toJson()=>{
     "building":building ,
@@ -37,7 +40,8 @@ class LocationModel {
     "specialMark" : specialMark ,
     "lat": lat ,
     "long":long ,
-    "name":name
+    "name":name ,
+    "type":type
 
 
 

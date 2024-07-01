@@ -40,8 +40,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
     emit(LoginFailure(errorCode: error));
   }
-
-
   ///sign up
   Future<void> signUpByEmailAndPassword(String name, String email , String password)async{
     late String error ;
@@ -86,7 +84,6 @@ class AuthCubit extends Cubit<AuthState> {
     emit(SignUpFailure(errorCode: error));
 
   }
-
   /// facebook
   Future<void> signInWithFacebook() async {
     emit(LoginLoading());
