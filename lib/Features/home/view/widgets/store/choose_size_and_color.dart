@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/list_of_sizes.dart';
 import '../../../../../core/function/favourite.dart';
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
+import '../../../../Favourite/controller/favourite_cubit.dart';
 import '../../../../cart/view/widgets/add_to_cart_btn.dart';
 import '../../../data/model/product_model.dart';
 
@@ -81,9 +83,9 @@ class _ChoseSizeAndColorState extends State<ChoseSizeAndColor> {
                 color: Color(int.parse(widget.color)),
                 borderRadius: BorderRadius.circular(12)),
             child: InkWell(
-                onTap: () {
-                  Favourite.favHandler(widget.isFav, widget.model);
+                onTap: () async{
 
+                  await BlocProvider.of<FavouriteCubit>(context).addOrRemoveFromFavourite(widget.isFav, widget.model);
                   setState(() {
 
                     widget.isFav = !widget.isFav;

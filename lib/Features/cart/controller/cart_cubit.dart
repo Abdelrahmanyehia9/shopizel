@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
@@ -15,21 +17,26 @@ class CartCubit extends Cubit<CartStates> {
     emit(CartStateLoading());
     try {
       List<CartModel> cartProducts = await cartRepo.getCartProducts();
-      List<String> stores =
-          cartRepo.getStoresOfProducts(cartProducts).toSet().toList();
-      emit(CartStateSuccess(cartProducts: cartProducts, stores: stores));
+      List<String> stores = cartRepo.getStoresOfProducts(cartProducts).toSet().toList();
+      int cartCount = cartRepo.getCartCount(cartProducts);
+      emit(CartStateSuccess(cartProducts: cartProducts, stores: stores , cartCount : cartCount ));
     } catch (e) {
       emit(CartStateFailure(error: e.toString()));
     }
   }
   Future<void> addToCart(CartModel model) async {
     emit(AddToCartLoading());
+
     try {
       await cartRepo.addToCart(model);
       emit(AddToCartSuccess());
     } catch (e) {
+      if(e is TimeoutException){
+        emit(AddToCartFailure(error: "TimeOut "));
+      }
       emit(AddToCartFailure(error: e.toString()));
     }
+    fetchCartProducts();
   }
   List<CartModel> getProductByStore(String storeName , List<CartModel> products){
     List<CartModel> coll  = [] ;
@@ -41,9 +48,10 @@ class CartCubit extends Cubit<CartStates> {
     return coll ;
   }
   Future<void>removeFromCart(CartModel model)async{
-    emit(RemoveFromCartLoading()) ;
     try{
+      emit(RemoveFromCartLoading()) ;
       await cartRepo.removeFromCart(model) ;
+      await fetchCartProducts() ;
       emit(RemoveFromCartSuccess()) ;
 
     }catch(e){

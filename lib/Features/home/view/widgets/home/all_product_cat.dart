@@ -41,75 +41,82 @@ super.initState();
           scrolledUnderElevation: 0,
         ),
 
-        body:  BlocBuilder<GenderCubit , GenderState>(
-            builder: (context ,state){
-              if (state is GenderStateSuccess){
-List<String> cat = state.cat.toSet().toList(  ) ;
-                if(state.collection.isNotEmpty){
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  
-                        child: SizedBox(
-                          height: screenHeight(context) * 0.19,
-                          child: ListView.builder(
-                            itemCount: cat.length ,
-                            itemBuilder: (context, index) => ClothesCat(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
-                              },
-                                color: AppConstants.appColor.value.toString(),
-                                text: cat[index]),
-                            scrollDirection: Axis.horizontal,
+        body:  RefreshIndicator(
+          onRefresh: ()async{
+            setState(() {
+              BlocProvider.of<GenderCubit>(context).fetch(widget.gender);
+            });
+          },
+          child: BlocBuilder<GenderCubit , GenderState>(
+              builder: (context ,state){
+                if (state is GenderStateSuccess){
+          List<String> cat = state.cat.toSet().toList(  ) ;
+                  if(state.collection.isNotEmpty){
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+
+                          child: SizedBox(
+                            height: screenHeight(context) * 0.19,
+                            child: ListView.builder(
+                              itemCount: cat.length ,
+                              itemBuilder: (context, index) => ClothesCat(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
+                                },
+                                  color: AppConstants.appColor.value.toString(),
+                                  text: cat[index]),
+                              scrollDirection: Axis.horizontal,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox( width: screenWidth(context)*0.8,
-                                child: const SearchTextField(productOnly: true,)),
-                            const Icon(Icons.filter_alt) ,
-                            const Icon(Icons.sort_sharp) ,
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox( width: screenWidth(context)*0.8,
+                                  child: const SearchTextField(productOnly: true,)),
+                              const Icon(Icons.filter_alt) ,
+                              const Icon(Icons.sort_sharp) ,
+                            ],
+                          ),
+                        ) ,
+                        StaggeredGridView.countBuilder(
+                          primary: false,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          itemCount: state.collection.length,
+                          itemBuilder: (BuildContext context, int index) => Center(
+                              child: ProductItem(
+                                model: state.collection[index],
+                                color: AppConstants.appColor.value.toString(),
+                              )),
+                          staggeredTileBuilder: (int index) =>
+                              StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
+                          mainAxisSpacing: 8.0,
                         ),
-                      ) ,
-                      StaggeredGridView.countBuilder(
-                        primary: false,
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
-                        itemCount: state.collection.length,
-                        itemBuilder: (BuildContext context, int index) => Center(
-                            child: ProductItem(
-                              model: state.collection[index],
-                              color: AppConstants.appColor.value.toString(),
-                            )),
-                        staggeredTileBuilder: (int index) =>
-                            StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                        mainAxisSpacing: 8.0,
-                      ),
-                    ],
-                  ),
-                ) ;}
-                else{
-                  return Center(child:  Text ("No Product Here"),) ; 
+                      ],
+                    ),
+                  ) ;}
+                  else{
+                    return Center(child:  Text ("No Product Here"),) ;
+                  }
                 }
-              }
-              else if (state is GenderStateFailure){
-                return const LoadingFailure() ;
-              }else{
-                return const AllProductCatLoading() ;
-              }
+                else if (state is GenderStateFailure){
+                  return const LoadingFailure() ;
+                }else{
+                  return const AllProductCatLoading() ;
+                }
 
 
 
 
-            },
-          ),
+              },
+            ),
+        ),
         );
   }
 }

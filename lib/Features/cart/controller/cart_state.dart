@@ -10,7 +10,8 @@ class CartStateFailure extends CartStates{
 class CartStateSuccess extends CartStates {
   final List<CartModel> cartProducts ;
   final List<String> stores ;
-  CartStateSuccess({required this.cartProducts , required this.stores});
+  final int cartCount ;
+  CartStateSuccess({required this.cartProducts , required this.stores , required this.cartCount});
 
 }
 

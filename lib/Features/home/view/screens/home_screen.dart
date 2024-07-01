@@ -9,16 +9,32 @@ import 'package:shoppizel/Features/Auth/view/screens/profile_screen.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
 import 'package:shoppizel/Features/Favourite/view/screens/favourite_screen.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
+import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/view/screen/cart_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../widgets/home/home_body.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  HomeScreen({super.key});
+
+
+  @override
+  void initState() {
+BlocProvider.of<CartCubit>(context).fetchCartProducts() ;
+super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,17 +262,28 @@ class HomeScreen extends StatelessWidget {
                   "assets/images/Ellipse 1294.svg",
                   fit: BoxFit.cover,
                 ),
-                const CircleAvatar(
-                  backgroundColor: AppConstants.appColor,
-                  radius: 12,
-                  child: Text(
-                    "2",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: AppConstants.fontFamily),
-                  ),
+                BlocBuilder<CartCubit ,CartStates>(
+                  builder: (context , state){
+                    if (state is CartStateSuccess){
+                      return CircleAvatar(
+                        backgroundColor: AppConstants.appColor,
+                        radius: 12,
+                        child: Text(
+                          state.cartCount.toString() , 
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: AppConstants.fontFamily),
+                        ),
+                      ) ;
+                    }else if (state is CartStateLoading){
+                      return const Center(child: CircularProgressIndicator()) ;
+                    } else{
+                      return const SizedBox() ;
+                    }
+    }
+
                 ),
               ],
             ),

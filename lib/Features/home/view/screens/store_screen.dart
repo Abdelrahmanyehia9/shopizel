@@ -31,41 +31,38 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
       builder:  (context , state){
         if (state is StoreStateSuccess){
 
-          return RefreshIndicator(
-            onRefresh: _onRefresh,
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Color(int.parse(widget.storeModel.color)),
-                iconTheme: const IconThemeData(color: Colors.white),
-                title:  Text(
-                  widget.storeModel.name,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                centerTitle: true,
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color(int.parse(widget.storeModel.color)),
+              iconTheme: const IconThemeData(color: Colors.white),
+              title:  Text(
+                widget.storeModel.name,
+                style: const TextStyle(color: Colors.white),
               ),
-              body: ContainedTabBarView(
-                tabBarProperties: TabBarProperties(
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorColor: Color(int.parse(widget.storeModel.color)),
-                    labelColor: Color(int.parse(widget.storeModel.color))
-                ),
-                tabs: [
-                  tab(name: "All"),
-                  tab(name: "Men"),
-                  tab(name: "Women"),
-                  tab(name: "Kids"),
-                ],
-                views:  [
-                  ///all
-                  StoreCollection(collections: state.collection , storeInfo: widget.storeModel),
-                   ///men
-                  StoreCollection(collections:context.read<StoreCubit>().men , storeInfo: widget.storeModel),
-                   ///women
-                  StoreCollection(collections: context.read<StoreCubit>().women, storeInfo: widget.storeModel),
-                   ///kids
-                  StoreCollection(collections:context.read<StoreCubit>().kids , storeInfo: widget.storeModel),
-                ],
+              centerTitle: true,
+            ),
+            body: ContainedTabBarView(
+              tabBarProperties: TabBarProperties(
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorColor: Color(int.parse(widget.storeModel.color)),
+                  labelColor: Color(int.parse(widget.storeModel.color))
               ),
+              tabs: [
+                tab(name: "All"),
+                tab(name: "Men"),
+                tab(name: "Women"),
+                tab(name: "Kids"),
+              ],
+              views:  [
+                ///all
+                StoreCollection(collections: state.collection , storeInfo: widget.storeModel),
+                 ///men
+                StoreCollection(collections:context.read<StoreCubit>().men , storeInfo: widget.storeModel),
+                 ///women
+                StoreCollection(collections: context.read<StoreCubit>().women, storeInfo: widget.storeModel),
+                 ///kids
+                StoreCollection(collections:context.read<StoreCubit>().kids , storeInfo: widget.storeModel),
+              ],
             ),
           ) ;
 
@@ -93,10 +90,6 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
         child: Text(name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       );
-  Future<void> _onRefresh()async{
-    setState(() {
-      BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.name) ;
-    });
-  }
+
 
 }

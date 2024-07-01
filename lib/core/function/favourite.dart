@@ -9,5 +9,7 @@ class Favourite {
     } else {
       await FavouriteRepo().addToFavourite(model: model);
     }
+
+
   }
 }

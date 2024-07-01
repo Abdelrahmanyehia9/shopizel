@@ -20,7 +20,6 @@ class CartRepo {
     }
     return model;
   }
-
   Future<void> addToCart(CartModel model) async {
     var response = await _fireStore.collection(FirebaseConstant.usersCollection)
         .doc(_auth.currentUser!.uid).collection(FirebaseConstant.cartCollection)
@@ -39,7 +38,6 @@ class CartRepo {
           .update({"quantity":quantity+1}) ;
     }
   }
-
   List<String> getStoresOfProducts(List<CartModel> model) {
     List<String> stores = [];
     for (CartModel store in model) {
@@ -48,7 +46,6 @@ class CartRepo {
 
     return stores;
   }
-
   Future<void> removeFromCart(CartModel model) async {
     var response = await _fireStore.collection(FirebaseConstant.usersCollection)
         .doc(_auth.currentUser?.uid).collection(FirebaseConstant.cartCollection)
@@ -65,5 +62,28 @@ class CartRepo {
       }
     }
   }
+int getCartCount(List<CartModel> carts){
+    int count  = 0 ;
+    for(int i =0 ; i<carts.length ; i++){
 
+      count+=carts[i].quantity ;
+
+
+
+    }
+
+    return count ;
+
+
+
+}
+Future<void>getCartEmpty()async{
+
+  final CollectionReference reference =   _fireStore.collection(FirebaseConstant.usersCollection).doc(_auth.currentUser!.uid).collection(FirebaseConstant.cartCollection) ;
+  final QuerySnapshot snapshot = await reference.get();
+
+  for (DocumentSnapshot doc in snapshot.docs) {
+    await doc.reference.delete();
+  }
+}
 }

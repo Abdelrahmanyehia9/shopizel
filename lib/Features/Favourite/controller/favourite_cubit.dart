@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_state.dart';
 import 'package:shoppizel/Features/Favourite/data/repository/favourite_repository.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
+
+import '../../../core/function/favourite.dart';
 
 class FavouriteCubit extends Cubit<FavouriteStates>{
 
@@ -29,6 +32,11 @@ emit(GetFavouriteStateSuccess(favourites: favourites)) ;
       }
 
     }
+}
+Future<void>addOrRemoveFromFavourite(bool isFav  , ProductModel model )async{
+
+  Favourite.favHandler(isFav, model) ;
+ await fetchFavourite() ;
 }
 
 

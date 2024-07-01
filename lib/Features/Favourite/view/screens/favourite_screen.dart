@@ -42,14 +42,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                     SizedBox(width: screenWidth(context) *.6,
                         height: screenHeight(context)*.35,
                         child: Image.asset("assets/images/Women Power - Mobile.png" , fit: BoxFit.cover,)) ,
-                      Text("You Don't Have Any product In Favourite" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 14),),
-                      SizedBox(height: 12,) ,
+                      const Text("You Don't Have Any product In Favourite" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 14),),
+                      const SizedBox(height: 12,) ,
                       InkWell(
                         onTap: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen())) ;
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen())) ;
                         },
                         child: Container(width: screenWidth(context)*.6 , height: 60  ,
-                        child: Center(child: Text("Browse Products" , style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                        child: const Center(child: Text("Browse Products" , style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                         decoration: BoxDecoration(
                           color: AppConstants.appColor ,
 
@@ -84,7 +84,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   state.favourites.removeAt(index) ;
                                 });
                               },
-                              backgroundColor: Color(0xFFFE4A49),
+                              backgroundColor: const Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
                               label: 'Delete',

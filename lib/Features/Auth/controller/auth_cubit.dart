@@ -49,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
     try{
 
       final UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      await credential.user!.updateDisplayName(name) ;
+      await credential.user!.updateDisplayName(name.split(" ").first) ;
 
 
       if(credential.user != null){

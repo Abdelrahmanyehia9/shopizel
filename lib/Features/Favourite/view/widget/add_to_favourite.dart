@@ -15,6 +15,8 @@ class AddToFavourite extends StatefulWidget {
 }
 
 class _AddToFavouriteState extends State<AddToFavourite> {
+
+
   @override
   Widget build(BuildContext context) {
     return    Container(
@@ -30,8 +32,9 @@ class _AddToFavouriteState extends State<AddToFavourite> {
           child: InkWell(
 
               onTap: ()async{
-        await   Favourite.favHandler(widget.isFave,widget.model) ;
-                setState(() {
+      await  BlocProvider.of<FavouriteCubit>(context).addOrRemoveFromFavourite(widget.isFave, widget.model);
+
+        setState(() {
 
                   widget.isFave = !(widget.isFave) ;
 

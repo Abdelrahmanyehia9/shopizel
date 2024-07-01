@@ -14,6 +14,8 @@ import 'Features/cart/controller/cart_cubit.dart';
 import 'Features/home/controllers/store_cubit.dart';
 import 'Features/home/data/repository/store_repo.dart';
 import 'Features/home/view/screens/home_screen.dart';
+import 'Features/location/view/screen/get_access_location.dart';
+import 'Features/location/view/screen/location_mark.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
 
@@ -38,11 +40,11 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context) => StoreCubit(StoreRepo())),
         BlocProvider(create: (context) => GenderCubit(HomeRepo())),
         BlocProvider(create: (context) => FavouriteCubit(FavouriteRepo())),
-        BlocProvider(create: (context) => CartCubit(CartRepo())..fetchCartProducts()),
+        BlocProvider(create: (context) => CartCubit(CartRepo())),
 
       ],
       child: MaterialApp(
-        home: HomeScreen(),
+        home: GetAccessLocation(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           highlightColor: Colors.transparent,

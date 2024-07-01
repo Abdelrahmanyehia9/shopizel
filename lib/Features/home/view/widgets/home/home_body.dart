@@ -1,4 +1,5 @@
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
@@ -35,7 +36,7 @@ class HomeBody extends StatelessWidget {
               ),
 
               ///greeting
-              greetingText(),
+              greetingText(name: FirebaseAuth.instance.currentUser?.displayName),
               const SearchTextField(),
 
               ///search product
