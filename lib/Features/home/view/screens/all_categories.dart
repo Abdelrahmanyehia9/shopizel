@@ -18,10 +18,10 @@ class AllCategories extends StatelessWidget {
             onTap: (){
           Navigator.pop(context) ;
         },
-            child: const Icon(Icons.close , color: AppConstants.appColor ,)),
+            child: const Icon(Icons.close  ,)),
         title: const Text(
           "Categories" ,
-          style: TextStyle(fontWeight: FontWeight.bold , color: AppConstants.appColor),
+          style: TextStyle(fontWeight: FontWeight.bold ),
         ),
 
       ),

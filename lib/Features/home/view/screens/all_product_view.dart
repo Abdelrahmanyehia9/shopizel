@@ -10,11 +10,12 @@ import '../../../../core/utils/screen_dimentions.dart';
 import '../../data/repository/store_repo.dart';
 
 class AllProductView extends StatelessWidget {
+  final TextEditingController _searchController = TextEditingController() ;
   final List<ProductModel> collection;
  final List<String> categories ;
   final String color;
 
-  const AllProductView(
+   AllProductView(
       {super.key, required this.color, required this.collection , required this.categories});
 
   @override
@@ -38,7 +39,7 @@ class AllProductView extends StatelessWidget {
                     itemBuilder: (context, index) => ClothesCat(
                       onTap: (){
 
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(collection, categories[index]), color: color) ) );
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(collection, categories[index]), color: color) ) );
 
                       },
                         color: color,
@@ -53,7 +54,7 @@ class AllProductView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SizedBox( width: screenWidth(context)*0.8,
-                        child: const SearchTextField(productOnly: true,)),
+                        child:  SearchTextField(productOnly: true, controller: _searchController ,)),
                     Icon(Icons.filter_alt) ,
                     Icon(Icons.sort_sharp) ,
                   ],

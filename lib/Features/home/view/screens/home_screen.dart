@@ -214,7 +214,7 @@ super.initState();
     ],
     ),
     ),
-    body: const HomeBody());
+    body:  HomeBody());
   }
 
   /// appbar of home

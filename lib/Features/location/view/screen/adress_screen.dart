@@ -14,9 +14,11 @@ import '../widget/type_of_location.dart';
 
 class AddressScreen extends StatefulWidget {
   final LatLng currentPos;
-  final String? neighbourhood ;
+  final LocationModel? model ;
+  final String? tittle ;
 
-  const AddressScreen({super.key, required this.currentPos , this.neighbourhood});
+
+  const AddressScreen({super.key, required this.currentPos , this.model , this.tittle });
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
@@ -24,7 +26,6 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
   String selectedLocation = "Building";
-  final TextEditingController _neighbourhood = TextEditingController();
   final TextEditingController _tiitle = TextEditingController();
   final TextEditingController _building = TextEditingController();
   final TextEditingController _floor = TextEditingController();
@@ -35,7 +36,15 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   void initState() {
-_neighbourhood.text = widget.neighbourhood??"" ;
+_tiitle.text = widget.tittle??"" ;
+_building.text = widget.model?.building??"" ;
+_floor.text = widget.model?.floor.toString()??"" ;
+_name.text = widget.model?.name??"" ;
+_flatno.text = widget.model?.flatNumber??"" ;
+_specialMark.text = widget.model?.specialMark??"" ;
+
+
+
 super.initState();
   }
 
@@ -90,10 +99,7 @@ super.initState();
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    fieldOfAddress(
-                        label: "Neighbourhood",
-                        controller: _neighbourhood,
-                        valid: true),
+
                     fieldOfAddress(
                         label: "tittle",
                         controller: _tiitle,
@@ -138,6 +144,7 @@ super.initState();
                     ),
                     fieldOfAddress(
                         label: "Name Of Address",
+                        enabled: widget.model?.name == null ?true:false,
                         controller: _name,
                         hint: "ex. Villa "),
                     BlocBuilder<LocationCubit, LocationStates>(
@@ -164,7 +171,9 @@ super.initState();
                                         lat: widget.currentPos.latitude.toString(),
                                         long: widget.currentPos.longitude.toString(),
                                         name: _name.text,
-                                        type: selectedLocation) ;
+                                        type: selectedLocation ,
+                                        dateOfAdded: DateTime.now().toString(),
+                                        isSelected: true) ;
 
                                     BlocProvider.of<LocationCubit>(context)
                                         .addLocation(model) ;
@@ -186,6 +195,7 @@ super.initState();
 
   Widget fieldOfAddress({required String label,
     String? hint,
+    bool?enabled ,
     required TextEditingController controller,
     bool? valid,
 
@@ -220,6 +230,7 @@ super.initState();
                 }
               }
                   : null,
+              enabled: enabled??true,
               decoration: InputDecoration(
                   filled: true,
                   hintText: hint ?? "",

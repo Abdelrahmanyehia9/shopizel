@@ -112,7 +112,7 @@ class _LocationMarkState extends State<LocationMap> {
                   child: Text(locName , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                 ) ,
                 PrimaryButton(label: "I live here" , width: screenWidth(context)*.9,onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> AddressScreen(currentPos: currentPos , neighbourhood: locName,)   )) ;
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> AddressScreen(currentPos: currentPos , tittle: locName,)   )) ;
                 },)
 
 

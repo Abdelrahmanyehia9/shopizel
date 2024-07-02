@@ -60,7 +60,7 @@ class _StoreCollectionState extends State<StoreCollection> {
                   itemCount: categories.length > 7?(categories.length/2).round():categories.length,
                   itemBuilder: (context, index) => InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(widget.collections, categories[index]), color: widget.storeInfo.color) ) );
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(widget.collections, categories[index]), color: widget.storeInfo.color) ) );
 
                     },
                     child: ClothesCat(

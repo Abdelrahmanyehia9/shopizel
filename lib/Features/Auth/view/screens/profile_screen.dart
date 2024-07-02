@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -110,8 +112,11 @@ class ProfileScreen extends StatelessWidget {
         
             ///address
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
+              padding:  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
               child: ListTile(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>const SavedAddresses()));
+                },
                 leading: CircleAvatar(
                     backgroundColor: AppConstants.appColor.withOpacity(0.1),
                     child: const Icon(

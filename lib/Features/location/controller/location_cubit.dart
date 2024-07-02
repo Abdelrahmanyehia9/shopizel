@@ -27,6 +27,26 @@ class LocationCubit extends Cubit<LocationStates>{
 
   }
 
+  Future<void>getAllLocations()async{
+
+    emit(GetLocationsStateLoading()) ;
+    try{
+
+     List<LocationModel> locations =  await repo.getAllLocations() ;
+     LocationModel? selected = repo.getSelectedLocation(locations) ;
+      emit(GetLocationsStateSuccess(locations: locations, selectedLocation: selected)) ;
+
+    }catch(e){
+      emit(GetLocationsStateFailure(error: "Oops There was an error Please Try again Later")) ;
+      print(e.toString()) ;
+    }
+
+
+
+
+
+  }
+
 
 
 }

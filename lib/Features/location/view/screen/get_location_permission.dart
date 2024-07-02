@@ -1,23 +1,21 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shoppizel/Features/location/data/location_repo.dart';
-import 'package:shoppizel/Features/location/view/screen/adress_screen.dart';
 import 'package:shoppizel/Features/location/view/widget/location_map.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 import '../../../../core/function/permission_handlers.dart';
 import 'package:latlong2/latlong.dart'  ;
 
-class GetAccessLocation extends StatefulWidget {
-  const GetAccessLocation({super.key});
+class GetLocationPermission extends StatefulWidget {
+  const GetLocationPermission({super.key});
 
   @override
-  State<GetAccessLocation> createState() => _GetAccessLocationState();
+  State<GetLocationPermission> createState() => _GetLocationPermissionState();
 }
 
-class _GetAccessLocationState extends State<GetAccessLocation> {
+class _GetLocationPermissionState extends State<GetLocationPermission> {
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,10 @@ class _GetAccessLocationState extends State<GetAccessLocation> {
                     Position position = await LocationRepo.determineDevicePosition();
                     LatLng coord = LatLng(position.latitude , position.longitude);
                     String stName = await repo.getLocationName(lat: coord.latitude.toString(), long: coord.longitude.toString()) ;
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>LocationMap(position: coord , stName: stName,))) ;
+                    setState(() {
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>LocationMap(position: coord , stName: stName,))) ;
+
+                    });
 
                   } else {
 

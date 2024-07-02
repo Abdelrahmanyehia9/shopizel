@@ -6,6 +6,7 @@ import 'package:shoppizel/Features/home/controllers/gender_state.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
 import 'package:shoppizel/Features/home/view/screens/product_spacific_cat.dart';
+import 'package:shoppizel/Features/home/view/widgets/store/product_gallery.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
@@ -24,6 +25,7 @@ final String gender ;
 }
 
 class _AllProductCatState extends State<AllProductCat> {
+final  TextEditingController _searchController = TextEditingController() ;
 
 
   @override
@@ -64,7 +66,7 @@ super.initState();
                               itemCount: cat.length ,
                               itemBuilder: (context, index) => ClothesCat(
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsSpecificCat(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
                                 },
                                   color: AppConstants.appColor.value.toString(),
                                   text: cat[index]),
@@ -72,32 +74,7 @@ super.initState();
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox( width: screenWidth(context)*0.8,
-                                  child: const SearchTextField(productOnly: true,)),
-                              const Icon(Icons.filter_alt) ,
-                              const Icon(Icons.sort_sharp) ,
-                            ],
-                          ),
-                        ) ,
-                        StaggeredGridView.countBuilder(
-                          primary: false,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          itemCount: state.collection.length,
-                          itemBuilder: (BuildContext context, int index) => Center(
-                              child: ProductItem(
-                                model: state.collection[index],
-                                color: AppConstants.appColor.value.toString(),
-                              )),
-                          staggeredTileBuilder: (int index) =>
-                              StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                          mainAxisSpacing: 8.0,
-                        ),
+                        ProductGallery(color: AppConstants.appColor.value.toString(), collection: state.collection)
                       ],
                     ),
                   ) ;}

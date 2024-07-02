@@ -9,6 +9,8 @@ class LocationModel {
   final String long;
   final String name ;
   final String type ;
+    bool isSelected ;
+    final String? dateOfAdded ;
 
   LocationModel({required this.tittle,
     required this.building,
@@ -18,7 +20,9 @@ class LocationModel {
     required this.lat,
     required this.long
   ,required this.name ,
-  required this.type});
+  required this.type ,
+  required this.isSelected ,
+   this.dateOfAdded});
 
 
   factory LocationModel.fromJson(Map<String, dynamic> json){
@@ -31,7 +35,8 @@ class LocationModel {
         lat: json["lat"],
         long: json["long"] ,
     name :json['name'] ,
-    type:json["type"]) ;
+    type:json["type"] ,
+    isSelected: json["isSelected"]) ;
   }
   Map<String , dynamic>toJson()=>{
     "building":building ,
@@ -41,7 +46,10 @@ class LocationModel {
     "lat": lat ,
     "long":long ,
     "name":name ,
-    "type":type
+    "type":type ,
+    "isSelected":isSelected ,
+    "tittle":tittle ,
+    "dateOfAdded" : dateOfAdded
 
 
 

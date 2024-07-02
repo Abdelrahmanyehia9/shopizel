@@ -14,11 +14,13 @@ import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/location/data/location_repo.dart';
+import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
+
 import 'Features/cart/controller/cart_cubit.dart';
 import 'Features/home/controllers/store_cubit.dart';
 import 'Features/home/data/repository/store_repo.dart';
 import 'Features/home/view/screens/home_screen.dart';
-import 'Features/location/view/screen/get_access_location_permission.dart';
+import 'Features/location/view/screen/get_location_permission.dart';
 import 'Features/location/view/screen/adress_screen.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
@@ -57,7 +59,7 @@ class Tship extends StatelessWidget {
           splashColor: Colors.transparent,
           hoverColor: Colors.transparent,
           fontFamily: AppConstants.fontFamily,
-          appBarTheme: AppBarTheme(color: AppConstants.appColor , foregroundColor: Colors.white , centerTitle: true) ,
+          appBarTheme: const AppBarTheme(color: AppConstants.appColor , foregroundColor: Colors.white , centerTitle: true) ,
           scaffoldBackgroundColor: const Color(0xffF3F3F3),
         ),
       ),
