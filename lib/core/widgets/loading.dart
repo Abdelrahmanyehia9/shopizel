@@ -26,7 +26,17 @@ class HomeLoadingShimmer extends StatelessWidget {
 
           ///search product
           /// offer of the week in database
-          const SeeAllLoading(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Shimmer.fromColors(baseColor: Colors.grey.shade300, highlightColor: Colors.grey.shade100, child: Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(12) ,
+              color: Colors.white
+              ),
+              width: screenWidth(context) ,
+              height: screenHeight(context)*0.25,
+            )),
+          ) ,
+          SizedBox(height: 11,) ,
 
           const CategoryListLoading(),
 

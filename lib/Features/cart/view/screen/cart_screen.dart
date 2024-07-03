@@ -192,8 +192,9 @@ class _CartScreenState extends State<CartScreen> {
   Widget storeProducts(
           {required String storeName,
           required List<CartModel> items,
-          required BuildContext context}) =>
-      Column(
+          required BuildContext context}) {
+    CartRepo repo = CartRepo() ;
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -217,8 +218,8 @@ class _CartScreenState extends State<CartScreen> {
                   motion: const ScrollMotion(),
                   dismissible: DismissiblePane(
                     // Handle onDismissed action when swiped
-                    onDismissed: () async {
-                      await CartRepo().removeFromCart(items[index]).whenComplete((){
+                    onDismissed: ()  {
+                       repo.removeFromCart(items[index]).whenComplete((){
                         BlocProvider.of<CartCubit>(context).fetchCartProducts();
 
                       });
@@ -232,8 +233,8 @@ class _CartScreenState extends State<CartScreen> {
                     // Swipe action button
                     SlidableAction(
                       spacing: 0,
-                      onPressed: (val) async {
-                        await CartRepo().removeFromCart(items[index]).whenComplete((){
+                      onPressed: (val)  async{
+                        await repo.removeFromCart(items[index]).whenComplete((){
                           BlocProvider.of<CartCubit>(context).fetchCartProducts();
 
                         });
@@ -249,9 +250,19 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ],
                 ),
-                child: CartItem(model: items[index]),
+                child: CartItem(model: items[index] , removeItemFromCart: ()async{
+                 await  repo.removeFromCart(items[index]).whenComplete((){
+                    BlocProvider.of<CartCubit>(context).fetchCartProducts();
+
+                  });
+
+                  setState(() {
+                    items.removeAt(index);
+                  });
+                },),
               )
           )
         ],
       );
+  }
 }

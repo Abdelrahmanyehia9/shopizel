@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoppizel/core/utils/app_constants.dart';
-
 import '../../data/model/category_model.dart';
-import '../widgets/home/category_list.dart';
+import '../widgets/home/category_item.dart';
 
 class AllCategories extends StatelessWidget {
   final List<CategoryModel> categories ;

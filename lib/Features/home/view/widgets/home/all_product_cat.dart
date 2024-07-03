@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shoppizel/Features/home/controllers/gender_Cubit.dart';
 import 'package:shoppizel/Features/home/controllers/gender_state.dart';
+import 'package:shoppizel/Features/home/controllers/store_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
 import 'package:shoppizel/Features/home/view/screens/product_spacific_cat.dart';
@@ -66,7 +67,7 @@ super.initState();
                               itemCount: cat.length ,
                               itemBuilder: (context, index) => ClothesCat(
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: BlocProvider.of<StoreCubit>(context).repo.getTypeOfClothes(state.collection, cat[index]), color: AppConstants.appColor.value.toString()) ) );
                                 },
                                   color: AppConstants.appColor.value.toString(),
                                   text: cat[index]),
@@ -79,7 +80,7 @@ super.initState();
                     ),
                   ) ;}
                   else{
-                    return Center(child:  Text ("No Product Here"),) ;
+                    return const Center(child:  Text ("No Product Here"),) ;
                   }
                 }
                 else if (state is GenderStateFailure){

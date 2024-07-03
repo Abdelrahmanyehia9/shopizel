@@ -1,29 +1,18 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
-import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
-import 'package:shoppizel/Features/home/view/widgets/store/list_of_sizes.dart';
-import 'package:shoppizel/core/function/favourite.dart';
-import 'package:shoppizel/core/function/snackbars.dart';
-import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-
-import '../../../../cart/view/widgets/add_to_cart_btn.dart';
 import 'choose_size_and_color.dart';
 
 class ProductDetails extends StatelessWidget {
-  ProductDetails(
+  const ProductDetails(
       {super.key,
       required this.model,
       required this.color,
       required this.isFav});
 
   final String color;
-  bool isFav;
+ final bool isFav;
   final ProductModel model;
 
   @override
@@ -80,14 +69,14 @@ class ProductDetails extends StatelessWidget {
                   children: [
                     Text.rich(
                       TextSpan(
-                          text: model!.sale != "0"
+                          text: model.sale != "0"
                               ? (double.parse(model.price!) *
                                       (0.99999 -
                                           double.parse(model.sale!) / 100.0))
                                   .toStringAsFixed(2)
                                   .split(".")
                                   .first
-                              : "${model!.price!} ",
+                              : "${model.price!} ",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -96,13 +85,13 @@ class ProductDetails extends StatelessWidget {
                           children: [
                             TextSpan(
                                 text:
-                                    ".${(double.parse(model!.price!) * (0.99999 - double.parse(model!.sale!) / 100.0)).toStringAsFixed(2).split(".").last}",
+                                    ".${(double.parse(model.price!) * (0.99999 - double.parse(model.sale!) / 100.0)).toStringAsFixed(2).split(".").last}",
                                 style: const TextStyle(fontSize: 15)),
                             const TextSpan(
                                 text: " EGP ", style: TextStyle(fontSize: 14)),
                             TextSpan(
-                              text: model!.sale != "0"
-                                  ? "${model?.price}EGP "
+                              text: model.sale != "0"
+                                  ? "${model.price}EGP "
                                   : "",
                               style: TextStyle(
                                   color: Colors.grey.shade400,

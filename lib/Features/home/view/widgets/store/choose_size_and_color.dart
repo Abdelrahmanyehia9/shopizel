@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/list_of_sizes.dart';
-import '../../../../../core/function/favourite.dart';
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
 import '../../../../Favourite/controller/favourite_cubit.dart';
 import '../../../../cart/view/widgets/add_to_cart_btn.dart';
 import '../../../data/model/product_model.dart';
+import 'list_of_colors.dart';
 
 class ChoseSizeAndColor extends StatefulWidget {
   ChoseSizeAndColor({super.key, required this.color, required this.model});

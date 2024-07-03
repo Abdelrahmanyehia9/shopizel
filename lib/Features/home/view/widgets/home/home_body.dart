@@ -20,7 +20,6 @@ import '../../../../../core/widgets/loading.dart';
 import '../../../data/model/store_model.dart';
 
 class HomeBody extends StatelessWidget {
-  final TextEditingController _searchController = TextEditingController();
 
   /// offer of the week
   HomeBody({super.key});
@@ -65,30 +64,15 @@ class HomeBody extends StatelessWidget {
 
               ///search product
               /// offer of the week in database
-              InkWell(
-                onDoubleTap: () {
-                  StoreModel? model = Searching.searchOnStore(
-                      search: _searchController.text.trim(),
-                      stores: state.stores);
-                  if (model != null) {
-                    print("*************************************" +
-                        model.name +
-                        "**********************************************************");
-                  } else {
-                    print(
-                        "************************************null************************************");
-                  }
+              SeeAll(
+                tittle: "All Category",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              AllCategories(categories: state.categories)));
                 },
-                child: SeeAll(
-                  tittle: "All Category",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                AllCategories(categories: state.categories)));
-                  },
-                ),
               ),
 
               /// category List (men -women - jewellery - kids)
@@ -104,13 +88,11 @@ class HomeBody extends StatelessWidget {
                           builder: (_) => AllStores(stores: state.stores)));
                 },
               ),
-
               StoresList(stores: state.stores)
             ],
           ),
         );
       } else if (state is HomeStateFailure) {
-        print(state.errorMessage);
         return const LoadingFailure();
       } else {
         return const HomeLoadingShimmer();

@@ -7,8 +7,8 @@ import '../data/repository/store_repo.dart';
 
 class StoreCubit extends Cubit<StoreState>{
 
-final StoreRepo _repo ;
-  StoreCubit(this._repo):super(StoreStateInitial()) ;
+final StoreRepo repo ;
+  StoreCubit(this.repo):super(StoreStateInitial()) ;
 List<ProductModel>men   =[]  ;
 List<ProductModel>women   =[]  ;
 List<ProductModel>kids   =[]  ;
@@ -19,10 +19,10 @@ Future<void> getCollection ({required String storeName ,}) async{
 
   try{
 
-   List<ProductModel> coll  = await _repo.getStoreCollection(storeName: storeName) ;
-   men = _repo.getGenderClothes(FirebaseConstant.menClothes, coll) ;
-   women = _repo.getGenderClothes(FirebaseConstant.womenClothes, coll) ;
-   kids = _repo.getGenderClothes(FirebaseConstant.kidsClothes, coll) ;
+   List<ProductModel> coll  = await repo.getStoreCollection(storeName: storeName) ;
+   men = repo.getGenderClothes(FirebaseConstant.menClothes, coll) ;
+   women = repo.getGenderClothes(FirebaseConstant.womenClothes, coll) ;
+   kids = repo.getGenderClothes(FirebaseConstant.kidsClothes, coll) ;
    emit(StoreStateSuccess(coll)) ;
 
   }catch(e){

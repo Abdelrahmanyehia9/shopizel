@@ -2,10 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/constants.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
-
 import '../../../../../core/utils/screen_dimentions.dart';
-import '../../../data/model/product_model.dart';
-import '../../screens/product_spacific_cat.dart';
+
 
 class ClothesCat extends StatelessWidget {
   final String color ;

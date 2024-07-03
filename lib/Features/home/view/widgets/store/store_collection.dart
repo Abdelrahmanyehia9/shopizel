@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/store_cubit.dart';
@@ -7,7 +5,6 @@ import 'package:shoppizel/Features/home/data/model/store_model.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
 import 'package:shoppizel/Features/home/view/screens/all_product_view.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/clothes_cat.dart';
-import 'package:shoppizel/Features/home/view/widgets/store/constants.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/product_item.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/see_all.dart';
@@ -15,30 +12,25 @@ import '../../../../../core/widgets/offer_card.dart';
 import '../../../data/model/product_model.dart';
 import '../../screens/product_spacific_cat.dart';
 
-class StoreCollection extends StatefulWidget {
+class StoreCollection extends StatelessWidget {
   final List<ProductModel> collections;
   final StoreModel storeInfo;
 
 
-  StoreCollection({
+  const StoreCollection({
     super.key,
     required this.collections,
     required this.storeInfo,
   });
 
-  @override
-  State<StoreCollection> createState() => _StoreCollectionState();
-}
-
-class _StoreCollectionState extends State<StoreCollection> {
-  StoreRepo repo = StoreRepo();
 
   @override
   Widget build(BuildContext context) {
-    List<String> categories = repo.getGenderClothCategories(widget.collections).toSet().toList() ;
+    StoreRepo repo = BlocProvider.of<StoreCubit>(context).repo ;
+    List<String> categories = repo.getGenderClothCategories(collections).toSet().toList() ;
     return RefreshIndicator(
       onRefresh: ()async{
-        BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeInfo.name) ;
+        BlocProvider.of<StoreCubit>(context).getCollection(storeName: storeInfo.name) ;
       },
       child: SingleChildScrollView(
         child: RefreshIndicator(
@@ -60,12 +52,12 @@ class _StoreCollectionState extends State<StoreCollection> {
                   itemCount: categories.length > 7?(categories.length/2).round():categories.length,
                   itemBuilder: (context, index) => InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(widget.collections, categories[index]), color: widget.storeInfo.color) ) );
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(collections, categories[index]), color: storeInfo.color) ) );
 
                     },
                     child: ClothesCat(
 
-                        color: widget.storeInfo.color,
+                        color: storeInfo.color,
                         text: categories[index]),
                   ),
                   scrollDirection: Axis.horizontal,
@@ -81,25 +73,25 @@ class _StoreCollectionState extends State<StoreCollection> {
                       MaterialPageRoute(
                           builder: (_) => AllProductView(
                               categories:
-                                  repo.getGenderClothCategories(widget.collections),
-                              color: widget.storeInfo.color,
-                              collection: repo.getPopularClothes(widget.collections))));
+                                  repo.getGenderClothCategories(collections),
+                              color: storeInfo.color,
+                              collection: repo.getPopularClothes(collections))));
                 },
               ),
               SizedBox(
                 height: screenHeight(context) * 0.38,
                 child: ListView.builder(
-                  itemCount: widget.collections.length>  7 ?(repo.getPopularClothes(widget.collections).length/3).round(): widget.collections.length,
+                  itemCount: collections.length>  7 ?(repo.getPopularClothes(collections).length/3).round(): collections.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProductItem(
-                    color: widget.storeInfo.color,
-                    model: repo.getPopularClothes(widget.collections)[index],
+                    color: storeInfo.color,
+                    model: repo.getPopularClothes(collections)[index],
                   ),
                 ),
               ),
 
               ///special offer
-              widget.storeInfo.specialOffer != null ?offerCard2(offer: widget.storeInfo.specialOffer??"Big Sale See our stores"):const SizedBox(),
+              storeInfo.specialOffer != null ?offerCard2(offer: storeInfo.specialOffer??"Big Sale See our stores"):const SizedBox(),
 
               ///sale
               SeeAll(
@@ -109,9 +101,9 @@ class _StoreCollectionState extends State<StoreCollection> {
                     context,
                     MaterialPageRoute(
                       builder: (_) => AllProductView(
-                        categories: repo.getGenderClothCategories(widget.collections),
-                        color: widget.storeInfo.color,
-                        collection: repo.getBigSaleProducts(widget.collections)
+                        categories: repo.getGenderClothCategories(collections),
+                        color: storeInfo.color,
+                        collection: repo.getBigSaleProducts(collections)
                       ),
                     ),
                   );
@@ -120,11 +112,11 @@ class _StoreCollectionState extends State<StoreCollection> {
               SizedBox(
                 height: screenHeight(context) * 0.38,
                 child: ListView.builder(
-                  itemCount:  widget.collections.length>7?(repo.getBigSaleProducts(widget.collections).length/3).round():widget.collections.length,
+                  itemCount:  collections.length>7?(repo.getBigSaleProducts(collections).length/3).round():collections.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProductItem(
-                    color: widget.storeInfo.color,
-                    model: repo.getBigSaleProducts(widget.collections)[index],
+                    color: storeInfo.color,
+                    model: repo.getBigSaleProducts(collections)[index],
                   ),
                 ),
               ),
@@ -137,9 +129,9 @@ class _StoreCollectionState extends State<StoreCollection> {
                     context,
                     MaterialPageRoute(
                       builder: (_) => AllProductView(
-                        categories: repo.getGenderClothCategories(widget.collections),
-                        color: widget.storeInfo.color,
-                        collection: repo.getNewestClothes(widget.collections),
+                        categories: repo.getGenderClothCategories(collections),
+                        color: storeInfo.color,
+                        collection: repo.getNewestClothes(collections),
                       ),
                     ),
                   );
@@ -148,11 +140,11 @@ class _StoreCollectionState extends State<StoreCollection> {
               SizedBox(
                 height: screenHeight(context) * 0.38,
                 child: ListView.builder(
-                  itemCount: widget.collections.length>7?(repo.getNewestClothes(widget.collections).length/3).round():widget.collections.length,
+                  itemCount: collections.length>7?(repo.getNewestClothes(collections).length/3).round():collections.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProductItem(
-                    color: widget.storeInfo.color,
-                    model: repo.getNewestClothes(widget.collections)[index],
+                    color: storeInfo.color,
+                    model: repo.getNewestClothes(collections)[index],
                   ),
                 ),
               ),
@@ -165,19 +157,19 @@ class _StoreCollectionState extends State<StoreCollection> {
                       MaterialPageRoute(
                           builder: (_) => AllProductView(
                               categories:
-                                  repo.getGenderClothCategories(widget.collections),
-                              color: widget.storeInfo.color,
-                              collection: repo.topRatedProducts(widget.collections))));
+                                  repo.getGenderClothCategories(collections),
+                              color: storeInfo.color,
+                              collection: repo.topRatedProducts(collections))));
                 },
               ),
               SizedBox(
                 height: screenHeight(context) * 0.38,
                 child: ListView.builder(
-                  itemCount: widget.collections.length>7? (repo.topRatedProducts(widget.collections).length/3).round():widget.collections.length,
+                  itemCount: collections.length>7? (repo.topRatedProducts(collections).length/3).round():collections.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProductItem(
-                    color: widget.storeInfo.color,
-                    model: repo.topRatedProducts(widget.collections)[index],
+                    color: storeInfo.color,
+                    model: repo.topRatedProducts(collections)[index],
                   ),
                 ),
               ),

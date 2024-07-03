@@ -4,7 +4,7 @@ class CartModel {
 final String name;
   final String size;
   final String color;
-  final int quantity;
+   int quantity;
   final String madeBy;
   final String price;
   final String sale;

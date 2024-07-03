@@ -15,6 +15,8 @@ import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/location/data/location_repo.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
+import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
+import 'package:shoppizel/Features/profile/data/profile_repo.dart';
 
 import 'Features/cart/controller/cart_cubit.dart';
 import 'Features/home/controllers/store_cubit.dart';
@@ -48,6 +50,8 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context) => FavouriteCubit(FavouriteRepo())),
         BlocProvider(create: (context) => CartCubit(CartRepo())),
         BlocProvider(create: (context) => LocationCubit(LocationRepo())),
+        BlocProvider(create: (context) => ProfileCubit(ProfileRepo())),
+
 
 
       ],

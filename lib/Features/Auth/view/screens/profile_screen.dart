@@ -3,8 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
+import '../../data/model/user_model.dart';
+
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final UserModel profileInfo ;
+  const ProfileScreen({super.key, required this.profileInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +37,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       fit: BoxFit.cover)),
               padding: const EdgeInsets.all(12),
-              child: const Column(
+              child:  Column(
                 children: [
-                  Center(
+                  const Center(
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
@@ -64,23 +67,23 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 18,
                   ),
                   Text(
-                    "Name",
-                    style: TextStyle(
+                    profileInfo.username??"Guest",
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                   Text(
-                    "+20150164466",
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    profileInfo.number??"",
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   Text(
-                    "email@yahoo.com",
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    profileInfo.email,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
