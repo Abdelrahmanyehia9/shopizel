@@ -32,7 +32,9 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
         if (state is StoreStateSuccess){
 
           return Scaffold(
+
             appBar: AppBar(
+
               backgroundColor: Color(int.parse(widget.storeModel.color)),
               iconTheme: const IconThemeData(color: Colors.white),
               title:  Text(
@@ -92,4 +94,39 @@ BlocProvider.of<StoreCubit>(context).getCollection(storeName: widget.storeModel.
       );
 
 
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: false, // Set to true if you want the AppBar to remain visible at the top
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text('SliverAppBar'),
+
+
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return ListTile(
+                  leading: Icon(Icons.star),
+                  title: Text('List Item $index'),
+                );
+              },
+              childCount: 50, // Adjust the number of items
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

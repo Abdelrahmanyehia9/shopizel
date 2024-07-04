@@ -33,149 +33,145 @@ class StoreCollection extends StatelessWidget {
         BlocProvider.of<StoreCubit>(context).getCollection(storeName: storeInfo.name) ;
       },
       child: SingleChildScrollView(
-        child: RefreshIndicator(
-          onRefresh: ()async{
 
-          },
-          child: Column(
-            children: [
+        child: Column(
+          children: [
 
-              const SizedBox(
-                height: 12,
-              ),
+            const SizedBox(
+              height: 12,
+            ),
 
-              ///categories
-              const SeeAll(tittle: "Categories"),
-              SizedBox(
-                height: screenHeight(context) * 0.19,
-                child: ListView.builder(
-                  itemCount: categories.length > 7?(categories.length/2).round():categories.length,
-                  itemBuilder: (context, index) => InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(collections, categories[index]), color: storeInfo.color) ) );
+            ///categories
+            const SeeAll(tittle: "Categories"),
+            SizedBox(
+              height: screenHeight(context) * 0.19,
+              child: ListView.builder(
+                itemCount: categories.length > 7?(categories.length/2).round():categories.length,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: repo.getTypeOfClothes(collections, categories[index]), color: storeInfo.color) ) );
 
-                    },
-                    child: ClothesCat(
+                  },
+                  child: ClothesCat(
 
-                        color: storeInfo.color,
-                        text: categories[index]),
-                  ),
-                  scrollDirection: Axis.horizontal,
+                      color: storeInfo.color,
+                      text: categories[index]),
                 ),
+                scrollDirection: Axis.horizontal,
               ),
+            ),
 
-              ///popular
-              SeeAll(
-                tittle: "Popular",
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => AllProductView(
-                              categories:
-                                  repo.getGenderClothCategories(collections),
-                              color: storeInfo.color,
-                              collection: repo.getPopularClothes(collections))));
-                },
-              ),
-              SizedBox(
-                height: screenHeight(context) * 0.38,
-                child: ListView.builder(
-                  itemCount: collections.length>  7 ?(repo.getPopularClothes(collections).length/3).round(): collections.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => ProductItem(
-                    color: storeInfo.color,
-                    model: repo.getPopularClothes(collections)[index],
-                  ),
-                ),
-              ),
-
-              ///special offer
-              storeInfo.specialOffer != null ?offerCard2(offer: storeInfo.specialOffer??"Big Sale See our stores"):const SizedBox(),
-
-              ///sale
-              SeeAll(
-                tittle: "Sale",
-                onTap: () {
-                  Navigator.push(
+            ///popular
+            SeeAll(
+              tittle: "Popular",
+              onTap: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => AllProductView(
-                        categories: repo.getGenderClothCategories(collections),
-                        color: storeInfo.color,
-                        collection: repo.getBigSaleProducts(collections)
-                      ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: screenHeight(context) * 0.38,
-                child: ListView.builder(
-                  itemCount:  collections.length>7?(repo.getBigSaleProducts(collections).length/3).round():collections.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => ProductItem(
-                    color: storeInfo.color,
-                    model: repo.getBigSaleProducts(collections)[index],
-                  ),
+                        builder: (_) => AllProductView(
+                            categories:
+                                repo.getGenderClothCategories(collections),
+                            color: storeInfo.color,
+                            collection: repo.getPopularClothes(collections))));
+              },
+            ),
+            SizedBox(
+              height: screenHeight(context) * 0.38,
+              child: ListView.builder(
+                itemCount: collections.length>  7 ?(repo.getPopularClothes(collections).length/3).round(): collections.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => ProductItem(
+                  color: storeInfo.color,
+                  model: repo.getPopularClothes(collections)[index],
                 ),
               ),
+            ),
 
-              ///newest
-              SeeAll(
-                tittle: "Newest",
-                onTap: () {
-                  Navigator.push(
+            ///special offer
+            storeInfo.specialOffer != null ?offerCard2(offer: storeInfo.specialOffer??"Big Sale See our stores"):const SizedBox(),
+
+            ///sale
+            SeeAll(
+              tittle: "Sale",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AllProductView(
+                      categories: repo.getGenderClothCategories(collections),
+                      color: storeInfo.color,
+                      collection: repo.getBigSaleProducts(collections)
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: screenHeight(context) * 0.38,
+              child: ListView.builder(
+                itemCount:  collections.length>7?(repo.getBigSaleProducts(collections).length/3).round():collections.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => ProductItem(
+                  color: storeInfo.color,
+                  model: repo.getBigSaleProducts(collections)[index],
+                ),
+              ),
+            ),
+
+            ///newest
+            SeeAll(
+              tittle: "Newest",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AllProductView(
+                      categories: repo.getGenderClothCategories(collections),
+                      color: storeInfo.color,
+                      collection: repo.getNewestClothes(collections),
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: screenHeight(context) * 0.38,
+              child: ListView.builder(
+                itemCount: collections.length>7?(repo.getNewestClothes(collections).length/3).round():collections.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => ProductItem(
+                  color: storeInfo.color,
+                  model: repo.getNewestClothes(collections)[index],
+                ),
+              ),
+            ),
+            ///top rated
+            SeeAll(
+              tittle: "Top Rated",
+              onTap: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => AllProductView(
-                        categories: repo.getGenderClothCategories(collections),
-                        color: storeInfo.color,
-                        collection: repo.getNewestClothes(collections),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: screenHeight(context) * 0.38,
-                child: ListView.builder(
-                  itemCount: collections.length>7?(repo.getNewestClothes(collections).length/3).round():collections.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => ProductItem(
-                    color: storeInfo.color,
-                    model: repo.getNewestClothes(collections)[index],
-                  ),
+                        builder: (_) => AllProductView(
+                            categories:
+                                repo.getGenderClothCategories(collections),
+                            color: storeInfo.color,
+                            collection: repo.topRatedProducts(collections))));
+              },
+            ),
+            SizedBox(
+              height: screenHeight(context) * 0.38,
+              child: ListView.builder(
+                itemCount: collections.length>7? (repo.topRatedProducts(collections).length/3).round():collections.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => ProductItem(
+                  color: storeInfo.color,
+                  model: repo.topRatedProducts(collections)[index],
                 ),
               ),
-              ///top rated
-              SeeAll(
-                tittle: "Top Rated",
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => AllProductView(
-                              categories:
-                                  repo.getGenderClothCategories(collections),
-                              color: storeInfo.color,
-                              collection: repo.topRatedProducts(collections))));
-                },
-              ),
-              SizedBox(
-                height: screenHeight(context) * 0.38,
-                child: ListView.builder(
-                  itemCount: collections.length>7? (repo.topRatedProducts(collections).length/3).round():collections.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => ProductItem(
-                    color: storeInfo.color,
-                    model: repo.topRatedProducts(collections)[index],
-                  ),
-                ),
-              ),
-              offerCard1(),
-            ],
-          ),
+            ),
+            offerCard1(),
+          ],
         ),
       ),
     );

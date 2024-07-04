@@ -218,8 +218,8 @@ class _CartScreenState extends State<CartScreen> {
                   motion: const ScrollMotion(),
                   dismissible: DismissiblePane(
                     // Handle onDismissed action when swiped
-                    onDismissed: ()  {
-                       repo.removeFromCart(items[index]).whenComplete((){
+                    onDismissed: ()  async{
+                       await repo.removeFromCart(items[index]).whenComplete((){
                         BlocProvider.of<CartCubit>(context).fetchCartProducts();
 
                       });

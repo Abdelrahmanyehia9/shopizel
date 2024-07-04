@@ -4,7 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
-import 'package:shoppizel/Features/Auth/view/screens/profile_screen.dart';
+import 'package:shoppizel/Features/home/view/screens/store_screen.dart';
+import 'package:shoppizel/Features/order/view/screen/order_screen.dart';
+import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
+import 'package:shoppizel/Features/profile/view/screen/profile_screen.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
 import 'package:shoppizel/Features/Favourite/data/repository/favourite_repository.dart';
 import 'package:shoppizel/Features/cart/data/repository/cart_repo.dart';
@@ -49,7 +52,7 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context) => GenderCubit(HomeRepo())),
         BlocProvider(create: (context) => FavouriteCubit(FavouriteRepo())),
         BlocProvider(create: (context) => CartCubit(CartRepo())),
-        BlocProvider(create: (context) => LocationCubit(LocationRepo())),
+        BlocProvider(create: (context) => LocationCubit(LocationRepo())..getAllLocations()),
         BlocProvider(create: (context) => ProfileCubit(ProfileRepo())),
 
 
@@ -59,12 +62,13 @@ class Tship extends StatelessWidget {
         home: const HomeScreen() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           hoverColor: Colors.transparent,
           fontFamily: AppConstants.fontFamily,
           appBarTheme: const AppBarTheme(color: AppConstants.appColor , foregroundColor: Colors.white , centerTitle: true) ,
-          scaffoldBackgroundColor: const Color(0xffF3F3F3),
+          scaffoldBackgroundColor: const Color(0xffECF0F4),
         ),
       ),
     );

@@ -1,13 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:shoppizel/Features/Auth/data/model/user_model.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
+import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
-import '../../data/model/user_model.dart';
-
 class ProfileScreen extends StatelessWidget {
-  final UserModel profileInfo ;
-  const ProfileScreen({super.key, required this.profileInfo});
+  final UserModel userModel ;
+   ProfileScreen({super.key, required this.userModel });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class ProfileScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: SingleChildScrollView
+        (
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -40,49 +42,34 @@ class ProfileScreen extends StatelessWidget {
               child:  Column(
                 children: [
                   const Center(
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        CircleAvatar(
-                          radius: 65,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage("https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=1868"),
-                            radius: 64,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 18,
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.edit,
-                              size: 14,
-                              color: AppConstants.appColor,
-                            ),
-                          ),
-                        )
-                      ],
+                    child: CircleAvatar(
+                      radius: 65,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider("https://i.postimg.cc/5tdvGxX2/117891559-1259928357686178-3630984762144176343-n.jpg")
+                         , radius: 64,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 18,
                   ),
                   Text(
-                    profileInfo.username??"Guest",
+                    userModel.username??"Guest",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                   Text(
-                    profileInfo.number??"",
+                    userModel.number??"0123456789",
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   Text(
-                    profileInfo.email,
+                    userModel.email,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
@@ -97,6 +84,11 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
               child: ListTile(
+
+                onTap: (){
+
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> EditProfile(userModel: userModel))) ;
+                 },
                 leading: CircleAvatar(
                     backgroundColor: AppConstants.appColor.withOpacity(0.1),
                     child: const Icon(

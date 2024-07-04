@@ -15,6 +15,23 @@ class AppConstants {
       Color(0xFF00695C),
     ],
   );
+  static const RadialGradient circularGradient = RadialGradient(
+    colors: [
+AppConstants.appColor,
+      Color(0xFF00695C),
+    ],
+    center: Alignment.center,
+    radius: 0.5,
+  ) ;
+  static  List<BoxShadow> shadow =[
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.2),
+      spreadRadius: 2,
+      blurRadius: 3,
+      offset: const Offset(0, 3), // changes position of shadow
+    ),
+  ]  ;
+
   static CustomTransitionPage buildPageWithDefaultTransition<T>({required BuildContext context,
       required GoRouterState state,
       required Widget child,

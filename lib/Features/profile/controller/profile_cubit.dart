@@ -6,7 +6,6 @@ import '../data/profile_repo.dart';
 
 class ProfileCubit extends Cubit<ProfileState>{
   ProfileRepo repo  ;
-  UserModel profile  = UserModel(uid: "", email: "example@gmail.com" , number: "0123456789")  ;
   ProfileCubit(this.repo):super(ProfileStateInitial()) ;
 
 
@@ -14,7 +13,6 @@ class ProfileCubit extends Cubit<ProfileState>{
     emit(ProfileInfoLoading()) ;
     try{
      UserModel model = await repo.getProfileInfo() ;
-     profile = model ;
       emit(ProfileInfoSuccess(profileInfo: model)) ;
 
     }catch(e){
@@ -22,5 +20,21 @@ class ProfileCubit extends Cubit<ProfileState>{
     }
 
 }
+  Future<void>editProfile(UserModel user)async{
+    emit(EditProfileInfoLoading()) ;
+    try{
+     await repo.editProfile(user) ;
+      emit(EditProfileInfoSuccess()) ;
+
+    }catch(e){
+      emit(EditProfileInfoFailure(errorMessage: e.toString())) ;
+    }
+
+
+
+
+
+
+  }
 
 }

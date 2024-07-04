@@ -20,3 +20,16 @@ class  ProfileInfoFailure extends ProfileState{
   ProfileInfoFailure({required this.errorMessage});
 }
 
+
+
+class  EditProfileInfoSuccess extends ProfileState
+{
+}
+class EditProfileInfoLoading extends ProfileState{
+
+
+}
+class EditProfileInfoFailure extends ProfileState{
+  final  String errorMessage ;
+  EditProfileInfoFailure({required this.errorMessage});
+}

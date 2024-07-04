@@ -44,22 +44,11 @@ class _ProductGalleryState extends State<ProductGallery> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox( width: screenWidth(context)*0.8,
-                  child:  SearchTextField(productOnly: true, controller: _searchController ,  onChanged: (value) {
-                    _filterProducts(value);
-                  },
+        SearchTextField(productOnly: true, controller: _searchController ,  onChanged: (value) {
+          _filterProducts(value);
+        },
 
 
-                  )),
-              const Icon(Icons.filter_alt) ,
-              const Icon(Icons.sort_sharp) ,
-            ],
-          ),
         ) ,
         StaggeredGridView.countBuilder(
           primary: false,

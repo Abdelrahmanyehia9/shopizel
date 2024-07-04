@@ -27,6 +27,10 @@ class ProfileRepo {
     return userInfo ;
 
   }
+  Future<void>editProfile(UserModel user) async{
+    await _fireStore.collection(FirebaseConstant.usersCollection).doc(FirebaseAuth.instance.currentUser!.uid).update(user.toJson()) ;
+    await FirebaseAuth.instance.currentUser!.updateDisplayName(user.username) ;
+  }
 
 
 }

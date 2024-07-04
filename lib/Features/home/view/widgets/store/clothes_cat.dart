@@ -36,10 +36,10 @@ class ClothesCat extends StatelessWidget {
                               fontSize: 16)),
                     ),
                     SizedBox(
-                      width: screenWidth(context) * 0.22,
-                      height: screenHeight(context) * 0.12,
+                      width: screenWidth(context) * 0.25,
+                      height: screenHeight(context) * 0.125,
                       child: CachedNetworkImage(
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.fitHeight,
                         imageUrl: GenerateImg.getImg(text),
                         placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(

@@ -4,79 +4,72 @@ import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/Features/home/view/screens/product_spacific_cat.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/search_textfield.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/clothes_cat.dart';
+import 'package:shoppizel/Features/home/view/widgets/store/product_gallery.dart';
 import 'package:shoppizel/Features/home/view/widgets/store/product_item.dart';
 
 import '../../../../core/utils/screen_dimentions.dart';
 import '../../data/repository/store_repo.dart';
 
 class AllProductView extends StatelessWidget {
-  final TextEditingController _searchController = TextEditingController() ;
+  final TextEditingController _searchController = TextEditingController();
+
   final List<ProductModel> collection;
- final List<String> categories ;
+  final List<String> categories;
+
   final String color;
 
-   AllProductView(
-      {super.key, required this.color, required this.collection , required this.categories});
+  AllProductView(
+      {super.key,
+      required this.color,
+      required this.collection,
+      required this.categories});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-        ),
-
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24.0),
-
-                child: SizedBox(
-                  height: screenHeight(context) * 0.19,
-                  child: ListView.builder(
-                    itemCount: categories.length ,
-                    itemBuilder: (context, index) => ClothesCat(
-                      onTap: (){
-
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => SearchingProducts(collection: StoreRepo().getTypeOfClothes(collection, categories[index]), color: color) ) );
-
-                      },
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Color(int.parse(color)),
+            title: Text("${collection.first.madeBy}"),
+            floating: true,
+            snap: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.19,
+                    child: ListView.builder(
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) => ClothesCat(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SearchingProducts(
+                                collection: StoreRepo().getTypeOfClothes(
+                                    collection, categories[index]),
+                                color: color,
+                              ),
+                            ),
+                          );
+                        },
                         color: color,
-                        text: categories[index]),
-                    scrollDirection: Axis.horizontal,
+                        text: categories[index],
+                      ),
+                      scrollDirection: Axis.horizontal,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox( width: screenWidth(context)*0.8,
-                        child:  SearchTextField(productOnly: true, controller: _searchController ,)),
-                    Icon(Icons.filter_alt) ,
-                    Icon(Icons.sort_sharp) ,
-                  ],
-                ),
-              ) ,
-              StaggeredGridView.countBuilder(
-                primary: false,
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                itemCount: collection.length,
-                itemBuilder: (BuildContext context, int index) => Center(
-                    child: ProductItem(
-                  model: collection[index],
-                  color: color,
-                )),
-                staggeredTileBuilder: (int index) =>
-                    StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 0.0,
-              ),
-            ],
+                ProductGallery(color: color, collection: collection),
+              ],
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
