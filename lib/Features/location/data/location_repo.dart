@@ -86,32 +86,14 @@ LocationModel? model  ;
     }
   }
 
+// Ensure you have imported FirebaseAuth
+
   Future<void> deleteSelectedItem(LocationModel model) async {
-    // var itemToDelete = await _firestore
-    //     .collection(FirebaseConstant.usersCollection)
-    //     .doc(FirebaseAuth.instance.currentUser!.uid)
-    //     .collection("location")
-    //     .doc(model.name)
-    //     .get();
-    // if (itemToDelete.get("isSelected") == true) {
-    //   var response = await _firestore
-    //       .collection(FirebaseConstant.usersCollection)
-    //       .doc(FirebaseAuth.instance.currentUser!.uid)
-    //       .collection("location")
-    //       .orderBy("dateOfAdded" ,descending: true)
-    //       .get();
-    //   await _firestore
-    //       .collection(FirebaseConstant.usersCollection)
-    //       .doc(FirebaseAuth.instance.currentUser!.uid)
-    //       .collection("location")
-    //       .doc(response.docs.first.id)
-    //       .update({"isSelected": true});
-    // }
-    await _firestore
-        .collection(FirebaseConstant.usersCollection)
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("location")
-        .doc(model.name)
-        .delete();
+    try{
+      _firestore.collection(FirebaseConstant.usersCollection).doc(FirebaseAuth.instance.currentUser!.uid).collection("location").doc(model.name).delete() ;
+
+    }catch(e){
+      print(e.toString()) ;
+    }
   }
 }

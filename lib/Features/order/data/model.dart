@@ -10,6 +10,8 @@ class OrderModel {
   final UserModel userModel;
   final String orderStatus;
   final LocationModel location ;
+  final String time ;
+  final String notes ;
 
   OrderModel({
     required this.orderId,
@@ -18,7 +20,9 @@ class OrderModel {
     required this.products,
     required this.userModel,
     required this.orderStatus,
-    required this.location
+    required this.location ,
+    required this.time ,
+    required this.notes
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -33,7 +37,10 @@ class OrderModel {
       products: parsedProducts,
       userModel: UserModel.fromJson(json["user"]),
       orderStatus: json["orderStatus"],
-      location:  LocationModel.fromJson(json["location"])
+      location:  LocationModel.fromJson(json["location"] ,
+      ) ,
+      time: json['time'] ,
+      notes:json["notes"]
     );
   }
 
@@ -48,7 +55,9 @@ class OrderModel {
       "products": productsJson,
       "user": userModel.toJson(),
       "orderStatus": orderStatus,
-      "location":location.toJson()
+      "location":location.toJson() ,
+      "time":time ,
+      "notes":notes
     };
   }
 }

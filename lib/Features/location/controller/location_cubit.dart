@@ -46,7 +46,18 @@ class LocationCubit extends Cubit<LocationStates>{
 
 
   }
+Future<void>deleteALocation(LocationModel model)async{
+    emit(DeleteLocationStateLoading()) ;
+    try {
+      await repo.deleteSelectedItem(model) ;
+      emit(DeleteLocationStateSuccess()) ;
+    } on Exception catch (e) {
+      emit(DeleteLocationStateFailure(error: "there was an error Please try again later")) ;
+      // TODO
+    }
 
+
+}
 
 
 }

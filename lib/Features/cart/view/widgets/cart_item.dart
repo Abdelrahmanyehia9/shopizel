@@ -10,9 +10,12 @@ import '../../../../core/utils/screen_dimentions.dart';
 import '../../data/model/cart_model.dart';
 
 class CartItem extends StatefulWidget {
+  final bool? isOrder ;
   final CartModel model;
  final  GestureTapCallback removeItemFromCart ;
-  const CartItem({super.key, required this.model ,required this.removeItemFromCart});
+  final  GestureTapCallback? onAdd ;
+  final  GestureTapCallback? onMinus ;
+  const CartItem({super.key, required this.model ,required this.removeItemFromCart , this.isOrder , this.onAdd  , this.onMinus});
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -27,7 +30,7 @@ class _CartItemState extends State<CartItem> {
           alignment: AlignmentDirectional.bottomEnd,
           children: [
             Container(
-              color: Colors.white,
+              color:widget.isOrder!=null?Colors.transparent: Colors.white,
               width: double.infinity,
               height: screenHeight(context) * .25,
               child: Padding(
@@ -144,16 +147,12 @@ class _CartItemState extends State<CartItem> {
                         Row(
                           children: [
                             InkWell(
-                              onTap: (){
-                                setState(() {
-                                  widget.model.quantity ++ ;
-                                });
-                              },
+                              onTap: widget.onAdd ,
                               child: Container(
-                                  padding: const EdgeInsets.all(3),
+                                  padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(12)),
+                                      borderRadius: BorderRadius.circular(4)),
                                   child: const FaIcon(
                                     FontAwesomeIcons.plus,
                                     size: 14,
@@ -161,23 +160,16 @@ class _CartItemState extends State<CartItem> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(widget.model.quantity.toString()),
                             ),
                             InkWell(
-                              onTap: ()async{
-                               if(widget.model.quantity>1){
-
-                                 setState(() {
-                                   widget.model.quantity --;
-                                 });
-                               }
-                              },
+                              onTap: widget.onMinus ,
                               child: Container(
-                                  padding: const EdgeInsets.all(3),
+                                  padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(12)),
+                                      borderRadius: BorderRadius.circular(4)),
                                   child: const FaIcon(
                                     FontAwesomeIcons.minus,
                                     size: 14,
@@ -234,4 +226,6 @@ class _CartItemState extends State<CartItem> {
           ],
         ));
   }
+
+
 }

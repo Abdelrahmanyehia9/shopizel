@@ -61,7 +61,7 @@ class _LocationMarkState extends State<LocationMap> {
       body: Column(
         children: [
           SizedBox(
-            height: screenHeight(context) * 0.8,
+            height: screenHeight(context) * 0.75,
             child: FlutterMap(
               mapController: mapController,
               options: MapOptions(
@@ -102,14 +102,15 @@ class _LocationMarkState extends State<LocationMap> {
             ),
           ),
           SizedBox(
-            height: screenHeight(context) * .2,
+            height: screenHeight(context) * .25,
             width: double.infinity,
             child: Column(
               children: [
                 SizedBox(height: screenHeight(context)*0.02,) ,
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12.0 , horizontal: 12),
-                  child: Text(locName , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                  child: Text(maxLines: 2 , overflow: TextOverflow.ellipsis ,
+                     locName , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                 ) ,
                 PrimaryButton(label: "I live here" , width: screenWidth(context)*.9,onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (_)=> AddressScreen(currentPos: currentPos , tittle: locName,)   )) ;

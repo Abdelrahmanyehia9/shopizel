@@ -125,18 +125,19 @@ class _SavedAddressesState extends State<SavedAddresses> {
                                     setState(() {
                                       locations[index].isSelected = true;
                                     });
-                                    await LocationRepo()
-                                        .selectLocation(locations[index]);
+                                    await BlocProvider.of<LocationCubit>(context).repo.selectLocation(locations[index]);
                                   },
                                   child: savedLocationItem(
                                       onRemove: () async {
-                                        await BlocProvider.of<LocationCubit>(
-                                                context)
-                                            .repo
-                                            .deleteSelectedItem(locations[index]);
+                                        var locationCubit = BlocProvider.of<LocationCubit>(context); // Store the reference
+
+                                        await locationCubit.repo.deleteSelectedItem(locations[index]);
+
                                         setState(() {
                                           locations.removeAt(index);
                                         });
+
+                                        locationCubit.getAllLocations(); // Use the stored reference
                                       },
                                       context: context,
                                       model: locations[index]),

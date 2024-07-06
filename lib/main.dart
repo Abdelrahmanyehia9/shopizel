@@ -6,6 +6,7 @@ import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
 import 'package:shoppizel/Features/home/view/screens/store_screen.dart';
 import 'package:shoppizel/Features/order/view/screen/order_screen.dart';
+import 'package:shoppizel/Features/payment/view/screen/choose_payment_method.dart';
 import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
 import 'package:shoppizel/Features/profile/view/screen/profile_screen.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
@@ -27,6 +28,7 @@ import 'Features/home/data/repository/store_repo.dart';
 import 'Features/home/view/screens/home_screen.dart';
 import 'Features/location/view/screen/get_location_permission.dart';
 import 'Features/location/view/screen/adress_screen.dart';
+import 'Features/payment/view/screen/order_confirmed.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
 
@@ -47,12 +49,12 @@ class Tship extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
-        BlocProvider(create: (context) => HomeCubit(HomeRepo())..fetch()),
+        BlocProvider(create: (context) => HomeCubit(HomeRepo())),
         BlocProvider(create: (context) => StoreCubit(StoreRepo())),
         BlocProvider(create: (context) => GenderCubit(HomeRepo())),
         BlocProvider(create: (context) => FavouriteCubit(FavouriteRepo())),
         BlocProvider(create: (context) => CartCubit(CartRepo())),
-        BlocProvider(create: (context) => LocationCubit(LocationRepo())..getAllLocations()),
+        BlocProvider(create: (context) => LocationCubit(LocationRepo())),
         BlocProvider(create: (context) => ProfileCubit(ProfileRepo())),
 
 

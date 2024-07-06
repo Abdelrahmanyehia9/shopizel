@@ -29,3 +29,12 @@ class GetLocationsStateFailure extends LocationStates {
 
   GetLocationsStateFailure({required this.error});
 }
+
+
+
+class DeleteLocationStateLoading extends LocationStates {}
+class DeleteLocationStateSuccess extends LocationStates {}
+class DeleteLocationStateFailure extends LocationStates {
+  final String error ;
+  DeleteLocationStateFailure({required this.error});
+}

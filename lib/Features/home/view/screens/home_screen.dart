@@ -7,6 +7,7 @@ import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
 import 'package:shoppizel/Features/cart/view/screen/cart_screen.dart';
+import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/location/data/model.dart';
 import 'package:shoppizel/Features/order/data/model.dart';
 import 'package:shoppizel/Features/order/data/repo.dart';
@@ -14,6 +15,7 @@ import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../Auth/data/model/user_model.dart';
 import '../../../profile/controller/profile_cubit.dart';
+import '../../controllers/home_cubit.dart';
 import '../widgets/home/home_body.dart';
 import '../widgets/home/home_drawer.dart';
 import '../widgets/home/my_location.dart';
@@ -36,9 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+     BlocProvider.of<HomeCubit>(context).fetch() ;
     BlocProvider.of<CartCubit>(context).fetchCartProducts();
     BlocProvider.of<ProfileCubit>(context).fetchProfile();
-    super.initState();
+     BlocProvider.of<LocationCubit>(context).getAllLocations();
+
+     super.initState();
   }
 
   @override
@@ -99,47 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 8,),
 
                     InkWell(
-                      onTap: () async {
-                        List<CartModel> products = [
-                          CartModel(
-                            productId: 2,
-                            size: "XL",
-                            color: "black",
-                            quantity: 2,
-                            madeBy: "zara",
-                            price: "22",
-                            sale: "20",
-                            imageUrl: "imageUrl",
-                            name: "name",),
-                          CartModel(productId: 2,
-                              size: "size",
-                              color: "color",
-                              quantity: 2,
-                              madeBy: "madeBy",
-                              price: "price",
-                              sale: "sale",
-                              imageUrl: "imageUrl",
-                              name: "name")
-                        ];
-                        LocationModel location = LocationModel(tittle: "tittle",
-                            building: "fdf",
-                            flatNumber: "flatNumber",
-                            floor: 4,
-                            specialMark: "specialMark",
-                            lat: "lat",
-                            long: "long",
-                            name: "name",
-                            type: "type",
-                            isSelected: false) ;
-                        OrderModel order = OrderModel(orderId: "3",
-                            dateOfOrder: DateTime.now().toString(),
-                            paymentMethod: "cash",
-                            products: products,
-                            userModel: userModel,
-                            orderStatus: "accepted",
-                            location: location);
-                        await OrderRepo().placeAOrder(order);
-                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 4, horizontal: 12),
@@ -175,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               'DELIVER TO',
               style: TextStyle(
-                  color: AppConstants.appColor,
+                  color: Colors.teal ,
                   fontSize: 12,
                   fontWeight: FontWeight.bold
               ),

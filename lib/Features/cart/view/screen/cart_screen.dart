@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/data/repository/cart_repo.dart';
+import 'package:shoppizel/Features/order/view/screen/order_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
 import '../../../../core/utils/screen_dimentions.dart';
@@ -25,20 +26,16 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         actions: [
           InkWell(
-            splashColor: Colors.grey.withOpacity(0.5),
-              onTap: ()async{
-
-            await CartRepo().getCartEmpty().whenComplete((){
+              splashColor: Colors.grey.withOpacity(0.5),
+              onTap: () async {
+                await CartRepo().getCartEmpty().whenComplete(() {
                   BlocProvider.of<CartCubit>(context).fetchCartProducts();
-                }) ;
-
-
-          },
+                });
+              },
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: const Icon(Icons.delete),
-              )) ,
-
+              )),
         ],
         foregroundColor: Colors.white,
         backgroundColor: AppConstants.appColor,
@@ -133,42 +130,52 @@ class _CartScreenState extends State<CartScreen> {
                       ),
 
                       ///checkout
-                      Container(
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppConstants.appColor,
-                            borderRadius: BorderRadius.circular(6)),
-                        padding: const EdgeInsets.all(18),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Checkout",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "${totalPriceAfterSale.toStringAsFixed(2)} EGP",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(
-                                  width: 6,
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
-                                )
-                              ],
-                            )
-                          ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => OrderScreen(
+                                        products: state.cartProducts,
+                                      )));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: AppConstants.appColor,
+                              borderRadius: BorderRadius.circular(6)),
+                          padding: const EdgeInsets.all(18),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Checkout",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 18),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "${totalPriceAfterSale.toStringAsFixed(2)} EGP",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -190,79 +197,99 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget storeProducts(
-          {required String storeName,
-          required List<CartModel> items,
-          required BuildContext context}) {
-    CartRepo repo = CartRepo() ;
+      {required String storeName,
+      required List<CartModel> items,
+      required BuildContext context}) {
+    CartRepo repo = CartRepo();
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Text(
-              storeName,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Text(
+            storeName,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          ListView.builder(
-              itemCount: items.length,
-              primary: false,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => Slidable(
-                key: ValueKey(
-                  items[index].productId.toString() +
-                      items[index].size +
-                      items[index].color,
-                ),
-                startActionPane: ActionPane(
-                  motion: const ScrollMotion(),
-                  dismissible: DismissiblePane(
-                    // Handle onDismissed action when swiped
-                    onDismissed: ()  async{
-                       await repo.removeFromCart(items[index]).whenComplete((){
-                        BlocProvider.of<CartCubit>(context).fetchCartProducts();
-
-                      });
-
-                      setState(() {
-                        items.removeAt(index);
-                      });
-                    },
+        ),
+        ListView.builder(
+            itemCount: items.length,
+            primary: false,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => Slidable(
+                  key: ValueKey(
+                    items[index].productId.toString() +
+                        items[index].size +
+                        items[index].color,
                   ),
-                  children: [
-                    // Swipe action button
-                    SlidableAction(
-                      spacing: 0,
-                      onPressed: (val)  async{
-                        await repo.removeFromCart(items[index]).whenComplete((){
-                          BlocProvider.of<CartCubit>(context).fetchCartProducts();
-
+                  startActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    dismissible: DismissiblePane(
+                      // Handle onDismissed action when swiped
+                      onDismissed: () async {
+                        await repo
+                            .removeFromCart(items[index])
+                            .whenComplete(() {
+                          BlocProvider.of<CartCubit>(context)
+                              .fetchCartProducts();
                         });
 
                         setState(() {
                           items.removeAt(index);
                         });
                       },
-                      backgroundColor: const Color(0xFFFE4A49),
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
-                      label: 'Delete',
                     ),
-                  ],
-                ),
-                child: CartItem(model: items[index] , removeItemFromCart: ()async{
-                 await  repo.removeFromCart(items[index]).whenComplete((){
-                    BlocProvider.of<CartCubit>(context).fetchCartProducts();
+                    children: [
+                      // Swipe action button
+                      SlidableAction(
+                        spacing: 0,
+                        onPressed: (val) async {
+                          await repo
+                              .removeFromCart(items[index])
+                              .whenComplete(() {
+                            BlocProvider.of<CartCubit>(context)
+                                .fetchCartProducts();
+                          });
 
-                  });
+                          setState(() {
+                            items.removeAt(index);
+                          });
+                        },
+                        backgroundColor: const Color(0xFFFE4A49),
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                      ),
+                    ],
+                  ),
+                  child: CartItem(
+                    onMinus: () async {
+                      if (items[index].quantity > 1) {
+                        setState(() {
+                          items[index].quantity--;
+                        });
+                      }
+                    },
+                    onAdd: () {
+                      setState(() {
+                        items[index].quantity++;
+                      });
+                    },
+                    model: items[index],
+                    removeItemFromCart: () async {
+                      await repo.removeFromCart(items[index]).whenComplete(
+                        () {
+                          BlocProvider.of<CartCubit>(context)
+                              .fetchCartProducts();
+                        },
+                      );
 
-                  setState(() {
-                    items.removeAt(index);
-                  });
-                },),
-              )
-          )
-        ],
-      );
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
+                  ),
+                ))
+      ],
+    );
   }
 }
