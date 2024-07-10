@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/Auth/data/model/user_model.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
+import 'package:shoppizel/Features/payment/view/screen/saved_card.dart';
 import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
@@ -119,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
                       size: 18,
                       color: AppConstants.appColor,
                     )),
-                title: const Text("My Adresses"),
+                title: const Text("My Addresses"),
                 trailing: const Icon(
                   Icons.arrow_forward_ios,
                   color: AppConstants.appColor,
@@ -132,6 +133,9 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
               child: ListTile(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>const SavedCard()));
+                },
                 leading: CircleAvatar(
                     backgroundColor: AppConstants.appColor.withOpacity(0.1),
                     child: const Icon(

@@ -5,6 +5,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
 import 'package:shoppizel/Features/home/view/screens/store_screen.dart';
+import 'package:shoppizel/Features/order/controller/order_cubit.dart';
+import 'package:shoppizel/Features/order/data/order_repo.dart';
+import 'package:shoppizel/Features/order/view/screen/my_orders.dart';
 import 'package:shoppizel/Features/order/view/screen/order_screen.dart';
 import 'package:shoppizel/Features/payment/view/screen/choose_payment_method.dart';
 import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
@@ -21,6 +24,8 @@ import 'package:shoppizel/Features/location/data/location_repo.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/profile/data/profile_repo.dart';
+import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
+import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
 
 import 'Features/cart/controller/cart_cubit.dart';
 import 'Features/home/controllers/store_cubit.dart';
@@ -56,6 +61,8 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context) => CartCubit(CartRepo())),
         BlocProvider(create: (context) => LocationCubit(LocationRepo())),
         BlocProvider(create: (context) => ProfileCubit(ProfileRepo())),
+        BlocProvider(create: (context)=> OrderCubit(OrderRepo())) ,
+        BlocProvider(create: (context)=>PromoCubit(PromoCodeRepo())) ,
 
 
 

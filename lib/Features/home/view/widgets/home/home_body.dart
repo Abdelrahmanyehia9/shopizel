@@ -22,7 +22,7 @@ import '../../../data/model/store_model.dart';
 class HomeBody extends StatelessWidget {
 
   /// offer of the week
-  HomeBody({super.key});
+  const HomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,8 @@ class OrderModel {
   final String orderStatus;
   final LocationModel location ;
   final String time ;
-  final String notes ;
+  final String? notes ;
+  final String? promo  ;
 
   OrderModel({
     required this.orderId,
@@ -22,7 +23,8 @@ class OrderModel {
     required this.orderStatus,
     required this.location ,
     required this.time ,
-    required this.notes
+     this.notes ,
+    this.promo
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -40,7 +42,8 @@ class OrderModel {
       location:  LocationModel.fromJson(json["location"] ,
       ) ,
       time: json['time'] ,
-      notes:json["notes"]
+      notes:json["notes"] ,
+      promo: json["promo"]
     );
   }
 
@@ -57,7 +60,8 @@ class OrderModel {
       "orderStatus": orderStatus,
       "location":location.toJson() ,
       "time":time ,
-      "notes":notes
+      "notes":notes ,
+      "promo":promo
     };
   }
 }

@@ -86,4 +86,30 @@ Future<void>getCartEmpty()async{
     await doc.reference.delete();
   }
 }
+ Future<void>increaseAndDecreaseQuantity(CartModel model , bool isAdded)async{
+   var response =await _fireStore.collection(FirebaseConstant.usersCollection).doc(_auth.currentUser!.uid).collection(FirebaseConstant.cartCollection)
+       .doc("${model.productId.toString()}${model.size}${model.color}").get() ;
+
+   int count = await response.get("quantity");
+    if (isAdded){
+
+      count++ ;
+     await response.reference.update({"quantity":count}) ;
+
+    }else{
+
+
+        count --  ;
+     await   response.reference.update({"quantity":count}) ;
+
+
+
+
+
+    }
+
+
+
+
+}
 }

@@ -20,6 +20,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  bool isProcessing = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,18 +263,8 @@ class _CartScreenState extends State<CartScreen> {
                     ],
                   ),
                   child: CartItem(
-                    onMinus: () async {
-                      if (items[index].quantity > 1) {
-                        setState(() {
-                          items[index].quantity--;
-                        });
-                      }
-                    },
-                    onAdd: () {
-                      setState(() {
-                        items[index].quantity++;
-                      });
-                    },
+                    onMinus:()=> _onMinus(index , items) ,
+                    onAdd: ()=>_onAdd(index , items) ,
                     model: items[index],
                     removeItemFromCart: () async {
                       await repo.removeFromCart(items[index]).whenComplete(
@@ -291,5 +282,34 @@ class _CartScreenState extends State<CartScreen> {
                 ))
       ],
     );
+  }
+
+  void _onAdd(int index , List<CartModel> items) async {
+    if (isProcessing) return;
+    setState(() {
+      isProcessing = true;
+    });
+    await BlocProvider.of<CartCubit>(context)
+        .cartRepo
+        .increaseAndDecreaseQuantity(items[index], true);
+    setState(() {
+      items[index].quantity++;
+
+      isProcessing = false;
+    });
+  }
+
+  void _onMinus(int index , List<CartModel> items) async {
+    if (isProcessing || items[index].quantity <= 1) return;
+    setState(() {
+      isProcessing = true;
+    });
+    await BlocProvider.of<CartCubit>(context)
+        .cartRepo
+        .increaseAndDecreaseQuantity(items[index], false);
+    setState(() {
+      items[index].quantity--;
+      isProcessing = false;
+    });
   }
 }

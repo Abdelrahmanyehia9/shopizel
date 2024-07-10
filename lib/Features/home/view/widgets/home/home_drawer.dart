@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shoppizel/Features/order/view/screen/my_orders.dart';
+import 'package:shoppizel/Features/promo/view/screen/promo_code_screen.dart';
 import '../../../../../core/function/snackbars.dart';
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
@@ -157,6 +159,7 @@ class HomeDrawer extends StatelessWidget {
           ///orders
           InkWell(
             onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>const MyOrders()     )) ;
 
             },
             child: const ListTile(
@@ -168,8 +171,7 @@ class HomeDrawer extends StatelessWidget {
           /// promo codes
           InkWell(
             onTap: () {
-              BlocProvider.of<FavouriteCubit>(context).fetchFavourite();
-
+Navigator.push(context, MaterialPageRoute(builder: (_) => const PromoCodeScreen())) ;
             },
             child: const ListTile(
               leading: FaIcon(FontAwesomeIcons.gift),

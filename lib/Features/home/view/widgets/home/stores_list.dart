@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/store_item.dart';
 import '../../../data/model/store_model.dart';
@@ -13,13 +15,14 @@ class StoresList extends StatelessWidget {
 
 
     return ListView.builder(
+      padding: EdgeInsets.zero,
         primary: false,
         shrinkWrap: true,
         clipBehavior: Clip.hardEdge,
         itemCount: stores.length,
         itemBuilder: (context, index) {
           return StoreItem(
-            features: HomeRepo().getStoreShopCategories(stores[index]),
+            features: BlocProvider.of<HomeCubit>(context).repo.getStoreShopCategories(stores[index]),
             storeModel: stores[index],
           );
         });

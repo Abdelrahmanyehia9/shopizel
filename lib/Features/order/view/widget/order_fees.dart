@@ -5,10 +5,12 @@ import 'package:shoppizel/Features/location/controller/location_states.dart';
 import 'package:shoppizel/Features/order/data/order_fees.dart';
 import 'package:shoppizel/Features/order/view/widget/checkout_button.dart';
 import 'package:shoppizel/Features/payment/view/screen/choose_payment_method.dart';
+import 'package:shoppizel/Features/promo/data/promo_model.dart';
 
 import '../screen/order_screen.dart';
+import 'gift_cart.dart';
 
-class OrderFees extends StatelessWidget {
+class OrderFees extends StatefulWidget {
 
   final double price;
  final GestureTapCallback? checkoutTapped ;
@@ -17,25 +19,49 @@ class OrderFees extends StatelessWidget {
   const OrderFees({super.key, required this.price, this.discount , this.checkoutTapped});
 
   @override
+  State<OrderFees> createState() => _OrderFeesState();
+}
+
+class _OrderFeesState extends State<OrderFees> {
+  PromoModel? model ;
+   double discount =0.0 ;
+
+  @override
+  void initState() {
+   super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const GiftCartTextField(),
+         GiftCartTextField(total : OrderFeesRepo.calcTotal(
+            order: widget.price,
+            shipping: 40,
+            service: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)) ,
+            promoCode: 0.0,
+            discount: widget.discount ?? 0).toStringAsFixed(2) ,
+         promoGift: (value){
+           setState(() {
+             model = value ;
+             discount = double.parse(model?.discount??"0") ;
+           });
+         },
+         ),
         const SizedBox(
           height: 16,
         ),
-        feesItem(tittle: "Order", value: "${price.toStringAsFixed(2)}", isSale: true),
+        feesItem(tittle: "Order", value: widget.price.toStringAsFixed(2),isSale:widget.discount != null ? true:false  ),
         feesItem(tittle: "shipping", value: "40.00"),
         feesItem(
             tittle: "service",
-            value: OrderFeesRepo.calcService(price: price-(discount??0.0)).toStringAsFixed(2)
+            value: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)).toStringAsFixed(2)
         ),
-        discount != null
-            ? feesItem(tittle: "discount", value: "-${discount!.toStringAsFixed(2)}")
-            : SizedBox(),
-        true
-            ? SizedBox()
-            : feesItem(tittle: "Gift Card ", value: "40", isPromo: true),
+        widget.discount != null
+            ? feesItem(tittle: "discount", value: "-${widget.discount!.toStringAsFixed(2)}")
+            : const SizedBox(),
+        model == null
+            ? const SizedBox()
+            : feesItem(tittle: "Gift Card ", value: discount>1 ? discount.toStringAsFixed(2) : (discount*widget.price).toStringAsFixed(2) , isPromo: true),
         const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Divider(
@@ -45,24 +71,23 @@ class OrderFees extends StatelessWidget {
         feesItem(
             tittle: "Total",
             value: OrderFeesRepo.calcTotal(
-                order: price,
+                order: widget.price,
                 shipping: 40,
-                service: OrderFeesRepo.calcService(price: price-(discount??0.0)) ,
-                promoCode: 0.0,
-                discount: discount ?? 0).toStringAsFixed(2) ) ,
+                service: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)) ,
+                promoCode: discount > 1 ? discount : discount*widget.price,
+                discount: widget.discount ?? 0).toStringAsFixed(2) ) ,
 
 
 
 
          CheckoutButton(
-           onTap: checkoutTapped  ,
-
+           onTap: widget.checkoutTapped ,
            total: OrderFeesRepo.calcTotal(
-            order: price,
+            order: widget.price,
             shipping: 40,
-            service: price > 1000 ? price * 0.01 : price * 0.015,
+            service: widget.price > 1000 ? widget.price * 0.01 : widget.price * 0.015,
             promoCode: 0.0,
-            discount: discount ?? 0).toStringAsFixed(2),)
+            discount: widget.discount ?? 0).toStringAsFixed(2),)
       ],
     );
   }
@@ -84,8 +109,8 @@ class OrderFees extends StatelessWidget {
           Text(
             value + " EGP",
             style: TextStyle(
-                fontSize: 14,
-                decoration: isSale != null
+                fontSize: 14,color: isPromo == true ? Colors.green : Colors.black,
+                decoration: isSale == true
                     ? TextDecoration.lineThrough
                     : TextDecoration.none),
           )

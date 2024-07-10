@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppConstants {
-  static const Color appColor = Color(0xFF00695C) ;
+  static const Color appColor = Color(0xFF004D40) ;
+
   static const Color backgroundOfLightTheme = Color(0xff1E1E2E);
   static const String bgPatternAuthContainer = "assets/images/BG Asset.png";
   static const String fontFamily = "Sen";
@@ -11,17 +12,19 @@ class AppConstants {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
+      Color(0xFF00897B) ,
       AppConstants.appColor,
-      Color(0xFF00695C),
     ],
   );
   static const RadialGradient circularGradient = RadialGradient(
     colors: [
-AppConstants.appColor,
-      Color(0xFF00695C),
+      Color(0xFF00796B) ,
+
+      AppConstants.appColor,
     ],
     center: Alignment.center,
-    radius: 0.5,
+    radius: 0.5
+    ,
   ) ;
   static  List<BoxShadow> shadow =[
     BoxShadow(

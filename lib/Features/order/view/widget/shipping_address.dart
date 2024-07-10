@@ -138,8 +138,8 @@ class ShippingAddress extends StatelessWidget {
       child:  Column(mainAxisAlignment: MainAxisAlignment.center,
           children:[
         Text("No Location Selected"  , style : TextStyle(fontSize: 16 , color:error==null? Colors.white:Colors.red)) ,
-        SizedBox(height: 8,) ,
-        Text("Press Here To select a Location " , style: TextStyle(color: Colors.grey),)
+        const SizedBox(height: 8,) ,
+        const Text("Press Here To select a Location " , style: TextStyle(color: Colors.grey),)
 
 
       ])

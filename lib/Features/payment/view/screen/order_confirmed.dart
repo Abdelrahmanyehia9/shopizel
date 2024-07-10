@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 
@@ -27,7 +28,9 @@ class OrderConfirmed extends StatelessWidget {
             const Text("Check dashboard to check order status" , textAlign: TextAlign.center , style: TextStyle(fontSize: 16 , color: Colors.grey),) ,
             const Text("Your Order NO : 564684935 " , textAlign:TextAlign.center, style: TextStyle(fontSize: 18 , color: Colors.grey),) ,
             const SizedBox(height: 18,) ,
-            const PrimaryButton(label: "done") ,
+             PrimaryButton(label: "done" , onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (_) =>const HomeScreen())) ;
+            },) ,
 
 
         const Spacer()
