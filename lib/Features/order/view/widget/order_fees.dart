@@ -1,67 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoppizel/Features/location/controller/location_cubit.dart';
-import 'package:shoppizel/Features/location/controller/location_states.dart';
 import 'package:shoppizel/Features/order/data/order_fees.dart';
 import 'package:shoppizel/Features/order/view/widget/checkout_button.dart';
-import 'package:shoppizel/Features/payment/view/screen/choose_payment_method.dart';
-import 'package:shoppizel/Features/promo/data/promo_model.dart';
-
-import '../screen/order_screen.dart';
+import 'package:shoppizel/Features/promo/controller/promo_state.dart';
+import '../../../promo/controller/promo_cubit.dart';
 import 'gift_cart.dart';
 
 class OrderFees extends StatefulWidget {
-
   final double price;
- final GestureTapCallback? checkoutTapped ;
+  final GestureTapCallback? checkoutTapped;
+  final void Function(String?) fees ;
   final double? discount;
 
-  const OrderFees({super.key, required this.price, this.discount , this.checkoutTapped});
+  const OrderFees(
+      {super.key, required this.price, this.discount, this.checkoutTapped ,required this.fees});
 
   @override
   State<OrderFees> createState() => _OrderFeesState();
 }
 
 class _OrderFeesState extends State<OrderFees> {
-  PromoModel? model ;
-   double discount =0.0 ;
-
   @override
   void initState() {
-   super.initState();
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         GiftCartTextField(total : OrderFeesRepo.calcTotal(
-            order: widget.price,
-            shipping: 40,
-            service: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)) ,
-            promoCode: 0.0,
-            discount: widget.discount ?? 0).toStringAsFixed(2) ,
-         promoGift: (value){
-           setState(() {
-             model = value ;
-             discount = double.parse(model?.discount??"0") ;
-           });
-         },
-         ),
+        GiftCartTextField(
+          total: OrderFeesRepo.calcTotal(
+                  order: widget.price,
+                  shipping: 40,
+                  service: OrderFeesRepo.calcService(
+                      price: widget.price - (widget.discount ?? 0.0)),
+                  promoCode: 0.0,
+                  discount: widget.discount ?? 0)
+              .toStringAsFixed(2),
+        ),
         const SizedBox(
           height: 16,
         ),
-        feesItem(tittle: "Order", value: widget.price.toStringAsFixed(2),isSale:widget.discount != null ? true:false  ),
+        feesItem(
+            tittle: "Order",
+            value: widget.price.toStringAsFixed(2),
+            isSale: false),
         feesItem(tittle: "shipping", value: "40.00"),
         feesItem(
             tittle: "service",
-            value: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)).toStringAsFixed(2)
-        ),
+            value: OrderFeesRepo.calcService(
+                    price: widget.price - (widget.discount ?? 0.0))
+                .toStringAsFixed(2)),
         widget.discount != null
-            ? feesItem(tittle: "discount", value: "-${widget.discount!.toStringAsFixed(2)}")
+            ? feesItem(
+                tittle: "discount",
+                value: "-${widget.discount!.toStringAsFixed(2)}")
             : const SizedBox(),
-        model == null
-            ? const SizedBox()
-            : feesItem(tittle: "Gift Card ", value: discount>1 ? discount.toStringAsFixed(2) : (discount*widget.price).toStringAsFixed(2) , isPromo: true),
+        BlocBuilder<PromoCubit, PromoState>(builder: (context, state) {
+          if (state is ApplyPromoSuccess) {
+            return feesItem(
+                tittle: "Gift Card ",
+                value: state.discount > 1
+                    ? "-${state.discount.toStringAsFixed(2)}"
+                    : "-${(state.discount * widget.price).toStringAsFixed(2)}",
+                isPromo: true);
+          } else {
+            return const SizedBox();
+          }
+        }),
         const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Divider(
@@ -71,23 +79,66 @@ class _OrderFeesState extends State<OrderFees> {
         feesItem(
             tittle: "Total",
             value: OrderFeesRepo.calcTotal(
-                order: widget.price,
-                shipping: 40,
-                service: OrderFeesRepo.calcService(price: widget.price-(widget.discount??0.0)) ,
-                promoCode: discount > 1 ? discount : discount*widget.price,
-                discount: widget.discount ?? 0).toStringAsFixed(2) ) ,
+                    order: widget.price,
+                    shipping: 40,
+                    service: OrderFeesRepo.calcService(
+                        price: widget.price - (widget.discount ?? 0.0)),
+                    promoCode: 0,
+                    discount: widget.discount ?? 0)
+                .toStringAsFixed(2)),
 
-
-
-
-         CheckoutButton(
-           onTap: widget.checkoutTapped ,
-           total: OrderFeesRepo.calcTotal(
-            order: widget.price,
-            shipping: 40,
-            service: widget.price > 1000 ? widget.price * 0.01 : widget.price * 0.015,
-            promoCode: 0.0,
-            discount: widget.discount ?? 0).toStringAsFixed(2),)
+        BlocBuilder<PromoCubit, PromoState>(
+          builder: (context, state) {
+            if (state is ApplyPromoSuccess) {
+              double discount = widget.discount ?? 0;
+              if (state.promoModel.minOrder > (widget.price - discount)) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4),
+                  child: Text(
+                    "add ${(state.promoModel.minOrder - (widget.price-discount)).toStringAsFixed(2)} EGP to Your order To complete ",
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
+              }
+              widget.fees(OrderFeesRepo.calcTotal(
+                  order: widget.price,
+                  discount: widget.discount ?? 0,
+                  shipping: 40,
+                  service: OrderFeesRepo.calcService(
+                      price: widget.price - (widget.discount ?? 0.0)),
+                  promoCode: state.discount>1?state.discount:state.discount*widget.price).toStringAsFixed(2)  );
+              return CheckoutButton(
+                  onTap: widget.checkoutTapped,
+                  total: (OrderFeesRepo.calcTotal(
+                          order: widget.price,
+                          discount: widget.discount ?? 0,
+                          shipping: 40,
+                          service: OrderFeesRepo.calcService(
+                              price: widget.price - (widget.discount ?? 0.0)),
+                          promoCode: state.discount>1?state.discount:state.discount*widget.price).toStringAsFixed(2)) );
+            } else {
+              widget.fees(OrderFeesRepo.calcTotal(
+                  order: widget.price,
+                  discount: widget.discount ?? 0,
+                  shipping: 40,
+                  service: OrderFeesRepo.calcService(
+                      price: widget.price - (widget.discount ?? 0.0)),
+                  promoCode: 0).toStringAsFixed(2)  );
+              return CheckoutButton(
+                  onTap: widget.checkoutTapped,
+                  total: (OrderFeesRepo.calcTotal(
+                          order: widget.price,
+                          discount: widget.discount ?? 0,
+                          shipping: 40,
+                          service: OrderFeesRepo.calcService(
+                              price: widget.price - (widget.discount ?? 0.0)),
+                          promoCode: 0))
+                      .toStringAsFixed(2));
+            }
+          },
+        )
       ],
     );
   }
@@ -109,7 +160,8 @@ class _OrderFeesState extends State<OrderFees> {
           Text(
             value + " EGP",
             style: TextStyle(
-                fontSize: 14,color: isPromo == true ? Colors.green : Colors.black,
+                fontSize: 14,
+                color: isPromo == true ? Colors.green : Colors.black,
                 decoration: isSale == true
                     ? TextDecoration.lineThrough
                     : TextDecoration.none),

@@ -9,6 +9,8 @@ import 'package:shoppizel/Features/order/data/order_model.dart';
 import 'package:shoppizel/Features/order/view/widget/delivery_time.dart';
 import 'package:shoppizel/Features/payment/view/screen/order_confirmed.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
+import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
+import 'package:shoppizel/Features/promo/controller/promo_state.dart';
 import 'package:shoppizel/core/function/snackbars.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
@@ -17,18 +19,20 @@ import 'package:shoppizel/core/widgets/primary_button.dart';
 import '../../../Auth/data/model/user_model.dart';
 import '../../../cart/data/model/cart_model.dart';
 import '../../../location/data/model.dart';
+import '../../../promo/data/promo_model.dart';
 import '../widget/payment_methods.dart';
 import '../widget/select_delivery_time.dart';
 
 class ChoosePaymentMethod extends StatelessWidget {
   final LocationModel locationModel;
-
+  final String fees ;
   final List<CartModel> cartModel;
 
   final String? promo;
 
   ChoosePaymentMethod(
-      {super.key, required this.locationModel, required this.cartModel, this.promo});
+
+      {super.key, required this.locationModel, required this.cartModel, this.promo , required this.fees});
 
   final TextEditingController _notesController = TextEditingController();
 
@@ -122,9 +126,15 @@ class ChoosePaymentMethod extends StatelessWidget {
                     }
                     else{
                       return   PrimaryButton(label: "Pay", onTap: () async{
+                        PromoModel? promoCode ;
+                      PromoState state =   BlocProvider.of<PromoCubit>(context).state ;
+                      if (state is ApplyPromoSuccess){
+                        promoCode = state.promoModel ;
+                      }
                     UserModel profile = await BlocProvider.of<ProfileCubit>(context).repo.getProfileInfo() ;
                     OrderModel order = OrderModel(
                     orderId: "",
+                    promo: promoCode?.code??"no promo",
                     dateOfOrder: DateTime.now().toString(),
                     paymentMethod: selectedPaymentMethod,
                     products: cartModel,
@@ -132,8 +142,11 @@ class ChoosePaymentMethod extends StatelessWidget {
                     orderStatus: "Accepted",
                     location: locationModel,
                     time: selectedTime,
+                    fees:  fees,
                     notes: _notesController.text==""?null: _notesController.text.trim()) ;
-                    context.read<OrderCubit>().makeAnOrder(order);
+
+                    context.read<OrderCubit>().makeAnOrder(order: order , promo: promoCode );
+                    context.read<PromoCubit>().getAllPromo() ;
                     },) ;
                     }
                   },

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/screen_dimentions.dart';
+import '../../controller/promo_cubit.dart';
 import '../../data/promo_model.dart';
 import '../../data/promo_code_repo.dart';
 
@@ -64,9 +66,8 @@ class PromoCodeItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    promoModel.validation != null
-                        ? "valid till ${DateFormat('dd-MM-yyyy').format(DateTime.parse(promoModel.validation!))}"
-                        : "Valid",
+                         "valid till ${DateFormat('dd-MM-yyyy').format(DateTime.parse(promoModel.validation))}"
+                    ,
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   ),
                    Text("Min Order : ${promoModel.minOrder} EGP" , style: TextStyle(fontSize: 12 , color: Colors.grey.shade600),) ,
@@ -83,7 +84,9 @@ class PromoCodeItem extends StatelessWidget {
                   (DateTime.now().isBefore(DateTime.parse(
                       promoModel.validation ?? DateTime(2028).toString())))
                       ? ElevatedButton(
-                    onPressed: () async{
+                    onPressed: () {
+                      BlocProvider.of<PromoCubit>(context).applyPromo(promoModel.code) ;
+
 
                     },
                     style: ElevatedButton.styleFrom(

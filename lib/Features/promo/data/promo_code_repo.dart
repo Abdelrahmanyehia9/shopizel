@@ -26,11 +26,12 @@ class PromoCodeRepo{
     }
 
   }
-Future<void> add (PromoModel model )async{
+Future<void> addNewPromo (PromoModel model )async{
     await _fireStore.collection(FirebaseConstant.usersCollection).doc(FirebaseAuth.instance.currentUser!.uid).collection("promo").add(model.toJson()) ;
 
 
 }
+
 
 
 

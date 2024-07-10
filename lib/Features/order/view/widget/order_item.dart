@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shoppizel/Features/rate/view/widget/rate_products.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/screen_dimentions.dart';
 import '../../data/order_model.dart';
@@ -70,9 +72,11 @@ class OrderItem extends StatelessWidget {
                       foregroundColor: AppConstants.appColor,
                       shape: const RoundedRectangleBorder()),
                 ) :TextButton.icon(
-                  onPressed: () {},
-                  label:  Text("Rate"),
-                  icon:  Icon(Icons.star_rate ,),
+                  onPressed: () {
+                    showBottomSheet(context: context, builder: (_)=>RateProducts(rateBy: FirebaseAuth.instance.currentUser!.uid, products: orderModel.products,    )) ;
+                  },
+                  label:  const Text("Rate"),
+                  icon:  const Icon(Icons.star_rate ,),
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.yellow.shade800 ,
                       shape: const RoundedRectangleBorder()),

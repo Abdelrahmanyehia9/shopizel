@@ -26,6 +26,8 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+
+  String? orderFees ;
   final ScrollController _scrollController = ScrollController();
   bool? error;
   bool isProcessing = false;
@@ -124,6 +126,9 @@ class _OrderScreenState extends State<OrderScreen> {
                 ),
               ),
               OrderFees(
+                fees: (value){
+                  orderFees = value  ;
+                },
                 price: widget.products.fold(
                   0.0,
                       (sum, item) => sum + double.parse(item.price) * item.quantity,
@@ -143,7 +148,9 @@ class _OrderScreenState extends State<OrderScreen> {
                         error = true;
                       });
                     } else {
+                      print(orderFees) ;
                       Navigator.push(context, MaterialPageRoute(builder: (_) => ChoosePaymentMethod(
+                        fees: orderFees!.toString(),
                         locationModel: state.selectedLocation!,
                         cartModel: widget.products,
                       )));

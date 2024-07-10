@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/order/controller/order_state.dart';
 import 'package:shoppizel/Features/order/data/order_repo.dart';
+import 'package:shoppizel/Features/promo/data/promo_model.dart';
 
 import '../data/order_model.dart';
 
@@ -10,10 +11,10 @@ class OrderCubit extends Cubit<OrderState>{
 
   OrderCubit(this.repo):super(OrderStateInitial()) ;
 
-  Future<void> makeAnOrder(OrderModel order)async{
+  Future<void> makeAnOrder({required OrderModel order , PromoModel? promo })async{
     emit(MakeOrderLoading()) ;
     try {
-      repo.placeAOrder(order) ;
+      repo.placeAOrder(order: order , promo: promo) ;
       emit(MakeOrderSuccess()) ;
     }catch(e){
       emit(MakeOrderFailure()) ;

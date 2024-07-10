@@ -26,6 +26,7 @@ import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/profile/data/profile_repo.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
+import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
 
 import 'Features/cart/controller/cart_cubit.dart';
 import 'Features/home/controllers/store_cubit.dart';
@@ -34,6 +35,7 @@ import 'Features/home/view/screens/home_screen.dart';
 import 'Features/location/view/screen/get_location_permission.dart';
 import 'Features/location/view/screen/adress_screen.dart';
 import 'Features/payment/view/screen/order_confirmed.dart';
+import 'Features/rate/data/rate_repo.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
 
@@ -62,7 +64,9 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context) => LocationCubit(LocationRepo())),
         BlocProvider(create: (context) => ProfileCubit(ProfileRepo())),
         BlocProvider(create: (context)=> OrderCubit(OrderRepo())) ,
-        BlocProvider(create: (context)=>PromoCubit(PromoCodeRepo())) ,
+        BlocProvider(create: (context)=>PromoCubit(PromoCodeRepo())..getAllPromo()) ,
+        BlocProvider(create: (context)=>RateCubit(repo:RateRepo())) ,
+
 
 
 
@@ -71,7 +75,14 @@ class Tship extends StatelessWidget {
         home: const HomeScreen() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-
+elevatedButtonTheme: const ElevatedButtonThemeData(
+  style: ButtonStyle(
+    foregroundColor: WidgetStatePropertyAll(Colors.white) ,
+    overlayColor: WidgetStatePropertyAll(Colors.teal),
+    backgroundColor: WidgetStatePropertyAll(AppConstants.appColor) ,
+    shape: WidgetStatePropertyAll(RoundedRectangleBorder())
+  )
+) , 
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           hoverColor: Colors.transparent,

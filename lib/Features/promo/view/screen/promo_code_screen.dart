@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/controller/promo_state.dart';
 import 'package:shoppizel/Features/shimmer/promo_codes_loading.dart';
@@ -18,7 +19,6 @@ class PromoCodeScreen extends StatefulWidget {
 class _PromoCodeScreenState extends State<PromoCodeScreen> {
   @override
   void initState() {
-    BlocProvider.of<PromoCubit>(context).getAllPromo();
     super.initState();
   }
 
@@ -31,18 +31,62 @@ class _PromoCodeScreenState extends State<PromoCodeScreen> {
       body: BlocBuilder<PromoCubit, PromoState>(
         builder: (context, state) {
           if (state is GetAllPromoSuccess) {
-            if(state.allPromo.isEmpty){
-              return const NoPromoCodes() ;
-            }else{
-              return  Padding(
+            if (state.allPromo.isEmpty) {
+              return const NoPromoCodes();
+            } else {
+              return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(itemCount: state.allPromo.length,
-                      itemBuilder: (context , index) =>
-                          PromoCodeItem(promoModel: state.allPromo[index]) )
-              );
+                  child: ListView.builder(
+                      itemCount: state.allPromo.length,
+                      itemBuilder: (context, index) =>
+                          PromoCodeItem(promoModel: state.allPromo[index])));
             }
-          }else{
-            return const  PromoCodesLoading();
+          } else if (state is ApplyPromoLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ApplyPromoSuccess) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: screenHeight(context)*.4,
+                      child: Image.asset("assets/images/pngwing.com (37).png" , fit: BoxFit.cover,)) ,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(textAlign: TextAlign.center ,style: TextStyle(fontSize: 18   , color: Colors.grey.shade600) ,
+                        "you have applied ${state.promoModel.code.toUpperCase()} Enjoying with Save ${state.discount > 1 ? "${state.discount} EGP" : "${state.discount*100} %" } on your next order valid for ${state.promoModel.store} "),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(onPressed: (){
+                        BlocProvider.of<PromoCubit>(context).getAllPromo() ;
+                      }, style: ElevatedButton.styleFrom(
+                        fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: Colors.red.shade600 ,
+                        overlayColor: Colors.red
+                      ), child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Remove  " , style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text(state.promoModel.code , style: const TextStyle(fontSize: 12),)
+                        ],
+                      ) ,),
+                      ElevatedButton(onPressed: (){
+Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen() )) ;
+                      }, style: ElevatedButton.styleFrom(
+                          fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: AppConstants.appColor ,
+
+                      ), child: const Text("Continue shopping" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 12),) ,),
+
+                    ],
+                  ) ,
+                ],
+              ),
+            );
+          } else {
+            return const PromoCodesLoading();
           }
         },
       ),
@@ -56,21 +100,32 @@ class NoPromoCodes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-    child: SizedBox(
-      width: screenWidth(context),
-      child:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: screenHeight(context)*0.5,
-              width: double.infinity,
-              child: Image.asset("assets/images/pngegg (1).png" , fit: BoxFit.fitHeight,)),
-          const SizedBox(height: 15,) ,
-          const Text("unfortunately No available Code this Time Try again later" , textAlign: TextAlign.center , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold ,color: AppConstants.appColor),)
-        ],
-      ) ,
-
-    ),
-    ) ;
-
+      child: SizedBox(
+        width: screenWidth(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                height: screenHeight(context) * 0.5,
+                width: double.infinity,
+                child: Image.asset(
+                  "assets/images/pngegg (1).png",
+                  fit: BoxFit.fitHeight,
+                )),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              "unfortunately No available Code this Time Try again later",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppConstants.appColor),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
