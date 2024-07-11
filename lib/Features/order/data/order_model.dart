@@ -14,6 +14,7 @@ class OrderModel {
   final String? notes ;
   final String? promo  ;
   final String fees ;
+  final bool? isRated ;
 
   OrderModel({
     required this.orderId,
@@ -26,7 +27,8 @@ class OrderModel {
     required this.time ,
      this.notes ,
     this.promo ,
-    required this.fees
+    required this.fees ,
+    this.isRated
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class OrderModel {
       notes:json["notes"] ,
       promo: json["promo"] ,
       fees: json["fees"] ,
+      isRated:json["isRated"]
     );
   }
 
@@ -65,7 +68,8 @@ class OrderModel {
       "time":time ,
       "notes":notes ,
       "promo":promo ,
-      "fees":fees
+      "fees":fees  ,
+      "isRated":isRated
     };
   }
 }

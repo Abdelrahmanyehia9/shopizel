@@ -71,9 +71,11 @@ class OrderItem extends StatelessWidget {
                   style: TextButton.styleFrom(
                       foregroundColor: AppConstants.appColor,
                       shape: const RoundedRectangleBorder()),
-                ) :TextButton.icon(
+                ) :
+                orderModel.isRated==true ? const SizedBox():TextButton.icon(
                   onPressed: () {
-                    showBottomSheet(context: context, builder: (_)=>RateProducts(rateBy: FirebaseAuth.instance.currentUser!.uid, products: orderModel.products,    )) ;
+                    showBottomSheet(context: context, builder: (_)=>RateProducts(
+                      rateBy: FirebaseAuth.instance.currentUser!.uid, products: orderModel.products, orderId: orderModel.orderId, )) ;
                   },
                   label:  const Text("Rate"),
                   icon:  const Icon(Icons.star_rate ,),

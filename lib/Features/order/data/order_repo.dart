@@ -19,7 +19,6 @@ class OrderRepo {
      await response.docs.first.reference.delete() ;
     }
   }
-
   Future<List<OrderModel>> getAllOrders() async {
     List<OrderModel> orders = [];
     var response = await _fireStore.collection("orders")
@@ -31,7 +30,6 @@ class OrderRepo {
     }
     return orders;
   }
-
   List<OrderModel> getCompletedOrders(List<OrderModel> allOrders) {
     List<OrderModel> completed = [];
     for (OrderModel order in allOrders) {
@@ -41,7 +39,6 @@ class OrderRepo {
     }
     return completed;
   }
-
   List<OrderModel> getOnGoingOrders(List<OrderModel> allOrders) {
     List<OrderModel> onGoing = [];
     for (OrderModel order in allOrders) {
@@ -51,7 +48,9 @@ class OrderRepo {
     }
     return onGoing;
   }
-
+   Future<void>markOrderAsRated(String orderId)async{
+    await _fireStore.collection("orders").doc(orderId).update({"isRated":true}) ;
+   }
 
 }
 

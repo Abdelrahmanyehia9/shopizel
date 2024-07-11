@@ -1,3 +1,5 @@
+import '../data/rate_model.dart';
+
 abstract class RateState{}
 class RateStateInitial extends RateState{}
 
@@ -11,3 +13,17 @@ class AddRateFailure extends RateState{
 
 }
 class AddRateLoading extends RateState{}
+
+
+
+
+class GetAllRatesLoading extends RateState{}
+class GetAllRatesSuccess extends RateState{
+  final List<RateModel> rates  ;
+  GetAllRatesSuccess({required this.rates});
+}
+class GetAllRatesFailure extends RateState{
+  final String error ;
+  GetAllRatesFailure({required this.error});
+
+}

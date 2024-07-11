@@ -13,9 +13,9 @@ class RateCubit extends Cubit<RateState>{
   Future<void>addNewRate(List<RateModel> rates)async{
     emit(AddRateLoading()) ;
     try{
-      repo.addRating(rates) ;
-      emit(AddRateSuccess()) ;
+      await repo.addRating(rates) ;
 
+      emit(AddRateSuccess()) ;
 
     }catch(e){
       emit(AddRateFailure(error: e.toString())) ;
@@ -26,6 +26,21 @@ class RateCubit extends Cubit<RateState>{
 
 
   }
+  Future<void>getMyRates()async{
+    emit(GetAllRatesLoading()) ;
+    try{
+      List<RateModel>myRates = await repo.getAllMyRates() ;
+      emit(GetAllRatesSuccess(rates: myRates)) ;
+
+    }catch(e){
+      emit(GetAllRatesFailure(error: e.toString())) ;
+    }
+
+
+
+
+  }
+
 
 
 

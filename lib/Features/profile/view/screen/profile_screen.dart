@@ -5,6 +5,7 @@ import 'package:shoppizel/Features/Auth/data/model/user_model.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
 import 'package:shoppizel/Features/payment/view/screen/saved_card.dart';
 import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
+import 'package:shoppizel/Features/rate/view/screen/my_rates.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -156,6 +157,9 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
               child: ListTile(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>const MyRates())) ;
+                },
                 leading: CircleAvatar(
                     backgroundColor: Colors.yellow.shade800.withOpacity(0.1),
                     child: Icon(

@@ -36,6 +36,7 @@ import 'Features/location/view/screen/get_location_permission.dart';
 import 'Features/location/view/screen/adress_screen.dart';
 import 'Features/payment/view/screen/order_confirmed.dart';
 import 'Features/rate/data/rate_repo.dart';
+import 'Features/rate/view/widget/product_rate.dart';
 import 'core/utils/app_constants.dart';
 import 'firebase_options.dart';
 
@@ -72,7 +73,7 @@ class Tship extends StatelessWidget {
 
       ],
       child: MaterialApp(
-        home: const HomeScreen() ,
+        home:  HomeScreen() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
 elevatedButtonTheme: const ElevatedButtonThemeData(

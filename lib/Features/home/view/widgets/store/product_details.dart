@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
+import 'package:shoppizel/Features/rate/view/widget/product_rate.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'choose_size_and_color.dart';
 
@@ -94,19 +95,21 @@ class ProductDetails extends StatelessWidget {
                                   ? "${model.price}EGP "
                                   : "",
                               style: TextStyle(
-                                  color: Colors.grey.shade400,
+                                  color: Colors.red,
                                   decoration: TextDecoration.lineThrough,
-                                  decorationColor: Colors.grey,
-                                  fontSize: 14),
+                                  decorationColor: Colors.red,
+                                  fontSize: 12),
                             )
                           ]),
                     ),
-                    rateProduct(rate: model.rate ?? "0", count: model.count)
+
                   ],
                 ),
+                ProductRate() ,
 
                 /// to make order
-                ChoseSizeAndColor(color: color, model: model)
+                ChoseSizeAndColor(color: color, model: model) ,
+
               ],
             ),
           )
