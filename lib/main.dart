@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Auth/view/screens/login_screen.dart';
+import 'package:shoppizel/Features/chat/view/screen/support_chat_screen.dart';
 import 'package:shoppizel/Features/home/view/screens/store_screen.dart';
 import 'package:shoppizel/Features/order/controller/order_cubit.dart';
 import 'package:shoppizel/Features/order/data/order_repo.dart';
@@ -34,7 +35,7 @@ import 'Features/home/data/repository/store_repo.dart';
 import 'Features/home/view/screens/home_screen.dart';
 import 'Features/location/view/screen/get_location_permission.dart';
 import 'Features/location/view/screen/adress_screen.dart';
-import 'Features/payment/view/screen/order_confirmed.dart';
+import 'Features/order/view/screen/order_confirmed.dart';
 import 'Features/rate/data/rate_repo.dart';
 import 'Features/rate/view/widget/product_rate.dart';
 import 'core/utils/app_constants.dart';
@@ -73,7 +74,7 @@ class Tship extends StatelessWidget {
 
       ],
       child: MaterialApp(
-        home:  HomeScreen() ,
+        home:  const HomeScreen() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
 elevatedButtonTheme: const ElevatedButtonThemeData(

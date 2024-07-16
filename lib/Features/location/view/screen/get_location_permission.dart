@@ -65,7 +65,7 @@ class _GetLocationPermissionState extends State<GetLocationPermission> {
                   PermissionHandlers permission = PermissionHandlers();
                   bool val = await permission.checkLocationPermission();
                   if (val == true) {
-                    Position position = await LocationRepo.determineDevicePosition();
+                    Position position = await (LocationRepo.determineDevicePosition());
                     LatLng coord = LatLng(position.latitude , position.longitude);
                     String stName = await repo.getLocationName(lat: coord.latitude.toString(), long: coord.longitude.toString()) ;
                     setState(() {

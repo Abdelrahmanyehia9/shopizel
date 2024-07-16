@@ -104,7 +104,7 @@ class _RateProductsState extends State<RateProducts> {
                             for (int i = 0; i < widget.products.length; i++) {
                               RateModel model = RateModel(
                                 dateRates: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()) ,
-                                rateBy: user,
+                                rateBy: user.uid,
                                 product: widget.products[i],
                                 desc: controllers[i].text,
                                 rateCount: starts.floor().toInt(),

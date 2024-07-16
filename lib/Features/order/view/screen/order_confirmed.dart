@@ -5,7 +5,8 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 
 class OrderConfirmed extends StatelessWidget {
-  const OrderConfirmed({super.key});
+  final String orderNo ;
+  const OrderConfirmed({super.key , required this.orderNo});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class OrderConfirmed extends StatelessWidget {
             const Text("Order Confirmed !" , style: TextStyle(fontSize: 28 , fontWeight: FontWeight.bold),) ,
             const SizedBox(height: 12,) ,
             const Text("Check dashboard to check order status" , textAlign: TextAlign.center , style: TextStyle(fontSize: 16 , color: Colors.grey),) ,
-            const Text("Your Order NO : 564684935 " , textAlign:TextAlign.center, style: TextStyle(fontSize: 18 , color: Colors.grey),) ,
+             Text("Your Order NO : ${orderNo}" , textAlign:TextAlign.center, style: TextStyle(fontSize: 14 , color: Colors.grey.shade600),) ,
             const SizedBox(height: 18,) ,
              PrimaryButton(label: "done" , onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (_) =>const HomeScreen())) ;

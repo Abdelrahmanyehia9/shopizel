@@ -1,18 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hidable/hidable.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
-import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
 import 'package:shoppizel/Features/cart/view/screen/cart_screen.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
-import 'package:shoppizel/Features/location/data/model.dart';
-import 'package:shoppizel/Features/order/data/order_model.dart';
-import 'package:shoppizel/Features/order/data/order_repo.dart';
-import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
-import 'package:shoppizel/Features/promo/data/promo_model.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../Auth/data/model/user_model.dart';
@@ -30,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserModel userModel = UserModel(
       uid: FirebaseAuth.instance.currentUser!.uid,
@@ -50,6 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       key: _scaffoldKey,
       drawer: HomeDrawer(
         userModel: userModel,
@@ -61,11 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
             delegate: SliverChildListDelegate(
               [
                 HomeBody(),
+
               ],
             ),
           ),
+
         ],
       ),
+
     );
   }
 

@@ -94,7 +94,7 @@ class ProductDetails extends StatelessWidget {
                               text: model.sale != "0"
                                   ? "${model.price}EGP "
                                   : "",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.red,
                                   decoration: TextDecoration.lineThrough,
                                   decorationColor: Colors.red,
@@ -105,7 +105,7 @@ class ProductDetails extends StatelessWidget {
 
                   ],
                 ),
-                ProductRate() ,
+                ProductRate(model: model,) ,
 
                 /// to make order
                 ChoseSizeAndColor(color: color, model: model) ,

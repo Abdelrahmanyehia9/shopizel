@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/profile/controller/profile_state.dart';
 
@@ -7,7 +9,6 @@ import '../data/profile_repo.dart';
 class ProfileCubit extends Cubit<ProfileState>{
   ProfileRepo repo  ;
   ProfileCubit(this.repo):super(ProfileStateInitial()) ;
-
 
   Future<void> fetchProfile() async{
     emit(ProfileInfoLoading()) ;
@@ -20,10 +21,13 @@ class ProfileCubit extends Cubit<ProfileState>{
     }
 
 }
-  Future<void>editProfile(UserModel user)async{
+  Future<void>editProfile(UserModel user , File? img)async{
     emit(EditProfileInfoLoading()) ;
     try{
      await repo.editProfile(user) ;
+     if (img != null ){
+     await repo.updateImg(image: img) ;
+     }
       emit(EditProfileInfoSuccess()) ;
 
     }catch(e){

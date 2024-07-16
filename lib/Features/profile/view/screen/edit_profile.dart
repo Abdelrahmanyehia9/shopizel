@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/profile/controller/profile_state.dart';
+import 'package:shoppizel/Features/profile/view/screen/pick_image.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 
@@ -25,7 +28,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
 
   final TextEditingController _number = TextEditingController();
-
+   File? img ;
   final TextEditingController _name = TextEditingController();
 
   @override
@@ -38,6 +41,15 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+
+        iconTheme: const IconThemeData(
+          color: Colors.white ,
+          size: 36
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       body: Container(
         height: screenHeight(context),
         decoration: const BoxDecoration(
@@ -55,7 +67,7 @@ class _EditProfileState extends State<EditProfile> {
           child: Column(
             children: [
               SizedBox(height: screenHeight(context)*0.125,) ,
-              const Center(
+               Center(
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
@@ -63,20 +75,40 @@ class _EditProfileState extends State<EditProfile> {
                       radius: 65,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider("https://i.postimg.cc/5tdvGxX2/117891559-1259928357686178-3630984762144176343-n.jpg")
-                        ,  radius: 64,
+                        backgroundColor: AppConstants.appColor,
+                        backgroundImage: img != null ? FileImage(img!): widget.userModel.profilePic != null ? CachedNetworkImageProvider(widget.userModel.profilePic!):AssetImage("assets/images/avatar.png")  ,
+                          radius: 64,
                       ),
                     ),
                     Positioned(
                       bottom: 0,
                       right: 18,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.edit,
-                          size: 14,
-                          color: AppConstants.appColor,
+                      child: InkWell(
+                        onTap: (){
+                          showModalBottomSheet(context: context, builder: (_)=>ChooseImagePicker(onSelected: (value){
+                            setState(() {
+                              img = value ;
+                            });
+                          },
+                          onRemove: ()async{
+
+                            setState(() {
+                              img = null ;
+                              widget.userModel.profilePic = null ;
+                            });
+                            Navigator.pop(context) ;
+                            await BlocProvider.of<ProfileCubit>(context).repo.deleteProfilePic() ;
+
+                          },) ) ;
+                        },
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: AppConstants.appColor,
+                          child: Icon(
+                            widget.userModel.profilePic !=null ? Icons.edit : Icons.add,
+                            size: 14,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     )
@@ -116,9 +148,10 @@ class _EditProfileState extends State<EditProfile> {
                       onTap: () async {
                         UserModel user = UserModel(uid: FirebaseAuth.instance.currentUser!.uid, email: FirebaseAuth.instance.currentUser!.email! , number: _number.text.trim() , username: _name.text.trim()) ;
                         await BlocProvider.of<ProfileCubit>(context)
-                            .editProfile(user).whenComplete((){
+                            .editProfile(user , img).whenComplete((){
                               BlocProvider.of<ProfileCubit>(context).fetchProfile() ;
                         });
+
                       },
                     );
                   }

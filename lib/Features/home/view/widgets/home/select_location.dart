@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
 import '../../../../../core/widgets/primary_button.dart';
 import '../../../../location/controller/location_cubit.dart';
+import '../../../../location/data/location_repo.dart';
 import '../../../../location/data/model.dart';
+import '../../../../location/view/widget/location_map.dart';
 
 class SelectALocation extends StatelessWidget {
   final List<LocationModel> locations;
@@ -52,7 +56,22 @@ class SelectALocation extends StatelessWidget {
                     },
                     child: locationItem(locations[index]))),
           ),
-          const PrimaryButton(label: "Add Location"),
+           PrimaryButton(label: "Add Location" , onTap: () async {
+            Position coord =
+            await LocationRepo.determineDevicePosition();
+            String locName = await LocationRepo()
+                .getLocationName(
+                lat: coord.latitude.toString(),
+                long: coord.longitude.toString());
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => LocationMap(
+                      position: LatLng(coord.latitude,
+                          coord.longitude),
+                      stName: locName,
+                    )));
+          },),
           const SizedBox(
             height: 12,
           ),

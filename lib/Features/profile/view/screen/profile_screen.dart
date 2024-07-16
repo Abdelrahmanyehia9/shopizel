@@ -1,12 +1,19 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Auth/data/model/user_model.dart';
 import 'package:shoppizel/Features/location/view/screen/saved_addresses.dart';
 import 'package:shoppizel/Features/payment/view/screen/saved_card.dart';
 import 'package:shoppizel/Features/profile/view/screen/edit_profile.dart';
 import 'package:shoppizel/Features/rate/view/screen/my_rates.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/utils/screen_dimentions.dart';
+
+import '../../../../core/function/snackbars.dart';
+import '../../../Auth/controller/auth_cubit.dart';
+import '../../../Auth/view/screens/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserModel userModel ;
@@ -15,17 +22,16 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar:  true,
       appBar: AppBar(
+iconTheme: const IconThemeData(
+  size: 28 ,
+  color: Colors.white
+),
         foregroundColor: Colors.white ,
-        backgroundColor: AppConstants.appColor,
-        scrolledUnderElevation: 0,
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+       backgroundColor: Colors.transparent,
+        elevation: 0,
+
       ),
       body: SingleChildScrollView
         (
@@ -43,13 +49,16 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child:  Column(
                 children: [
-                  const Center(
+                  SizedBox(height: screenHeight(context)*0.075,) ,
+
+                   Center(
                     child: CircleAvatar(
                       radius: 65,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider("https://i.postimg.cc/5tdvGxX2/117891559-1259928357686178-3630984762144176343-n.jpg")
-                         , radius: 64,
+                        backgroundColor: AppConstants.appColor,
+                        backgroundImage: userModel.profilePic !=null ? CachedNetworkImageProvider(userModel.profilePic! ,):  const AssetImage("assets/images/avatar.png" ,),
+                          radius: 64,
                       ),
                     ),
                   ),
@@ -200,6 +209,23 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
               child: ListTile(
+                onTap: (){
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    try {
+                      Navigator.pop(context);
+                      BlocProvider.of<AuthCubit>(context).signOut();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                            (
+                            route) => false, // Replace false with your condition to stop removing routes
+                      );
+                    } catch (e) {
+                      SnackBars.customSnackBar(context: context, desc: "you should Sign In Before That", tittle: "Failed", type: AnimatedSnackBarType.error) ;
+                    }
+                  }
+                },
                 leading: CircleAvatar(
                     backgroundColor: AppConstants.appColor.withOpacity(0.1),
                     child: const Icon(

@@ -9,7 +9,7 @@ class OrderRepo {
 
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
-  Future<void> placeAOrder({required OrderModel order,PromoModel? promo}) async {
+  Future<String> placeAOrder({required OrderModel order,PromoModel? promo}) async {
     var res = await _fireStore.collection("orders").add(order.toJson());
     await res.update({"orderId": res.id});
     if(promo != null ){
@@ -18,6 +18,7 @@ class OrderRepo {
           "code", isEqualTo: promo.code).get() ;
      await response.docs.first.reference.delete() ;
     }
+    return res.id ;
   }
   Future<List<OrderModel>> getAllOrders() async {
     List<OrderModel> orders = [];

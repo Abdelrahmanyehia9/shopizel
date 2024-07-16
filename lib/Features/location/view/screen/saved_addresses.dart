@@ -125,7 +125,9 @@ class _SavedAddressesState extends State<SavedAddresses> {
                                     setState(() {
                                       locations[index].isSelected = true;
                                     });
-                                    await BlocProvider.of<LocationCubit>(context).repo.selectLocation(locations[index]);
+                                    await BlocProvider.of<LocationCubit>(context).repo.selectLocation(locations[index]).whenComplete((){
+                                      BlocProvider.of<LocationCubit>(context).getAllLocations() ;
+                                    });
                                   },
                                   child: savedLocationItem(
                                       onRemove: () async {

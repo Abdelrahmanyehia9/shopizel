@@ -48,10 +48,10 @@ class HomeDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CircleAvatar(
+                         CircleAvatar(
                           radius: 36,
-                          backgroundColor: AppConstants.appColor,
-                          backgroundImage: CachedNetworkImageProvider("https://i.postimg.cc/5tdvGxX2/117891559-1259928357686178-3630984762144176343-n.jpg"),
+                          backgroundColor: AppConstants.appColor ,
+                          backgroundImage: userModel.profilePic !=null ? CachedNetworkImageProvider(userModel.profilePic! , ):  const AssetImage("assets/images/avatar.png" ,),
                         ),
                         SizedBox(width: screenWidth(context)*0.65,
                           child: Text(
@@ -66,12 +66,12 @@ class HomeDrawer extends StatelessWidget {
                         Text(
                           state.profileInfo.email ,
                           style: const TextStyle(
-                              color: AppConstants.appColor, fontSize: 10),
+                              color: Colors.teal, fontSize: 10),
                         ) ,
                         Text(
                           state.profileInfo.number??"0123456789",
                           style: const TextStyle(
-                              color: AppConstants.appColor, fontSize: 8),
+                              color: Colors.teal, fontSize: 8),
                         )
 
                       ],
@@ -113,6 +113,7 @@ class HomeDrawer extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 36,
                         backgroundColor: AppConstants.appColor,
+
                       ),
                     ),
                   ),

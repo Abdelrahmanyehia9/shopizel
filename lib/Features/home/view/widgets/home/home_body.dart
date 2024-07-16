@@ -18,14 +18,20 @@ import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import '../../../../../core/widgets/loading_failure.dart';
 import '../../../../../core/widgets/loading.dart';
 import '../../../data/model/store_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeBody extends StatelessWidget {
-
   /// offer of the week
   const HomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<String> imgList = [
+      "https://i.postimg.cc/bwBbH0dj/19575339-331497697271041-6891568621659223354-o.jpg",
+      "https://pbs.twimg.com/media/C0SShxrWIAEWsEA.jpg",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2bbcfa99737217.5ef9be3dbb9a9.jpg",
+      "https://manage.babycouture.in/public/banners/banner_1631167643.jpg"
+    ];
     return BlocBuilder<HomeCubit, HomeStates>(builder: (context, state) {
       if (state is HomeStateSuccess) {
         return SingleChildScrollView(
@@ -41,25 +47,21 @@ class HomeBody extends StatelessWidget {
               ///greeting
               greetingText(
                   name: FirebaseAuth.instance.currentUser?.displayName),
-              FanCarouselImageSlider.sliderType1(
-                imagesLink: const [
-                  "https://akns-images.eonline.com/eol_images/Entire_Site/2022528/rs_1024x759-220628162412-E-Comm.jpg?fit=around%7C1024:759&output-quality=90&crop=1024:759;center,top",
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHJWjElfdcUgw4mqQUQeDTNpy9gE1kCxu5Qw&s",
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnQ-agD00Mjm9KfLeOljh7wUT4SQRObPcgJw&s",
-                ],
-                showIndicator: false,
-                turns: 100,
-                autoPlayInterval: const Duration(seconds: 5),
-                imageRadius: 12,
-                initalPageIndex: 0,
-                slideViewportFraction: 1,
-                isAssets: false,
-                isClickable: false,
-                autoPlay: true,
-                sliderHeight: screenHeight(context) * 0.22,
-                sideItemsShadow: const [],
-                currentItemShadow: const [],
-                expandedImageFitMode: BoxFit.cover,
+              SizedBox(height: 12,) ,
+              CarouselSlider(
+                options: CarouselOptions(
+                  enlargeFactor: 0.2,
+                  viewportFraction: 0.85,
+                  enlargeCenterPage: true,
+                  height: screenHeight(context) * 0.2,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                ),
+                items: imgList
+                    .map((item) => ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(item, fit: BoxFit.fill)))
+                    .toList(),
               ),
 
               ///search product

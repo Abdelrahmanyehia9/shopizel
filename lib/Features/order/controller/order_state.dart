@@ -3,7 +3,11 @@ import '../data/order_model.dart';
 
 abstract class OrderState{}
 class OrderStateInitial extends OrderState{}
-class MakeOrderSuccess extends OrderState {}
+class MakeOrderSuccess extends OrderState {
+ final String orderNo ;
+
+  MakeOrderSuccess({required this.orderNo});
+}
 class MakeOrderFailure extends OrderState{}
 class MakeOrderLoading extends OrderState{}
 

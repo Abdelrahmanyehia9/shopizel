@@ -11,9 +11,8 @@ import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/screen_dimentions.dart';
 
 class GiftCartTextField extends StatefulWidget {
-  final String total;
 
-  const GiftCartTextField({super.key, required this.total});
+  const GiftCartTextField({super.key});
 
   @override
   State<GiftCartTextField> createState() => _GiftCartTextFieldState();

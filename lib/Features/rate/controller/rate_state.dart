@@ -27,3 +27,14 @@ class GetAllRatesFailure extends RateState{
   GetAllRatesFailure({required this.error});
 
 }
+
+
+class GetProductRateLoading extends RateState {}
+class GetProductRateFailure extends RateState {}
+class GetProductRateSuccess extends RateState {
+  final List<RateModel> rates ;
+
+  GetProductRateSuccess({required this.rates});
+}
+
+

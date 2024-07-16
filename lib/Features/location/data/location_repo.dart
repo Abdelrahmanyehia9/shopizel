@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shoppizel/Features/location/data/model.dart';
 import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/function/permission_handlers.dart';
 
 class LocationRepo {
   Dio dio = Dio();
@@ -85,9 +87,6 @@ LocationModel? model  ;
       }
     }
   }
-
-// Ensure you have imported FirebaseAuth
-
   Future<void> deleteSelectedItem(LocationModel model) async {
     try{
       _firestore.collection(FirebaseConstant.usersCollection).doc(FirebaseAuth.instance.currentUser!.uid).collection("location").doc(model.name).delete() ;

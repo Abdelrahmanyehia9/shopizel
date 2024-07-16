@@ -2,7 +2,7 @@ import '../../Auth/data/model/user_model.dart';
 import '../../cart/data/model/cart_model.dart';
 
 class RateModel {
-  final UserModel rateBy;
+  final String rateBy;
   final CartModel product;
   final String desc;
   final int rateCount;
@@ -13,7 +13,7 @@ class RateModel {
 
   factory RateModel.fromJson(Map<String, dynamic> json) =>
       RateModel(
-        rateBy: UserModel.fromJson(json["rateBy"]),
+        rateBy: json["rateBy"],
         product: CartModel.fromJson(json['product']),
         desc: json["desc"],
         rateCount: json["rateCount"],
@@ -23,7 +23,7 @@ class RateModel {
       ) ;
   Map<String , dynamic>toJson()=>{
     "product": product.toJson() ,
-    "rateBy": rateBy.toJson(),
+    "rateBy": rateBy,
     "desc":desc ,
     "rateCount":rateCount ,
     "dateOfRate":dateRates

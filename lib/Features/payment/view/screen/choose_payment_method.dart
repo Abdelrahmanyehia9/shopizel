@@ -7,7 +7,7 @@ import 'package:shoppizel/Features/order/controller/order_cubit.dart';
 import 'package:shoppizel/Features/order/controller/order_state.dart';
 import 'package:shoppizel/Features/order/data/order_model.dart';
 import 'package:shoppizel/Features/order/view/widget/delivery_time.dart';
-import 'package:shoppizel/Features/payment/view/screen/order_confirmed.dart';
+import 'package:shoppizel/Features/order/view/screen/order_confirmed.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/controller/promo_state.dart';
@@ -113,7 +113,8 @@ class ChoosePaymentMethod extends StatelessWidget {
                     if (state is MakeOrderFailure){
                       SnackBars.customSnackBar(context: context, desc: "error in making order try again later", tittle: "failed", type: AnimatedSnackBarType.error) ;
                     }else if (state is MakeOrderSuccess){
-                      Navigator.push(context, MaterialPageRoute(builder: (_) =>  const OrderConfirmed()  )) ;
+                      Navigator.push(context, MaterialPageRoute(builder: (_) =>   OrderConfirmed(orderNo:
+                       state.orderNo )  )) ;
 
 
                     }

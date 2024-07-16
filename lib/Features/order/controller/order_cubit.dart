@@ -14,8 +14,8 @@ class OrderCubit extends Cubit<OrderState>{
   Future<void> makeAnOrder({required OrderModel order , PromoModel? promo })async{
     emit(MakeOrderLoading()) ;
     try {
-      repo.placeAOrder(order: order , promo: promo) ;
-      emit(MakeOrderSuccess()) ;
+     String orderNo = await repo.placeAOrder(order: order , promo: promo) ;
+      emit(MakeOrderSuccess(orderNo: orderNo)) ;
     }catch(e){
       emit(MakeOrderFailure()) ;
       print(e.toString()) ;

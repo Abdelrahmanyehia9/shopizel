@@ -10,6 +10,7 @@ import 'package:shoppizel/core/function/validation.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
+import '../../../home/view/screens/home_screen.dart';
 import '../widget/type_of_location.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -176,7 +177,10 @@ super.initState();
                                         isSelected: true) ;
 
                                     BlocProvider.of<LocationCubit>(context)
-                                        .addLocation(model) ;
+                                        .addLocation(model).whenComplete((){
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const HomeScreen())  , (route)=>false) ;
+
+                                  }) ;
                                   }
                                 },
                               ),
