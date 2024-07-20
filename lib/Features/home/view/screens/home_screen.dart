@@ -1,20 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hidable/hidable.dart';
+import 'package:shoppizel/Features/Machine/Visual%20Search/view/search_by_photo_screen.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
-import 'package:shoppizel/Features/cart/controller/cart_state.dart';
-import 'package:shoppizel/Features/cart/view/screen/cart_screen.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
+import 'package:shoppizel/Features/profile/view/screen/pick_image.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
-import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import '../../../Auth/data/model/user_model.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../controllers/home_cubit.dart';
+import '../widgets/bot.dart';
+import '../widgets/home/home_app_bar.dart';
 import '../widgets/home/home_body.dart';
 import '../widgets/home/home_drawer.dart';
-import '../widgets/home/my_location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,13 +23,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  File? imageSearch ;
+bool visible = true ;
+  int _bottomNavIndex = 0;
+
   final ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  UserModel userModel = UserModel(
-      uid: FirebaseAuth.instance.currentUser!.uid,
-      email: "example@yahoo.com",
-      username: "Guest",
-      number: "0123456789");
+  List<Widget>pages = [
+    CustomScrollView(
+      controller: ScrollController(),
+      slivers: [
+        const HomeAppBar(isHome: true,) ,
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              const HomeBody()              ],
+          ),
+        ),
+      ],
+    ),
+    const bot(text: "robot",) ,
+    const bot(text: "setting") ,
+    const bot(text: "profile")
+
+  ]  ;
 
   @override
   void initState() {
@@ -38,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<CartCubit>(context).fetchCartProducts();
     BlocProvider.of<ProfileCubit>(context).fetchProfile();
     BlocProvider.of<LocationCubit>(context).getAllLocations();
-
     super.initState();
   }
 
@@ -46,155 +61,62 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Visibility(
+        visible: visible,
+        child: FloatingActionButton(
+          splashColor: AppConstants.appColor.withOpacity(0.25),
 
-      key: _scaffoldKey,
-      drawer: HomeDrawer(
-        userModel: userModel,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          homeAppBar(),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                HomeBody(),
+             tooltip: "Scan with photo",
+          onPressed: () async{
+            setState(() {
+              visible = false ;
+            });
 
-              ],
-            ),
+          final  result = await  showModalBottomSheet(context: context, builder: (_)=> ChooseImagePicker(isSearching:true  , onSelected: (value){
+              imageSearch = value ;
+              if (imageSearch != null ){
+
+                Navigator.push(context, MaterialPageRoute(builder: (_)=> SearchByPhotoScreen(photo : imageSearch!)   )) ;
+              }
+
+            })  ) ;
+
+          if(result == null ){
+            setState(() {
+              visible = true  ;
+            });
+          }
+          },
+          shape: const CircleBorder(),
+          backgroundColor: Colors.white,
+          child: const Icon(
+            Icons.document_scanner_outlined,
+            color: AppConstants.appColor,
+
           ),
-
-        ],
+        ),
       ),
-
+      key: _scaffoldKey,
+      drawer: HomeDrawer(),
+      body: pages[_bottomNavIndex] ,
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        iconSize: 24,
+        inactiveColor: Colors.white,
+        activeColor: Colors.cyanAccent,
+        icons: const [
+          Icons.home,
+          Icons.face,
+          Icons.settings,
+          Icons.person,
+        ],
+        activeIndex: _bottomNavIndex,
+        backgroundGradient: AppConstants.gradient,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.defaultEdge,
+        onTap: (index) => setState(() => _bottomNavIndex = index),
+        //other params
+      ),
     );
   }
 
-  SliverAppBar homeAppBar() => SliverAppBar(
-        foregroundColor: Colors.black,
-        expandedHeight: screenHeight(context) * .32,
-        scrolledUnderElevation: 0,
-        flexibleSpace: FlexibleSpaceBar(
-          background: Container(
-            decoration:
-                const BoxDecoration(gradient: AppConstants.circularGradient),
-            padding: EdgeInsets.only(
-                top: kToolbarHeight + MediaQuery.of(context).padding.top + 12,
-                right: screenWidth(context) * .05,
-                left: screenWidth(context) * .05),
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Sale 40% ",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    SizedBox(
-                        width: screenWidth(context) * 0.45,
-                        child: Text(
-                          "save 40% on first order use code 'FIRST40' ",
-                          style: TextStyle(
-                              color: Colors.grey.shade100, fontSize: 14),
-                        )),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    InkWell(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 12),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white)),
-                        child: const Text(
-                          "Use Now",
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                    width: screenWidth(context) * .45,
-                    height: screenHeight(context) * .3,
-                    child: Image.asset(
-                      "assets/images/pngwing.com (36).png",
-                      fit: BoxFit.fitHeight,
-                    ))
-              ],
-            ),
-          ),
-        ),
-        backgroundColor: const Color(0xffECF0F4),
-        centerTitle: false,
-        floating: true,
-        snap: true,
-        pinned: true,
-        title: const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'DELIVER TO',
-              style: TextStyle(
-                  color: Colors.teal,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold),
-            ),
-            MyLocation()
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: InkWell(
-              onTap: () {
-                BlocProvider.of<CartCubit>(context).fetchCartProducts();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const CartScreen()));
-              },
-              child: Stack(
-                alignment: AlignmentDirectional.topEnd,
-                children: [
-                  SvgPicture.asset(
-                    "assets/images/Ellipse 1294.svg",
-                    fit: BoxFit.cover,
-                  ),
-                  BlocBuilder<CartCubit, CartStates>(builder: (context, state) {
-                    if (state is CartStateSuccess) {
-                      return CircleAvatar(
-                        backgroundColor: AppConstants.appColor,
-                        radius: 12,
-                        child: Text(
-                          state.cartCount.toString(),
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: AppConstants.fontFamily),
-                        ),
-                      );
-                    } else if (state is CartStateLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      return const SizedBox();
-                    }
-                  }),
-                ],
-              ),
-            ),
-          )
-        ],
-        leadingWidth: screenWidth(context) * 0.2,
-      );
 }

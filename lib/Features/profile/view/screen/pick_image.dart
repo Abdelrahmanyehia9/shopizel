@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
@@ -9,8 +10,8 @@ import '../../../../core/function/image_picker.dart';
 class ChooseImagePicker extends StatefulWidget {
   final GestureTapCallback? onRemove ;
   final void Function(File?) onSelected ;
-
-  const ChooseImagePicker({super.key , required this.onSelected , this.onRemove});
+ final bool? isSearching ;
+  const ChooseImagePicker({super.key , required this.onSelected , this.onRemove , this.isSearching});
 
   @override
   State<ChooseImagePicker> createState() => _ChooseImagePickerState();
@@ -31,6 +32,7 @@ class _ChooseImagePickerState extends State<ChooseImagePicker> {
     if (_imageFile != null) {
       Navigator.pop(context);
       widget.onSelected(_imageFile!);
+
     }
   }
 
@@ -89,7 +91,7 @@ class _ChooseImagePickerState extends State<ChooseImagePicker> {
           const SizedBox(
             height: 4,
           ),
-          ElevatedButton.icon(
+        widget.isSearching ==true ?const SizedBox():  ElevatedButton.icon(
             onPressed: widget.onRemove ,
             label: const Text(
               "Delete",

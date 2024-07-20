@@ -19,9 +19,9 @@ import '../../../../profile/controller/profile_state.dart';
 import '../../../../profile/view/screen/profile_screen.dart';
 
 class HomeDrawer extends StatelessWidget {
-  UserModel userModel ;
+ late UserModel userModel ;
 
-  HomeDrawer({super.key , required this.userModel});
+  HomeDrawer({super.key });
   final FirebaseAuth _auth = FirebaseAuth.instance ;
   @override
   Widget build(BuildContext context) {
