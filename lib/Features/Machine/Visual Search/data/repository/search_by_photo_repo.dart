@@ -16,7 +16,7 @@ final  ApiHelper helper ;
 
 Future<List<VisualSearchModel>?> search(String desc)async{
 
-  Map<String  ,  dynamic>? response = await helper.post("/similarity", {"description":desc}) ;
+  Map<String  ,  dynamic>? response = await helper.post("/similarity", {"description":desc} , "application/json") ;
   List<VisualSearchModel> predicted = [] ;
   if (response != null ){
      for (var item in response['results']){
@@ -37,7 +37,7 @@ Future<String?> getPhotoFeatures({required File image})async{
   final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: AppConstants.geminiApiKey);
   final photo = await image.readAsBytes() ;
 
-  final prompt = TextPart("Give me Feature of this clothes , please mention the color");
+  final prompt = TextPart(" description  keywords, please mention the color ");
   final imageParts = [
     DataPart('image/jpeg', photo),
   ];

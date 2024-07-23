@@ -7,12 +7,12 @@ class ApiHelper{
   ApiHelper({required this.dio});
 
 
-  Future<Map<String, dynamic>?> post(String endpoint, Map<String, dynamic> data,  ) async {
+  Future<Map<String, dynamic>?> post(String endpoint, Map<String, dynamic> data, String contentType ) async {
     try {
       final response = await dio.post(
         AppConstants.baseUrl+endpoint,
         data: data,
-        options: Options(headers: {"Content-Type":"application/json"}),
+        options: Options(headers: {"Content-Type":contentType}),
       );
       return response.data;
     } on DioError catch (e) {

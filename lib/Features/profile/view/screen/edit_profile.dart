@@ -131,7 +131,7 @@ class _EditProfileState extends State<EditProfile> {
                         desc: "profile updated Successfully",
                         tittle: "Great",
                         type: AnimatedSnackBarType.success);
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>const HomeScreen())) ;
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>const HomeScreen()) , (route)=>false ) ;
                   }
 
                 },

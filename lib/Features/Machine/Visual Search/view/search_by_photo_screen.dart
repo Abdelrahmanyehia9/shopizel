@@ -57,10 +57,10 @@ class _SearchByPhotoScreenState extends State<SearchByPhotoScreen> {
                         decoration: BoxDecoration(
                             color: AppConstants.secondColor,
                             borderRadius: BorderRadius.circular(4)),
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Text(
                           "Match ${(simScore < 90 ?  simScore +  10 : simScore).toStringAsFixed(0)}%",
-                          style: TextStyle(color: Colors.white, fontSize: 10 , fontWeight: FontWeight.bold),
+                          style: const TextStyle(color: Colors.white, fontSize: 10 , fontWeight: FontWeight.bold),
                         ),
                       ):const SizedBox()
                     ],
@@ -76,7 +76,7 @@ class _SearchByPhotoScreenState extends State<SearchByPhotoScreen> {
           );
         } else if (state is SearchByPhotoStateFailure) {
           print(state.errorMessage);
-          return Center(child: Text(state.errorMessage));
+          return Center(child: Text(state.errorMessage , textAlign: TextAlign.center,));
         } else {
           return const Center(
             child: CircularProgressIndicator(),

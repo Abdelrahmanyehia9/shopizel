@@ -119,7 +119,7 @@ class HomeAppBar extends StatelessWidget {
                 BlocBuilder<CartCubit, CartStates>(builder: (context, state) {
                   if (state is CartStateSuccess) {
                     return CircleAvatar(
-                      backgroundColor: AppConstants.secondColor,
+                      backgroundColor: AppConstants.appColor,
                       radius: 12,
                       child: Text(
                         state.cartCount.toString(),

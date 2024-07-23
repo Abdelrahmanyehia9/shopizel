@@ -15,7 +15,6 @@ class SearchByPhotoCubit extends Cubit<SearchByPhotoStates> {
     emit(SearchByPhotoLoading());
     try {
       String? desc = await repo.getPhotoFeatures(image: image);
-      print(desc) ;
       if (desc == null) {
         emit(SearchByPhotoStateFailure(
             errorMessage: "Please enter valid Image"));

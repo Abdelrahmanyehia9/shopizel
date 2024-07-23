@@ -8,6 +8,7 @@ import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/profile/view/screen/pick_image.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
+import '../../../Machine/robot/view/robot_view.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../controllers/home_cubit.dart';
 import '../widgets/bot.dart';
@@ -42,7 +43,7 @@ bool visible = true ;
         ),
       ],
     ),
-    const bot(text: "robot",) ,
+    const RobotScreen() ,
     const bot(text: "setting") ,
     const bot(text: "profile")
 
@@ -64,8 +65,6 @@ bool visible = true ;
       floatingActionButton: Visibility(
         visible: visible,
         child: FloatingActionButton(
-          splashColor: AppConstants.appColor.withOpacity(0.25),
-
              tooltip: "Scan with photo",
           onPressed: () async{
             setState(() {
@@ -88,10 +87,10 @@ bool visible = true ;
           }
           },
           shape: const CircleBorder(),
-          backgroundColor: Colors.white,
+          backgroundColor: AppConstants.appColor,
           child: const Icon(
             Icons.document_scanner_outlined,
-            color: AppConstants.appColor,
+            color: Colors.white,
 
           ),
         ),
@@ -101,16 +100,16 @@ bool visible = true ;
       body: pages[_bottomNavIndex] ,
       bottomNavigationBar: AnimatedBottomNavigationBar(
         iconSize: 24,
-        inactiveColor: Colors.white,
-        activeColor: Colors.cyanAccent,
+        inactiveColor: Colors.grey,
+        activeColor: AppConstants.appColor,
         icons: const [
           Icons.home,
           Icons.face,
           Icons.settings,
           Icons.person,
         ],
+
         activeIndex: _bottomNavIndex,
-        backgroundGradient: AppConstants.gradient,
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.defaultEdge,
         onTap: (index) => setState(() => _bottomNavIndex = index),
