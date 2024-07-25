@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/clothes_measure_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/clothes_measure_state.dart';
+import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 import 'package:wheel_slider/wheel_slider.dart';
@@ -62,9 +63,10 @@ class _MeasureInfoScreenState extends State<MeasureInfoScreen> {
     ) ,
             const Spacer(),
             BlocConsumer<ClothesMeasureCubit , ClothesMeasureState>(
-              listener: (context , state){
+              listener: (context , state)async{
                 if (state is ClothesMeasureStateSuccess){
-Navigator.push(context, MaterialPageRoute(builder: (_)=>MeasureScreen(imgModel: widget.imgModel))) ;
+                  List<ProductModel>products = await BlocProvider.of<ClothesMeasureCubit>(context).repo.getMeasureProduct(state.measureModel.sizeValue) ;
+Navigator.push(context, MaterialPageRoute(builder: (_)=>MeasureScreen(imgModel: widget.imgModel  , model: state.measureModel, products: products,))) ;
 
                 }else if (state is ClothesMeasureStateFailure){
                   SnackBars.customSnackBar(context: context, desc: state.errorMessage, tittle: "error", type: AnimatedSnackBarType.error) ;
@@ -89,7 +91,7 @@ class GenderSelection extends StatefulWidget {
   const GenderSelection({super.key});
 
   @override
-  _GenderSelectionState createState() => _GenderSelectionState();
+  State<GenderSelection> createState() => _GenderSelectionState();
 }
 
 class _GenderSelectionState extends State<GenderSelection> {
