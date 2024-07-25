@@ -32,6 +32,10 @@ class RobotScreen extends StatelessWidget {
                   imgUrl:
                       "https://cdn.paautism.org/uploads/2019/07/ClothesShopping-1000x450.jpg"),
               robotItem(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) =>  const FittingRoom(isMeasure:true)));
+                  },
                   color: Colors.yellow.shade900,
                   tittle: "Measurements",
                   disc: "know your size instantly",

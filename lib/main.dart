@@ -8,8 +8,10 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:shoppizel/Features/Auth/controller/auth_cubit.dart';
 import 'package:shoppizel/Features/Machine/Visual%20Search/controller/search_by_photo_cubit.dart';
 import 'package:shoppizel/Features/Machine/Visual%20Search/data/repository/search_by_photo_repo.dart';
+import 'package:shoppizel/Features/Machine/robot/controller/clothes_measure_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_cubit.dart';
-import 'package:shoppizel/Features/Machine/robot/data/fitting_room_repo.dart';
+import 'package:shoppizel/Features/Machine/robot/data/repo/clothes_measure_repo.dart';
+import 'package:shoppizel/Features/Machine/robot/data/repo/fitting_room_repo.dart';
 import 'package:shoppizel/Features/order/controller/order_cubit.dart';
 import 'package:shoppizel/Features/order/data/order_repo.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
@@ -26,6 +28,7 @@ import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
 import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
 import 'package:shoppizel/core/database/api_helper.dart';
+import 'package:shoppizel/core/service/single_ton.dart';
 import 'package:shoppizel/searching.dart';
 import 'Features/Machine/robot/view/robot_view.dart';
 import 'Features/cart/controller/cart_cubit.dart';
@@ -43,7 +46,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
+  setup() ;
   runApp(const Tship());
 }
 
@@ -65,8 +68,9 @@ class Tship extends StatelessWidget {
         BlocProvider(create: (context)=> OrderCubit(OrderRepo())) ,
         BlocProvider(create: (context)=>PromoCubit(PromoCodeRepo())..getAllPromo()) ,
         BlocProvider(create: (context)=>RateCubit(repo:RateRepo())) ,
-        BlocProvider(create: (context)=>SearchByPhotoCubit(SearchByPhotoRepo(ApiHelper(dio: Dio())))) ,
-        BlocProvider(create: (context)=> FittingRoomCubit(FittingRoomRepo(helper: ApiHelper(dio: Dio()))))
+        BlocProvider(create: (context)=>SearchByPhotoCubit(SearchByPhotoRepo(getIt.get<ApiHelper>()))) ,
+        BlocProvider(create: (context)=> FittingRoomCubit(FittingRoomRepo(helper: getIt.get<ApiHelper>()))) ,
+        BlocProvider(create: (context)=> ClothesMeasureCubit(ClothesMeasureRepo(helper: getIt.get<ApiHelper>())))
       ],
       child: MaterialApp(
         home:   const HomeScreen() , 

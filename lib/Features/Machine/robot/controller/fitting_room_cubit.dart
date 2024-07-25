@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_state.dart';
 
-import '../data/fitting_room_repo.dart';
+import '../data/repo/fitting_room_repo.dart';
 
 class FittingRoomCubit extends Cubit<FittingRoomState>{
   final FittingRoomRepo repo ;

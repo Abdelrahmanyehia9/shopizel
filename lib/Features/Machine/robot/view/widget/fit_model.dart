@@ -178,7 +178,7 @@ class ShowFittedModel extends StatelessWidget {
     return BlocBuilder<FittingRoomCubit , FittingRoomState>(
         builder: (context , state) {
           if(state is FittingRoomStateSuccess){
-            return Image.network(state.img) ;
+            return Image.network(state.img , fit: BoxFit.cover,) ;
           }else if (state is FittingRoomStateLoading){
             return const Center(child: CircularProgressIndicator(color: AppConstants.appColor,),) ;
           }else if (state is FittingRoomStateFailure){

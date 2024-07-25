@@ -5,17 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_cubit.dart';
-import 'package:shoppizel/Features/Machine/robot/data/fitting_room_repo.dart';
+import 'package:shoppizel/Features/Machine/robot/data/repo/fitting_room_repo.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
-
+import '../../../../../core/service/upload_img_cloud.dart';
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
 import '../../../../../core/widgets/primary_button.dart';
 import '../../../../profile/view/screen/pick_image.dart';
-import 'fit_model.dart';
+import '../widget/fit_model.dart';
+import '../widget/measure_info_screen.dart';
 
 class FittingRoom extends StatefulWidget {
-  const FittingRoom({super.key});
+  final bool? isMeasure ;
+  const FittingRoom({super.key , this.isMeasure});
 
   @override
   State<FittingRoom> createState() => _FittingRoomState();
@@ -29,7 +31,7 @@ class _FittingRoomState extends State<FittingRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fitting Room"),
+        title:  Text(widget.isMeasure ==true ? "Measurements":"Fitting Room"),
       ),
       body: _selectedImg == null
           ? Padding(
@@ -90,7 +92,9 @@ class _FittingRoomState extends State<FittingRoom> {
             PrimaryButton(
               label: "later",
               color: Colors.white,
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context) ;
+              },
             ),
             const SizedBox(
               height: 16,
@@ -140,10 +144,9 @@ class _FittingRoomState extends State<FittingRoom> {
                   });
                     FittingRoomRepo repo = BlocProvider.of<FittingRoomCubit>(context).repo ;
                   List<ProductModel> items = await repo.getTopProducts() ;
-                  String? imgModel = await repo.uploadToCloud(image: _selectedImg!) ;
-
-                 Navigator.push(context,
-                     MaterialPageRoute(builder: (_) => FitModel(imgModel: imgModel!, products : items)));
+                  String? imgModel = await uploadToCloud(image: _selectedImg!) ;
+print(imgModel) ;
+                 Navigator.push(context, MaterialPageRoute(builder: (_) => widget.isMeasure == true ?  MeasureInfoScreen(imgModel : imgModel) : FitModel(imgModel: imgModel!, products : items)));
                   setState(() {
                     isLoading = false ;
                   });

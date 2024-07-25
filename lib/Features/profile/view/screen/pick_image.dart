@@ -5,7 +5,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import '../../../../core/function/image_picker.dart';
+import '../../../../core/service/image_picker.dart';
 
 class ChooseImagePicker extends StatefulWidget {
   final GestureTapCallback? onRemove ;
