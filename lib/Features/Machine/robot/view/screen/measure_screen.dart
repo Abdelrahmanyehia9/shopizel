@@ -133,8 +133,8 @@ class SizeMeasureContainer extends StatelessWidget {
     )
     ;
   }
-  Widget sizeItem(context ,String tittle   , String value)=>Column(
-
+  Widget sizeItem(context ,String tittle   , String value)=>
+      Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
@@ -148,7 +148,7 @@ class SizeMeasureContainer extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12,) ,
-          Text(
+          Text(  overflow: TextOverflow.ellipsis ,
             tittle=="Size"? value: "${value}cm",
             style:  TextStyle(
               fontSize: 12,

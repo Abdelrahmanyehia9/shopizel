@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_state.dart';
 
@@ -95,8 +96,8 @@ class _FitModelState extends State<FitModel> {
                         border: Border.all(
                             color: errorSelected == true ? Colors.red :  Colors.grey.shade400, width: 1),
                       ),
-                      width: screenWidth(context),
-                      height: screenHeight(context) * .4,
+                      width: screenWidth(context) ,
+                      height: screenHeight(context) * .5,
                       child: ShowFittedModel()
                     ),
                   ),
@@ -170,30 +171,61 @@ class _FitModelState extends State<FitModel> {
     ),
   );
 }
+
+
 class ShowFittedModel extends StatelessWidget {
   const ShowFittedModel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FittingRoomCubit , FittingRoomState>(
-        builder: (context , state) {
-          if(state is FittingRoomStateSuccess){
-            return Image.network(state.img , fit: BoxFit.cover,) ;
-          }else if (state is FittingRoomStateLoading){
-            return const Center(child: CircularProgressIndicator(color: AppConstants.appColor,),) ;
-          }else if (state is FittingRoomStateFailure){
-            return  Text(
-              state.errorMessage,
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            ) ;
-          }else{
-            return Text(
-              "Press apply, your photo will appear here",
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            ) ;
-          }
-
-
-        });
+    return BlocBuilder<FittingRoomCubit, FittingRoomState>(
+      builder: (context, state) {
+        return ClipRect(
+          child: Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: double.infinity, // Ensure the width is constrained by the parent
+              height: double.infinity, // Ensure the height is constrained by the parent
+              child: Builder(
+                builder: (context) {
+                  if (state is FittingRoomStateSuccess) {
+                    return PhotoView(
+                      gestureDetectorBehavior: HitTestBehavior.opaque,
+                      imageProvider: NetworkImage(state.img),
+                      minScale: PhotoViewComputedScale.contained,
+                      maxScale: PhotoViewComputedScale.covered * 3,
+                      initialScale: PhotoViewComputedScale.contained,
+                      strictScale: true,
+                      filterQuality: FilterQuality.high,
+                      backgroundDecoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      enableRotation: false,
+                    );
+                  } else if (state is FittingRoomStateLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: AppConstants.appColor),
+                    );
+                  } else if (state is FittingRoomStateFailure) {
+                    return Center(
+                      child: Text(
+                        state.errorMessage,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    );
+                  } else {
+                    return Text(
+                      "Press apply, your photo will appear here",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
+

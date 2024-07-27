@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/Machine/robot/view/screen/fitting_room.dart';
+import 'package:shoppizel/Features/Machine/robot/view/screen/generate_outfit.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
 
@@ -9,45 +10,52 @@ class RobotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              robotItem(
-                  color: AppConstants.appColor,
-                  tittle: "Generate Outfit",
-                  disc: "get outfit good with her",
-                  imgUrl:
-                      "https://img.freepik.com/premium-photo/chinese-gentleman-dressed-corporate-outfit-generate-ai_98402-102866.jpg"),
-              robotItem(
-                  onTap: () {
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                robotItem(
+                  onTap: (){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const FittingRoom()));
+                        MaterialPageRoute(builder: (_) => const GenerateOutfit()));
+
                   },
-                  color: Colors.red,
-                  tittle: "Fitting Room ",
-                  disc: "see outfits on your image",
-                  imgUrl:
-                      "https://cdn.paautism.org/uploads/2019/07/ClothesShopping-1000x450.jpg"),
-              robotItem(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) =>  const FittingRoom(isMeasure:true)));
-                  },
-                  color: Colors.yellow.shade900,
-                  tittle: "Measurements",
-                  disc: "know your size instantly",
-                  imgUrl:
-                      "https://www.threekit.com/hs-fs/hubfs/Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg?width=855&name=Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg"),
-              robotItem(
-                  color: Colors.blue,
-                  tittle: "Chat Ai",
-                  disc: " Chat bot as you want",
-                  imgUrl:
-                      "https://d2vrvpw63099lz.cloudfront.net/do-i-need-a-chatbot/header-chat-box.png"),
-            ],
+                    color: AppConstants.appColor,
+                    tittle: "Generate Outfit",
+                    disc: "get outfit good with her",
+                    imgUrl:
+                        "https://img.freepik.com/premium-photo/chinese-gentleman-dressed-corporate-outfit-generate-ai_98402-102866.jpg"),
+                robotItem(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => const FittingRoom()));
+                    },
+                    color: Colors.red,
+                    tittle: "Fitting Room ",
+                    disc: "see outfits on your image",
+                    imgUrl:
+                        "https://cdn.paautism.org/uploads/2019/07/ClothesShopping-1000x450.jpg"),
+                robotItem(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) =>  const FittingRoom(isMeasure:true)));
+                    },
+                    color: Colors.yellow.shade900,
+                    tittle: "Measurements",
+                    disc: "know your size instantly",
+                    imgUrl:
+                        "https://www.threekit.com/hs-fs/hubfs/Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg?width=855&name=Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg"),
+                robotItem(
+                    color: Colors.blue,
+                    tittle: "Chat Ai",
+                    disc: " Chat bot as you want",
+                    imgUrl:
+                        "https://d2vrvpw63099lz.cloudfront.net/do-i-need-a-chatbot/header-chat-box.png"),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppizel/core/utils/app_constants.dart';
 
 class AuthTextField extends StatefulWidget {
   const AuthTextField(
@@ -26,6 +27,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppConstants.appColor,
         validator: widget.validator ??
             (value) {
               if (value!.isEmpty) {
