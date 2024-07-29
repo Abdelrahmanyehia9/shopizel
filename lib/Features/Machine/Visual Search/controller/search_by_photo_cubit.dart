@@ -6,6 +6,8 @@ import 'package:shoppizel/Features/Machine/Visual%20Search/data/model/visual_sea
 import 'package:shoppizel/Features/Machine/Visual%20Search/data/repository/search_by_photo_repo.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
 
+import '../../../../core/service/gimini.dart';
+
 class SearchByPhotoCubit extends Cubit<SearchByPhotoStates> {
   final SearchByPhotoRepo repo;
 
@@ -14,7 +16,7 @@ class SearchByPhotoCubit extends Cubit<SearchByPhotoStates> {
   Future<void> fetch({required File image}) async {
     emit(SearchByPhotoLoading());
     try {
-      String? desc = await repo.getPhotoFeatures(image: image);
+      String? desc = await geminiTextAndPhoto(image: image ,text: "description  keywords, please mention the color " );
       if (desc == null) {
         emit(SearchByPhotoStateFailure(
             errorMessage: "Please enter valid Image"));

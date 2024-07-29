@@ -39,8 +39,8 @@ class _FitModelState extends State<FitModel> {
                   height: 12,
                 ),
                 fittingModel(context),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     "Choose Outfit",
                     style: TextStyle(
@@ -98,7 +98,7 @@ class _FitModelState extends State<FitModel> {
                       ),
                       width: screenWidth(context) ,
                       height: screenHeight(context) * .5,
-                      child: ShowFittedModel()
+                      child: const ShowFittedModel()
                     ),
                   ),
                 ),
@@ -133,9 +133,9 @@ class _FitModelState extends State<FitModel> {
     ),
     child: Row(
       children: [
-        Expanded(
+        const Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +145,7 @@ class _FitModelState extends State<FitModel> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.white),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 8,
                 ),
                 Text(
@@ -197,7 +197,7 @@ class ShowFittedModel extends StatelessWidget {
                       initialScale: PhotoViewComputedScale.contained,
                       strictScale: true,
                       filterQuality: FilterQuality.high,
-                      backgroundDecoration: BoxDecoration(
+                      backgroundDecoration: const BoxDecoration(
                         color: Colors.transparent,
                       ),
                       enableRotation: false,
@@ -210,13 +210,15 @@ class ShowFittedModel extends StatelessWidget {
                     return Center(
                       child: Text(
                         state.errorMessage,
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     );
                   } else {
-                    return Text(
-                      "Press apply, your photo will appear here",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    return const Center(
+                      child: Text(
+                        "Press apply, your photo will appear here",
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
                     );
                   }
                 },

@@ -33,20 +33,6 @@ return predicted ;
 
 
 }
-Future<String?> getPhotoFeatures({required File image})async{
-  final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: AppConstants.geminiApiKey);
-  final photo = await image.readAsBytes() ;
-
-  final prompt = TextPart(" description  keywords, please mention the color ");
-  final imageParts = [
-    DataPart('image/jpeg', photo),
-  ];
-  final response = await model.generateContent([
-    Content.multi([prompt, ...imageParts])
-  ]);
-  print(response.text) ;
-  return  response.text ;
-}
 Future<List<ProductModel>>productSearch(List<VisualSearchModel> predict)async{
 
   List<ProductModel>products = [] ;
