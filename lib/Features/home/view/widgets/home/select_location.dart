@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
@@ -11,71 +12,87 @@ import '../../../../location/data/location_repo.dart';
 import '../../../../location/data/model.dart';
 import '../../../../location/view/widget/location_map.dart';
 
-class SelectALocation extends StatelessWidget {
+class SelectALocation extends StatefulWidget {
   final List<LocationModel> locations;
 
-  final GestureTapCallback locationSelected;
 
   const SelectALocation(
-      {super.key, required this.locations, required this.locationSelected});
+      {super.key, required this.locations,});
 
   @override
+  State<SelectALocation> createState() => _SelectALocationState();
+}
+
+class _SelectALocationState extends State<SelectALocation> {
+  bool isLoading = false ;
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const CircleAvatar(
-                  backgroundColor: Colors.red,
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 18,
-                  ))),
-          SizedBox(
-            height: screenHeight(context) * 0.48,
-            child: ListView.builder(
-                itemCount: locations.length,
-                itemBuilder: (context, index) => InkWell(
-                    onTap: () async {
-                      await BlocProvider.of<LocationCubit>(context)
-                          .repo
-                          .selectLocation(locations[index])
-                          .whenComplete(() {
-                        Navigator.pop(context);
-                        BlocProvider.of<LocationCubit>(context)
-                            .getAllLocations();
-                      });
-                    },
-                    child: locationItem(locations[index]))),
-          ),
-           PrimaryButton(label: "Add Location" , onTap: () async {
-            Position coord =
-            await LocationRepo.determineDevicePosition();
-            String locName = await LocationRepo()
-                .getLocationName(
-                lat: coord.latitude.toString(),
-                long: coord.longitude.toString());
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => LocationMap(
-                      position: LatLng(coord.latitude,
-                          coord.longitude),
-                      stName: locName,
-                    )));
-          },),
-          const SizedBox(
-            height: 12,
-          ),
-        ],
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      color: Colors.black,
+      progressIndicator: CircularProgressIndicator(color: Colors.white,),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const CircleAvatar(
+                    backgroundColor: Colors.red,
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 18,
+                    ))),
+            SizedBox(
+              height: screenHeight(context) * 0.48,
+              child: ListView.builder(
+                  itemCount: widget.locations.length,
+                  itemBuilder: (context, index) => InkWell(
+                      onTap: () async {
+                        await BlocProvider.of<LocationCubit>(context)
+                            .repo
+                            .selectLocation(widget.locations[index])
+                            .whenComplete(() {
+                          Navigator.pop(context);
+                          BlocProvider.of<LocationCubit>(context)
+                              .getAllLocations();
+                        });
+                      },
+                      child: locationItem(widget.locations[index]))),
+            ),
+             PrimaryButton(label: "Add Location" , onTap: () async {
+               setState(() {
+                 isLoading= true ;
+               });
+              Position coord =
+              await LocationRepo.determineDevicePosition();
+              String locName = await LocationRepo()
+                  .getLocationName(
+                  lat: coord.latitude.toString(),
+                  long: coord.longitude.toString());
+              setState(() {
+                isLoading = false ;
+              });
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => LocationMap(
+                        position: LatLng(coord.latitude,
+                            coord.longitude),
+                        stName: locName,
+                      )));
+            },),
+            const SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -21,40 +21,88 @@ class ChatBotOverview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: screenHeight(context)*.42,
-                child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                height: screenHeight(context) * .42,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height:  screenHeight(context)*.15,
+                      height: screenHeight(context) * .15,
                       width: screenWidth(context),
-                      child: Image.asset("assets/images/robot-friendly-chatbot-with-antenna-message-chat-vector-40420716-removebg-preview.png"),
-                    ) ,
-                    const Text(" Hello! My name is T-robot iam here to help you to get most suitable outfit for you please ask me  " , style: TextStyle(color: Colors.grey),)   ,
-                  ],),) ,
+                      child: Image.asset(
+                          "assets/images/robot-friendly-chatbot-with-antenna-message-chat-vector-40420716-removebg-preview.png"),
+                    ),
+                    const Text(
+                      " Hello! My name is T-robot iam here to help you to get most suitable outfit for you please ask me  ",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Align(alignment: Alignment.topLeft,
-                    child: Text("Example ..." , style: TextStyle(color: AppConstants.appColor  , fontWeight: FontWeight.bold),)),
-              ) ,
-              const PrimaryButton(label: "how can i enhance my outfit" , color: Colors.white,) ,
-              const SizedBox(height: 4,) ,
-              const PrimaryButton(label: "give me outfit for wedding party" , color: Colors.white,) ,
-              const SizedBox(height: 4,) ,
-              const PrimaryButton(label: "how can i know deficit  in clothes" , color: Colors.white,) ,
-              const SizedBox(height: 8,) ,
-              PrimaryButton(label: "Custom chat" , onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_) =>  const ChatBotScreen())) ;
-              }, ) ,
-
-
-
-
-
-
-
-
-
-            ],),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Example ...",
+                      style: TextStyle(
+                          color: AppConstants.appColor,
+                          fontWeight: FontWeight.bold),
+                    )),
+              ),
+              PrimaryButton(
+                label: "How can I improve an outfit?",
+                color: Colors.white,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ChatBotScreen(
+                                initialMessage: "How can I improve appearance of an outfit?",
+                              )));
+                },
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              PrimaryButton(
+                label: "give me outfit  for wedding party !",
+                color: Colors.white,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ChatBotScreen(
+                                initialMessage: "give me outfit example for wedding party !",
+                              )));
+                },
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              PrimaryButton(
+                label: "How can I discover defects in clothes?",
+                color: Colors.white,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ChatBotScreen(
+                                initialMessage: "How can I discover defects in clothes?",
+                              )));
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              PrimaryButton(
+                label: "Custom chat",
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ChatBotScreen()));
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

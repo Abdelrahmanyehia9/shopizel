@@ -10,14 +10,14 @@ class SendPrompt extends StatefulWidget {
   final TextEditingController textController ;
   final GestureTapCallback sendMessage ;
   final void Function(File?)selectedImg;
-  const SendPrompt({super.key , required this.textController  , required this.sendMessage  , required this.selectedImg});
+  File? img  ;
+   SendPrompt({super.key , required this.textController  , required this.sendMessage  , required this.selectedImg , this.img});
 
   @override
   State<SendPrompt> createState() => _SendPromptState();
 }
 
 class _SendPromptState extends State<SendPrompt> {
-  File? img ;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -36,20 +36,20 @@ class _SendPromptState extends State<SendPrompt> {
             ),
           ),
         ),
-        if (img == null) IconButton(
+        if (widget.img == null) IconButton(
           icon: const Icon(Icons.photo , color: Colors.white,),
           onPressed: (){
             showModalBottomSheet(context: context, builder: (_)=>ChooseImagePicker(isSearching:true , onSelected: (value){
               setState(() {
-                img = value ;
+                widget.img = value ;
               });
-              widget.selectedImg(img);
+              widget.selectedImg(widget.img);
             }) ) ;
           },
         ) else InkWell(
           onTap: (){
             setState(() {
-              img = null ;
+              widget.img = null ;
             });
             widget.selectedImg(null) ;
           },
@@ -58,7 +58,7 @@ class _SendPromptState extends State<SendPrompt> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: SizedBox(height: screenHeight(context)*.065 , width: screenWidth(context)*.1, child: Image.file(img! , fit: BoxFit.fill,),),
+                child: SizedBox(height: screenHeight(context)*.065 , width: screenWidth(context)*.1, child: Image.file(widget.img! , fit: BoxFit.fill,),),
               ),
               const CircleAvatar(
                   backgroundColor: Colors.red,

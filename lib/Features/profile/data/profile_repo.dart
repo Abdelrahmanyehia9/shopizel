@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shoppizel/Features/location/data/model.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 import '../../Auth/data/model/user_model.dart';
 

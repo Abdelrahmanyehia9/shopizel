@@ -1,4 +1,4 @@
-import '../../../../../core/database/firebase_constant.dart';
+import '../../../../../core/database/remote/firebase_constant.dart';
 
 class GenerateImg {
   static String getImg(String cat) {

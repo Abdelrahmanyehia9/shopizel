@@ -1,13 +1,10 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
-import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/core/function/snackbars.dart';
-import 'package:shoppizel/core/utils/app_constants.dart';
 
 import '../../../../core/utils/screen_dimentions.dart';
 

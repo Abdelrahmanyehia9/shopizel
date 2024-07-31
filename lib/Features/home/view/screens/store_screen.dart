@@ -5,7 +5,7 @@ import 'package:shoppizel/Features/home/controllers/store_cubit.dart';
 import 'package:shoppizel/Features/home/controllers/store_state.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/home/data/repository/store_repo.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';
 import '../../../../core/widgets/loading.dart';
 import '../../data/model/product_model.dart';

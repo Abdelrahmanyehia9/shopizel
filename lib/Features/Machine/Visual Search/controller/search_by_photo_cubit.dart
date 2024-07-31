@@ -16,7 +16,8 @@ class SearchByPhotoCubit extends Cubit<SearchByPhotoStates> {
   Future<void> fetch({required File image}) async {
     emit(SearchByPhotoLoading());
     try {
-      String? desc = await geminiTextAndPhoto(image: image ,text: "description  keywords, please mention the color " );
+      String? desc = await geminiTextAndPhoto(image: image ,text: "description of clothes lengthy keywords, please mention the color " );
+      print(desc) ;
       if (desc == null) {
         emit(SearchByPhotoStateFailure(
             errorMessage: "Please enter valid Image"));

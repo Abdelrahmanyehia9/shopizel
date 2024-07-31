@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/data/repository/cart_repo.dart';
@@ -33,9 +34,9 @@ class _CartScreenState extends State<CartScreen> {
                   BlocProvider.of<CartCubit>(context).fetchCartProducts();
                 });
               },
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: const Icon(Icons.delete),
+              child: const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Icon(Icons.delete),
               )),
         ],
         foregroundColor: Colors.white,
@@ -47,9 +48,12 @@ class _CartScreenState extends State<CartScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
+      body: ModalProgressHUD(
+        color: Colors.black,
+        progressIndicator: const CircularProgressIndicator(color: AppConstants.appColor,),
+        inAsyncCall: isProcessing,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: BlocBuilder<CartCubit, CartStates>(
             builder: (context, state) {
               if (state is CartStateSuccess) {
@@ -66,52 +70,54 @@ class _CartScreenState extends State<CartScreen> {
                             (0.99999 - double.parse(item.sale) / 100.0)));
 
                 if (state.cartProducts.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: screenHeight(context) * .085,
-                        ),
-                        SizedBox(
-                            width: screenWidth(context) * .6,
-                            height: screenHeight(context) * .35,
-                            child: Image.asset(
-                              "assets/images/pngwing.com (34).png",
-                              fit: BoxFit.cover,
-                            )),
-                        const Text(
-                          "You Don't Have Any product In Cart",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const HomeScreen()));
-                          },
-                          child: Container(
+                  return SingleChildScrollView(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: screenHeight(context) * .085,
+                          ),
+                          SizedBox(
                               width: screenWidth(context) * .6,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: AppConstants.appColor,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Center(
-                                  child: Text(
-                                "Browse Products",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ))),
-                        )
-                      ],
+                              height: screenHeight(context) * .35,
+                              child: Image.asset(
+                                "assets/images/pngwing.com (34).png",
+                                fit: BoxFit.cover,
+                              )),
+                          const Text(
+                            "You Don't Have Any product In Cart",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const HomeScreen()));
+                            },
+                            child: Container(
+                                width: screenWidth(context) * .6,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: AppConstants.appColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Center(
+                                    child: Text(
+                                  "Browse Products",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 } else {

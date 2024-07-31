@@ -14,6 +14,8 @@ import 'package:shoppizel/Features/Machine/robot/controller/generate_outfit_cubi
 import 'package:shoppizel/Features/Machine/robot/data/repo/clothes_measure_repo.dart';
 import 'package:shoppizel/Features/Machine/robot/data/repo/fitting_room_repo.dart';
 import 'package:shoppizel/Features/Machine/robot/data/repo/generate_outfit_repo.dart';
+import 'package:shoppizel/Features/intro/onBoarding/on_boarding_screen.dart';
+import 'package:shoppizel/Features/intro/splash/view/splash_screen.dart';
 import 'package:shoppizel/Features/order/controller/order_cubit.dart';
 import 'package:shoppizel/Features/order/data/order_repo.dart';
 import 'package:shoppizel/Features/Favourite/controller/favourite_cubit.dart';
@@ -29,7 +31,7 @@ import 'package:shoppizel/Features/profile/data/profile_repo.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
 import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
 import 'package:shoppizel/core/service/single_ton.dart';
 import 'package:shoppizel/searching.dart';
 import 'Features/Machine/robot/view/robot_view.dart';
@@ -80,7 +82,7 @@ class Tship extends StatelessWidget {
 
       ],
       child: MaterialApp(
-        home:    ChatBotOverview() ,
+        home:    const SplashScreen() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
 elevatedButtonTheme: const ElevatedButtonThemeData(

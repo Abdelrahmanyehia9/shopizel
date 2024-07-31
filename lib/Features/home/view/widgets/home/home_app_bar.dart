@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
+import 'package:shoppizel/Features/promo/view/screen/promo_code_screen.dart';
 
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
@@ -54,6 +56,12 @@ class HomeAppBar extends StatelessWidget {
                     height: 8,
                   ),
                   InkWell(
+                    onTap: ()async{
+                      await BlocProvider.of<PromoCubit>(context).applyPromo("First40").whenComplete((){
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const PromoCodeScreen() ));
+
+                      }) ;
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 12),
@@ -141,7 +149,9 @@ class HomeAppBar extends StatelessWidget {
           ),
         )
       ],
-      leadingWidth: screenWidth(context) * 0.2,
+      leadingWidth: screenWidth(context) * 0.05 ,
+      leading: SizedBox(),
+
     );
   }
 }

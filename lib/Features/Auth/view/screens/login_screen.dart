@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Auth/view/screens/forget_password_screen.dart';
 import 'package:shoppizel/Features/Auth/view/screens/sigup_screen.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
+import 'package:shoppizel/core/database/local/shared_prefrences.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/function/snackbars.dart';
@@ -93,10 +94,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return PrimaryButton(
                         label: "Log in",
-                        onTap: () {
+                        onTap: () async{
                           if (_globalKey.currentState!.validate()) {
+
                             context.read<AuthCubit>().loginByEmailAndPassword(
                                 emailController.text, passwordController.text);
+                            if(rememberMeIsChecked == true){
+                              await SharedPreferenceHelper.setBool(SharedPreferenceHelper.isLoggingIn, true) ;
+                            }
                           }
                         });
                   }, listener: (context, state) {

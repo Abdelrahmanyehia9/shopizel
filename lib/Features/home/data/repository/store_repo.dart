@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 import '../model/store_model.dart';
 

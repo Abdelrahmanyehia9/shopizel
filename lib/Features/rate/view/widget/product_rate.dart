@@ -5,7 +5,7 @@ import 'package:shoppizel/Features/home/data/model/product_model.dart';
 import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
 import 'package:shoppizel/Features/rate/controller/rate_state.dart';
 import 'package:shoppizel/Features/rate/data/rate_model.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:cached_network_image/cached_network_image.dart';

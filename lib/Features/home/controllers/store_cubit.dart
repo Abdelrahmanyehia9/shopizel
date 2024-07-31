@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/controllers/store_state.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 import '../data/model/product_model.dart';
 import '../data/repository/store_repo.dart';

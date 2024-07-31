@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/Machine/robot/view/screen/chatbot_screen.dart';
 import 'package:shoppizel/Features/Machine/robot/view/screen/fitting_room.dart';
 import 'package:shoppizel/Features/Machine/robot/view/screen/generate_outfit.dart';
+import 'package:shoppizel/Features/Machine/robot/view/widget/chat_over_view.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 
 
@@ -51,6 +52,7 @@ class RobotScreen extends StatelessWidget {
                         "https://www.threekit.com/hs-fs/hubfs/Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg?width=855&name=Measuring%20the%20fit%20of%20a%20suit%20along%20the%20wearers%20back.jpg"),
                 robotItem(
                   onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=> const ChatBotOverview())) ;
                   },
                     color: Colors.blue,
                     tittle: "Chat Ai",

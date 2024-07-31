@@ -10,7 +10,8 @@ class MeasureScreen extends StatefulWidget {
   final String imgModel ;
   final ClothesMeasureModel model ;
   final List<ProductModel> products ;
-  const MeasureScreen({super.key , required this.imgModel , required this.model , required this.products});
+  final String size ;
+  const MeasureScreen({super.key , required this.imgModel , required this.model , required this.products , required this.size});
 
   @override
   State<MeasureScreen> createState() => _MeasureScreenState();
@@ -36,32 +37,32 @@ class _MeasureScreenState extends State<MeasureScreen> {
                 children: [
                   SizedBox(
                       child: Image.asset("assets/images/size-chart.png")) ,
-                  Row(
+                  const Row(
                     children: [
                       Text("width:  " , style: TextStyle(color: Colors.red   , fontSize: 12  , fontWeight: FontWeight.bold),),
                       Expanded(child: Text("distance between left shoulder and right shoulder" , style: TextStyle(color: Colors.grey  , fontSize: 12),))
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Text("Height:  " , style: TextStyle(color: Colors.blue   , fontSize: 12  , fontWeight: FontWeight.bold),),
                       Expanded(child: Text("distance between shoulder and bottom of shirt" , style: TextStyle(color: Colors.grey  , fontSize: 12),))
                     ],
                   ) ,
-                  Row(
+                  const Row(
                     children: [
                       Text("Sleeve:  " , style: TextStyle(color: Colors.green   , fontSize: 12  , fontWeight: FontWeight.bold),),
                       Expanded(child: Text("the long of sleeve " , style: TextStyle(color: Colors.grey  , fontSize: 12),))
                     ],
                   ) ,
-                  SizedBox(height: 8,) ,
+                  const SizedBox(height: 8,) ,
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: TextButton(onPressed: (){
                         _controller.hideTooltip() ;
-                      }, child: Text("I understood") , style: TextButton.styleFrom(foregroundColor: AppConstants.appColor
+                      }, child: const Text("I understood") , style: TextButton.styleFrom(foregroundColor: AppConstants.appColor
                       ),),
                     ),
                   ) ,
@@ -81,7 +82,7 @@ class _MeasureScreenState extends State<MeasureScreen> {
         child: SingleChildScrollView(
           child: Column(
             children:[
-                SizeMeasureContainer(imgModel: widget.imgModel , model:  widget.model,) ,
+                SizeMeasureContainer(imgModel: widget.imgModel , model:  widget.model, size : widget.size) ,
               const SizedBox(height: 12,) ,
               ProductGallery(color: AppConstants.appColor.value.toString(), collection: widget.products)
             ]
@@ -94,7 +95,8 @@ class _MeasureScreenState extends State<MeasureScreen> {
 class SizeMeasureContainer extends StatelessWidget {
   final String imgModel ;
   final ClothesMeasureModel model  ;
-  const SizeMeasureContainer({super.key , required this.imgModel , required this.model});
+  final String size  ;
+  const SizeMeasureContainer({super.key , required this.imgModel , required this.model , required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +125,7 @@ class SizeMeasureContainer extends StatelessWidget {
               sizeItem(context , "Width"  , model.chestWidth.toStringAsFixed(0)),
               sizeItem(context , "Height"  , model.frontLength.toStringAsFixed(0)),
               sizeItem(context , "Sleeve"  , model.sleeveLength.toStringAsFixed(0)),
-              sizeItem(context , "Size"  , model.sizeValue)
+              sizeItem(context , "Size"  , size)
 
 
             ],

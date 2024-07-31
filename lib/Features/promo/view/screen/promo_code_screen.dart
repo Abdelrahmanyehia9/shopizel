@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
@@ -6,7 +7,7 @@ import 'package:shoppizel/Features/promo/controller/promo_state.dart';
 import 'package:shoppizel/Features/shimmer/promo_codes_loading.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-
+import 'package:shoppizel/core/widgets/primary_button.dart';
 import '../widget/promo_code_item.dart';
 
 class PromoCodeScreen extends StatefulWidget {
@@ -29,68 +30,88 @@ class _PromoCodeScreenState extends State<PromoCodeScreen> {
         title: const Text("Promo Code"),
       ),
       body: BlocBuilder<PromoCubit, PromoState>(
-        builder: (context, state) {
-          if (state is GetAllPromoSuccess) {
-            if (state.allPromo.isEmpty) {
-              return const NoPromoCodes();
-            } else {
-              return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                      itemCount: state.allPromo.length,
-                      itemBuilder: (context, index) =>
-                          PromoCodeItem(promoModel: state.allPromo[index])));
-            }
-          } else if (state is ApplyPromoLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is ApplyPromoSuccess) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: screenHeight(context)*.4,
-                      child: Image.asset("assets/images/pngwing.com (37).png" , fit: BoxFit.cover,)) ,
-                  Padding(
+          builder: (context, state) {
+            if (state is GetAllPromoSuccess) {
+              if (state.allPromo.isEmpty) {
+                return const NoPromoCodes();
+              } else {
+                return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(textAlign: TextAlign.center ,style: TextStyle(fontSize: 18   , color: Colors.grey.shade600) ,
-                        "you have applied ${state.promoModel.code.toUpperCase()} Enjoying with Save ${state.discount > 1 ? "${state.discount} EGP" : "${state.discount*100} %" } on your next order valid for ${state.promoModel.store} "),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(onPressed: (){
-                        BlocProvider.of<PromoCubit>(context).getAllPromo() ;
-                      }, style: ElevatedButton.styleFrom(
-                        fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: Colors.red.shade600 ,
-                        overlayColor: Colors.red
-                      ), child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Remove  " , style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text(state.promoModel.code , style: const TextStyle(fontSize: 12),)
-                        ],
-                      ) ,),
-                      ElevatedButton(onPressed: (){
-Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen() )) ;
-                      }, style: ElevatedButton.styleFrom(
-                          fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: AppConstants.appColor ,
+                    child: ListView.builder(
+                        itemCount: state.allPromo.length,
+                        itemBuilder: (context, index) =>
+                            PromoCodeItem(promoModel: state.allPromo[index])));
+              }
+            } else if (state is ApplyPromoLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is ApplyPromoSuccess) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: screenHeight(context)*.4,
+                        child: Image.asset("assets/images/pngwing.com (37).png" , fit: BoxFit.cover,)) ,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(textAlign: TextAlign.center ,style: TextStyle(fontSize: 18   , color: Colors.grey.shade600) ,
+                          "you have applied ${state.promoModel.code.toUpperCase()} Enjoying with Save ${state.discount > 1 ? "${state.discount} EGP" : "${state.discount*100} %" } on your next order valid for ${state.promoModel.store} "),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(onPressed: (){
+                          BlocProvider.of<PromoCubit>(context).getAllPromo() ;
+                        }, style: ElevatedButton.styleFrom(
+                          fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: Colors.red.shade600 ,
+                          overlayColor: Colors.red
+                        ), child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Remove  " , style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(state.promoModel.code , style: const TextStyle(fontSize: 12),)
+                          ],
+                        ) ,),
+                        ElevatedButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen() )) ;
+                        }, style: ElevatedButton.styleFrom(
+                            fixedSize: Size(screenWidth(context)*0.49, screenHeight(context)*0.06) , backgroundColor: AppConstants.appColor ,
 
-                      ), child: const Text("Continue shopping" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 12),) ,),
+                        ), child: const Text("Continue shopping" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 12),) ,),
 
-                    ],
-                  ) ,
-                ],
-              ),
-            );
-          } else {
-            return const PromoCodesLoading();
-          }
-        },
-      ),
-    );
+                      ],
+                    ) ,
+                  ],
+                ),
+              );
+            }else if (state is ApplyPromoFailure){
+
+
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Center( child: Text("Error has occurred" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 18),)),
+                    SizedBox(height: 16,) ,
+                    PrimaryButton(label: "Show Available promo" , onTap: (){
+                      BlocProvider.of<PromoCubit>(context).getAllPromo() ;
+                    },)
+                  ],
+                ),
+              ) ;
+
+            }
+
+            else {
+              return const PromoCodesLoading();
+            }
+          },
+        ),
+      );
   }
 }
 

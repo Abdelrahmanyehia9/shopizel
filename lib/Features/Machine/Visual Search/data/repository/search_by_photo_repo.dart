@@ -1,12 +1,9 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:shoppizel/Features/Machine/Visual%20Search/data/model/visual_search_model.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
-import 'package:shoppizel/core/utils/app_constants.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 class SearchByPhotoRepo {
 

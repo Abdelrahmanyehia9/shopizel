@@ -11,7 +11,8 @@ import '../widget/message_bubble.dart';
 import '../widget/send_prompt.dart';
 
 class ChatBotScreen extends StatefulWidget {
-  const ChatBotScreen({super.key});
+  final String? initialMessage ;
+  const ChatBotScreen({super.key , this.initialMessage});
 
   @override
   State<ChatBotScreen> createState() => _ChatBotScreenState();
@@ -27,6 +28,16 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
   File? image;
 
+
+
+  @override
+  void initState() {
+if (widget.initialMessage != null){
+  textController.text = widget.initialMessage!;
+  _sendMessage() ;
+}
+super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -38,7 +49,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         ),
         body: messages.isNotEmpty
             ? Column(
-                children: <Widget>[
+                children: [
                   Expanded(
                     child: ListView.builder(
                       controller: _scrollController,
@@ -56,7 +67,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SendPrompt(
-
+                           img: image,
                           textController: textController,
                           selectedImg: (value){
                               image = value ;
@@ -75,8 +86,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
   void _sendMessage() async {
     String prompt = "";
+    String? response;
     if (textController.text.isNotEmpty) {
-      prompt = textController.text;
+      prompt =  textController.text ;
       textController.clear();
       setState(() {
         messages.add(Message(
@@ -84,34 +96,27 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
             text: prompt,
             isBot: false,
             time: DateFormat("h:m a").format(DateTime.now())));
-        _scrollController.animateTo(0,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeInOut);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _scrollController.animateTo(0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut);        });
+
         _isLoading = true;
       });
-      print(prompt) ;
       if (image != null) {
-        String? response =
-            await geminiTextAndPhoto(image: image!, text: prompt);
-        setState(() {
-          image = null;
-          messages.add(Message(
-              text: response ?? "sorry i cant reply",
-              isBot: true,
-              time: DateFormat("h:m a").format(DateTime.now())));
-          _isLoading = false;
-        });
+        response =  await geminiTextAndPhoto(image: image!, text: prompt);
       } else {
-        String? response = await geminiText(text: prompt);
-        setState(() {
-          messages.add(Message(
-              text: response ?? "sorry i cant reply",
-              isBot: true,
-              time: DateFormat("h:m a").format(DateTime.now())));
-          _isLoading = false;
-        });
-        print(response) ;
+        response = await geminiText(text: prompt);
       }
+      setState(() {
+        image = null;
+        messages.add(Message(
+            text: response ?? "sorry i cant reply",
+            isBot: true,
+            time: DateFormat("h:m a").format(DateTime.now())));
+        _isLoading = false;
+      });
+
     }
   }
 }

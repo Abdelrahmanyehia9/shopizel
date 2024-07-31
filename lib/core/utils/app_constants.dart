@@ -8,8 +8,9 @@ class AppConstants {
   static const Color backgroundOfLightTheme = Color(0xff1E1E2E);
   static const String bgPatternAuthContainer = "assets/images/BG Asset.png";
   static const String fontFamily = "Sen";
-  static  const  String baseUrl = "http://192.168.1.8:5000" ;
+  static  const  String baseUrl = "http://192.168.1.107:5000" ;
 static const String geminiApiKey = "AIzaSyCzrGaAqQB1T1lhriUrQCq9bPtyBGlEzB8" ;
+static bool floatingActionVisibility = true;
   static const LinearGradient gradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

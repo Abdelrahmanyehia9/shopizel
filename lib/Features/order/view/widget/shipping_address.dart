@@ -24,10 +24,10 @@ class ShippingAddress extends StatelessWidget {
           if (state is GetLocationsStateSuccess) {
             return InkWell(
               onLongPress:(){
-                showBottomSheet(context: context, builder: (_)=>SelectALocation(locations: state.locations  , locationSelected: (){},)) ;
+                showBottomSheet(context: context, builder: (_)=>SelectALocation(locations: state.locations  )) ;
               } ,
               child: state.selectedLocation == null ? InkWell(onTap: (){
-          showBottomSheet(context: context, builder: (_)=>SelectALocation(locations: state.locations  , locationSelected: (){} )); },
+          showBottomSheet(context: context, builder: (_)=>SelectALocation(locations: state.locations )); },
                   child: noLocationSelected(context  , error)):
               savedLocationItem(
                   context: context, location: state.selectedLocation!),

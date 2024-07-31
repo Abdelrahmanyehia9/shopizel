@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 import '../../../../home/data/model/product_model.dart';
 import '../model/clothes_measure_model.dart';
@@ -22,7 +22,8 @@ class ClothesMeasureRepo {
    
    
  }
- Future<List<ProductModel>> getMeasureProduct(String size) async {
+ Future<List<ProductModel>> getMeasureProduct({required String size , String? gender }) async {
+   List<ProductModel> filered = [] ;
    var response = await FirebaseFirestore.instance
        .collection(FirebaseConstant.productsCollections)
        .get();
@@ -30,7 +31,11 @@ class ClothesMeasureRepo {
    List<ProductModel> products = response.docs
        .map((doc) => ProductModel.fromJson(doc.data()))
        .toList();
-
+   print(gender) ;
+   if(gender != null){
+  filered = products.where((product) => product.category! == gender).toList();
+return filered.where((product) => product.sizes.contains(size)).toList();
+   }
    return products.where((product) => product.sizes.contains(size)).toList();
  }
 }

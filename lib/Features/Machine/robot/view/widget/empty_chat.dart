@@ -6,7 +6,6 @@ import '../../../../../core/utils/screen_dimentions.dart';
 
 class EmptyAiChat extends StatelessWidget {
   final TextEditingController controller ;
-
   final GestureTapCallback sendMessage ;
   final void Function(File?)selectedimg ;
   const EmptyAiChat({super.key ,required this.controller  , required this.sendMessage , required this.selectedimg});

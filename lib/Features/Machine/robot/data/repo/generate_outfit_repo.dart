@@ -1,5 +1,5 @@
 import 'package:shoppizel/Features/Machine/robot/data/model/generate_outfit_model.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
 
 class GenerateOutfitRepo {
   final ApiHelper helper;

@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 
 import '../../../../home/data/model/product_model.dart';
 

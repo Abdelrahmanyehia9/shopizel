@@ -10,7 +10,7 @@ class ClothesMeasureCubit extends Cubit<ClothesMeasureState>{
   ClothesMeasureCubit(this.repo):super(ClothesMeasureStateInitial()) ;
 
 
-Future<void>getMeasure({required String img, double? height})async{
+Future<void>getMeasure({required String img, double? height })async{
   emit(ClothesMeasureStateLoading()) ;
 
   try{

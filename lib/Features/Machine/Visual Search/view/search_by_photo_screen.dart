@@ -31,47 +31,53 @@ class _SearchByPhotoScreenState extends State<SearchByPhotoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("similar products"),
+      ),
       body: BlocBuilder<SearchByPhotoCubit, SearchByPhotoStates>(
           builder: (context, state) {
         if (state is SearchByPhotoStateSuccess) {
           
           return SingleChildScrollView(
-            child: Column(
-              children: [
-                StaggeredGridView.countBuilder(
-                  primary: false,
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  itemCount: state.products.length,
-                  itemBuilder: (BuildContext context, int index) {
-                   double simScore = state.predicted[index].simScore*100.ceil() ;
-                    return Center(
-                      child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      ProductItem(
-                        model: state.products[index],
-                        color: AppConstants.appColor.value.toString(),
-                      ),
-                      simScore > 30 ?Container(
-                        decoration: BoxDecoration(
-                            color: AppConstants.secondColor,
-                            borderRadius: BorderRadius.circular(4)),
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          "Match ${(simScore < 90 ?  simScore +  10 : simScore).toStringAsFixed(0)}%",
-                          style: const TextStyle(color: Colors.white, fontSize: 10 , fontWeight: FontWeight.bold),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                  StaggeredGridView.countBuilder(
+                    primary: false,
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    itemCount: state.products.length,
+                    itemBuilder: (BuildContext context, int index) {
+                     double simScore = state.predicted[index].simScore*100.ceil() ;
+                      return Center(
+                        child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        ProductItem(
+                          model: state.products[index],
+                          color: AppConstants.appColor.value.toString(),
                         ),
-                      ):const SizedBox()
-                    ],
-                  ));
-                  },
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 0.0,
-                ),
-              ],
+                        simScore > 30 ?Container(
+                          decoration: BoxDecoration(
+                              color: AppConstants.secondColor,
+                              borderRadius: BorderRadius.circular(4)),
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            "Match ${(simScore < 90 ?  simScore +  10 : simScore).toStringAsFixed(0)}%",
+                            style: const TextStyle(color: Colors.white, fontSize: 10 , fontWeight: FontWeight.bold),
+                          ),
+                        ):const SizedBox()
+                      ],
+                    ));
+                    },
+                    staggeredTileBuilder: (int index) =>
+                        StaggeredTile.count(1, index.isEven ? 2.2 : 1.4),
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 0.0,
+                  ),
+                ],
+              ),
             ),
           );
         } else if (state is SearchByPhotoStateFailure) {

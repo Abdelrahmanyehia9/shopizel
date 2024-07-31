@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shoppizel/core/database/api_helper.dart';
+import 'package:shoppizel/core/database/remote/api_helper.dart';
 
 final  getIt = GetIt.instance;
 

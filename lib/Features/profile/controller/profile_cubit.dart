@@ -7,6 +7,9 @@ import '../../Auth/data/model/user_model.dart';
 import '../data/profile_repo.dart';
 
 class ProfileCubit extends Cubit<ProfileState>{
+
+
+  late UserModel profile ;
   ProfileRepo repo  ;
   ProfileCubit(this.repo):super(ProfileStateInitial()) ;
 
@@ -14,6 +17,7 @@ class ProfileCubit extends Cubit<ProfileState>{
     emit(ProfileInfoLoading()) ;
     try{
      UserModel model = await repo.getProfileInfo() ;
+     profile = model ;
       emit(ProfileInfoSuccess(profileInfo: model)) ;
 
     }catch(e){

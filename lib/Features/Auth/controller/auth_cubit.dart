@@ -4,8 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/Auth/controller/auth_state.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shoppizel/core/database/local/shared_prefrences.dart';
 
-import '../../../core/database/firebase_constant.dart';
+import '../../../core/database/remote/firebase_constant.dart';
 import '../data/model/user_model.dart';
 
 class AuthCubit extends Cubit<AuthState> {

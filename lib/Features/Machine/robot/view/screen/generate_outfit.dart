@@ -1,14 +1,18 @@
 import 'dart:io';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
+import 'package:shoppizel/Features/Machine/Visual%20Search/controller/search_by_photo_cubit.dart';
 import 'package:shoppizel/Features/Machine/Visual%20Search/view/search_by_photo_screen.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/generate_outfit_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/generate_outfit_state.dart';
 import 'package:shoppizel/Features/Machine/robot/data/model/generate_outfit_model.dart';
+import 'package:shoppizel/core/service/download_image_to%20fike.dart';
 import 'package:shoppizel/core/service/upload_img_cloud.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
@@ -33,6 +37,7 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         body: SafeArea(
       child: SingleChildScrollView(
         child: Form(
@@ -47,6 +52,7 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
               if (state is GenerateOutfitStateSuccess){
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Center(
                       child: Stack(
@@ -54,9 +60,10 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
                           SizedBox(
                               height: screenHeight(context) * 0.55,
                               width: double.infinity,
-                              child: Image.network(
-                                state.model.output!.last,
-                                fit: BoxFit.fitHeight,
+                              child: CachedNetworkImage(
+                                fit: BoxFit.fitHeight, imageUrl: state.model.output!.last,
+                                placeholder: (context  , url)=>const Center(child: CircularProgressIndicator()),
+
                               )),
                           Positioned(
                             child: Padding(
@@ -75,18 +82,50 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
                                 ),
                               ),
                             ),
+                          ) ,
+                          Positioned(
+                            bottom: 0,
+                            right: 5,
+                            child: Container(
+                              width: 60,height: 80,
+
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) , color: Colors.white,
+                                  border: Border.all(color: AppConstants.appColor , width: 2),
+                                  image: DecorationImage(image: NetworkImage("https://i.postimg.cc/JnBRzpzd/istockphoto-523150985-612x612.jpg"))
+                              ),
+                            ),
                           )
                         ],
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 18.0),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
 
+                            const SizedBox(height: 16,) ,
+                            Text("Created at : ${DateFormat("dd-mm-yyyy hh:mm a").format(DateTime.parse(state.model.createdAt!))}" , style: TextStyle(color: Colors.grey),) ,
+                            Text("Created at : ${DateFormat("dd-mm-yyyy hh:mm a").format(DateTime.parse(state.model.completedAt!))}" , style: TextStyle(color: Colors.grey),) ,
+                            Text("predicted Time : ${state.model.metrics!.predictTime!.toStringAsFixed(2)} s" , style: TextStyle(color: Colors.grey),) ,
+                            const SizedBox(height: 16,) ,
+
+                          ],
+                        ),
+                      ),
+                    ) ,
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0 , bottom: 8),
                       child: SizedBox(
                           width: screenWidth(context) * .9,
                           child: PrimaryButton(
                             label: "Show Similar",
-                            onTap: () {
+                            onTap: () async{
+                              File image = await downloadImage(state.model.output!.last, "downloaded_image.jpg") ;
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=> SearchByPhotoScreen( photo: image,  ))) ;
+                              
+                              
+                              
                             },
                           )),
                     ) ,
@@ -105,7 +144,7 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
                   ],
                 ) ;
               }else if (state is GenerateOutfitStateLoading){
-                return const Center(child: CircularProgressIndicator(color: AppConstants.appColor,),) ;
+                return const Center(child: LinearProgressIndicator(color: AppConstants.appColor,),) ;
               }else{
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,7 +252,7 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
                               }
                             },
                             controller: _controller,
-                            initialValue: "ex. black polo t-shirt")),
+                            initialValue: "ex. ${_selectedIndex == 0 ?"black polo t-shirt" : "blue jeans pant"}")),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: SizedBox(

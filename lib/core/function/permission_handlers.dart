@@ -29,7 +29,7 @@ class PermissionHandlers{
 
 
 
- Future<bool>checkLocationPermission()async=>_checkPermission(Permission.location) ;
+  Future<bool>checkLocationPermission()async=>_checkPermission(Permission.location) ;
 
 
 

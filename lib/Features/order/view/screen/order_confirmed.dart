@@ -30,7 +30,7 @@ class OrderConfirmed extends StatelessWidget {
              Text("Your Order NO : ${orderNo}" , textAlign:TextAlign.center, style: TextStyle(fontSize: 14 , color: Colors.grey.shade600),) ,
             const SizedBox(height: 18,) ,
              PrimaryButton(label: "done" , onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (_) =>const HomeScreen())) ;
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>const HomeScreen()) , (route)=>false) ;
             },) ,
 
 

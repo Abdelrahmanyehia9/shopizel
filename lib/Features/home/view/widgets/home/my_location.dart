@@ -19,7 +19,6 @@ class MyLocation extends StatelessWidget {
                 context: context,
                 builder: (_) => SelectALocation(
                       locations: state.locations,
-                      locationSelected: () {},
                     ));
           },
           child: Padding(

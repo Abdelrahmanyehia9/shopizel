@@ -5,7 +5,7 @@ import 'package:shoppizel/Features/home/controllers/gender_state.dart';
 import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/all_product_cat.dart';
 import 'package:shoppizel/Features/home/view/screens/all_product_view.dart';
-import 'package:shoppizel/core/database/firebase_constant.dart';
+import 'package:shoppizel/core/database/remote/firebase_constant.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/loading_failure.dart';

@@ -59,6 +59,7 @@ class _FitModelState extends State<FitModel> {
                         onTap: () {
                           setState(() {
                             selectedProduct = widget.products[index];
+                            print(widget.imgModel) ;
                             print(selectedProduct!.imageCover) ;
                           });
                         },

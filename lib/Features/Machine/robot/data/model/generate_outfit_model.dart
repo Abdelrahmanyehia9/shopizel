@@ -36,9 +36,9 @@ class GenerateOutfitModel {
     status = json['status'];
     createdAt = json['created_at'];
     startedAt = json['started_at'];
+    input = json['input'] != null ? Input.fromJson(json['input']) : null;
     completedAt = json['completed_at'];
-    metrics =
-    json['metrics'] != null ? Metrics.fromJson(json['metrics']) : null;
+    metrics = json['metrics'] != null ? Metrics.fromJson(json['metrics']) : null;
   }
 
 }
@@ -50,7 +50,13 @@ class Input {
 
   Input({this.clothing, this.image, this.prompt});
 
-
+ factory Input.fromJson(Map<String , dynamic>json){
+   return Input(
+     image: json["image"] ,
+     prompt: json["prompt"] ,
+     clothing: json['clothing']
+   ) ;
+ }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['clothing'] = clothing;

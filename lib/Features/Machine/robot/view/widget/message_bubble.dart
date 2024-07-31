@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
@@ -43,7 +44,16 @@ class MessageBubble extends StatelessWidget {
                     child: SizedBox(height: 200  , width: screenWidth(context) ,
                         child: Image.file(message.img! , fit: BoxFit.cover,)),
                   ):SizedBox()  ,
-                  Text(
+        message.isBot ?  MarkdownBody(
+    data: message.text,
+    styleSheet: MarkdownStyleSheet(
+    p: TextStyle(
+    fontSize: 14,
+    color: Colors.black
+    ),
+    ), ) :
+
+    Text(
                     message.text,
                     style: TextStyle(fontSize: 14 , color: message.isBot ? Colors.black:Colors.white),
                   ),
