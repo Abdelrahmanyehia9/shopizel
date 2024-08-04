@@ -104,9 +104,9 @@ super.initState();
         _isLoading = true;
       });
       if (image != null) {
-        response =  await geminiTextAndPhoto(image: image!, text: prompt);
+        response =  await GeminiHelper.geminiTextAndPhoto(image: image!, text: prompt);
       } else {
-        response = await geminiText(text: prompt);
+        response = await GeminiHelper.geminiText(text: prompt);
       }
       setState(() {
         image = null;

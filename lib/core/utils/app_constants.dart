@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppConstants {
+  ///colors
   static const Color appColor = Color(0xFF004D40) ;
   static const Color secondColor = Color(0xFF0097A7) ;
+  static const Color backgroundOfLightTheme = Color(0xffECF0F4) ;
 
-  static const Color backgroundOfLightTheme = Color(0xff1E1E2E);
+  ///photos
   static const String bgPatternAuthContainer = "assets/images/BG Asset.png";
+  ///font
   static const String fontFamily = "Sen";
+  ///api keys
   static  const  String baseUrl = "http://192.168.1.107:5000" ;
 static const String geminiApiKey = "AIzaSyCzrGaAqQB1T1lhriUrQCq9bPtyBGlEzB8" ;
+///floating action visible
 static bool floatingActionVisibility = true;
+///gradient
   static const LinearGradient gradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -29,6 +35,7 @@ static bool floatingActionVisibility = true;
     radius: 0.5
     ,
   ) ;
+  /// shadow
   static  List<BoxShadow> shadow =[
     BoxShadow(
       color: Colors.grey.withOpacity(0.2),
@@ -38,19 +45,5 @@ static bool floatingActionVisibility = true;
     ),
   ]  ;
 
-  static CustomTransitionPage buildPageWithDefaultTransition<T>({required BuildContext context,
-      required GoRouterState state,
-      required Widget child,
-      Duration? duration}) {
-    return CustomTransitionPage<T>(
-      transitionDuration: duration ?? const Duration(milliseconds: 400),
-      key: state.pageKey,
-      child: child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-              opacity:
-                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-              child: child),
-    );
-  }
+
 }

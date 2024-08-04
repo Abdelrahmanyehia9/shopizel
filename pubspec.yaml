@@ -77,6 +77,8 @@ dependencies:
   flutter_markdown: ^0.7.3
   shared_preferences: ^2.3.0
   introduction_screen: ^3.1.14
+  easy_stepper: ^0.8.5+1
+
 
 dev_dependencies:
   flutter_test:
@@ -103,7 +105,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/machine learning/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

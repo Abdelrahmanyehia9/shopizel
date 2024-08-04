@@ -5,12 +5,12 @@ class ApiHelper{
 
   final Dio dio  ;
   ApiHelper({required this.dio});
-
+ String baseUrl = AppConstants.baseUrl ;
 
   Future<Map<String, dynamic>?> post(String endpoint, Map<String, dynamic> data, String contentType ) async {
     try {
       final response = await dio.post(
-        AppConstants.baseUrl+endpoint,
+        baseUrl+endpoint,
         data: data,
         options: Options(headers: {"Content-Type":contentType}),
       );

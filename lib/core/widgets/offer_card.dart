@@ -6,11 +6,11 @@ Widget offerCard1() =>
     Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
-        Container(height: 180, width: double.infinity) ,
+        const SizedBox(height: 180, width: double.infinity) ,
         Container(
           width: double.infinity,
           height: 150,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.black,
           ),
           child: Row(
@@ -22,7 +22,7 @@ Widget offerCard1() =>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Summer Collections',
                       style: TextStyle(
                         fontSize: 20,
@@ -30,17 +30,17 @@ Widget offerCard1() =>
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
                         // Implement navigation or action
                       },
                       child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8 ,vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8 ,vertical: 4),
                         decoration: BoxDecoration(
                         border: Border.all(color: Colors.white)
                       ),
-                        child: Row(
+                        child: const Row(
                           children: [
                             Text(
                               'See More',
@@ -63,7 +63,7 @@ Widget offerCard1() =>
             ],
           ),
         ),
-        Container( height: 180, width: 180, child: Image.network("https://i.postimg.cc/J0Bd2WgC/young-hipster-man-with-his-arms-crossed-1368-14152-removebg-preview.png" , fit: BoxFit.cover,),
+        SizedBox( height: 180, width: 180, child: Image.network("https://i.postimg.cc/J0Bd2WgC/young-hipster-man-with-his-arms-crossed-1368-14152-removebg-preview.png" , fit: BoxFit.cover,),
           )
 
       ],
@@ -101,7 +101,7 @@ Widget offerCard2({required String offer}) =>
                   ),
                   Text(
                     offer,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
 
@@ -112,8 +112,8 @@ Widget offerCard2({required String offer}) =>
                 ],
               ),
               Container(
-                padding: EdgeInsets.all(4),
-                child: Icon(Icons.alarm , color: Colors.white, ),
+                padding: const EdgeInsets.all(4),
+                child: const Icon(Icons.alarm , color: Colors.white, ),
               )
             ],
           ),

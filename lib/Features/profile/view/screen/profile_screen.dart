@@ -16,7 +16,7 @@ import 'package:shoppizel/core/database/local/shared_prefrences.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 
-import '../../../../core/function/snackbars.dart';
+import '../../../../core/widgets/snackbars.dart';
 import '../../../Auth/controller/auth_cubit.dart';
 import '../../../Auth/view/screens/login_screen.dart';
 import '../../../Favourite/controller/favourite_cubit.dart';

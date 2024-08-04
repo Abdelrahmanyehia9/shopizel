@@ -9,7 +9,7 @@ import 'package:shoppizel/Features/Machine/Visual%20Search/view/search_by_photo_
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/profile/controller/profile_state.dart';
-import 'package:shoppizel/Features/profile/view/screen/pick_image.dart';
+import 'package:shoppizel/core/service/pick_image.dart';
 import 'package:shoppizel/Features/profile/view/screen/profile_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import '../../../Machine/robot/view/robot_view.dart';

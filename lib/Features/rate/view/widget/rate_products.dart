@@ -11,7 +11,7 @@ import 'package:shoppizel/Features/rate/controller/rate_state.dart';
 import 'package:shoppizel/Features/rate/data/rate_model.dart';
 import 'package:shoppizel/Features/rate/view/widget/description_rate.dart';
 import 'package:shoppizel/Features/rate/view/widget/product_rating_stars.dart';
-import 'package:shoppizel/core/function/snackbars.dart';
+import 'package:shoppizel/core/widgets/snackbars.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';

@@ -26,6 +26,7 @@ import 'package:shoppizel/Features/home/controllers/home_cubit.dart';
 import 'package:shoppizel/Features/home/data/repository/home_repo.dart';
 import 'package:shoppizel/Features/location/controller/location_cubit.dart';
 import 'package:shoppizel/Features/location/data/location_repo.dart';
+import 'package:shoppizel/Features/order/view/screen/order_tracking.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/profile/data/profile_repo.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
@@ -33,7 +34,6 @@ import 'package:shoppizel/Features/promo/data/promo_code_repo.dart';
 import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
 import 'package:shoppizel/core/database/remote/api_helper.dart';
 import 'package:shoppizel/core/service/single_ton.dart';
-import 'package:shoppizel/searching.dart';
 import 'Features/Machine/robot/view/robot_view.dart';
 import 'Features/Machine/robot/view/screen/chatbot_screen.dart';
 import 'Features/Machine/robot/view/widget/chat_over_view.dart';
@@ -82,7 +82,7 @@ class Tship extends StatelessWidget {
 
       ],
       child: MaterialApp(
-        home:    const SplashScreen() ,
+        home:    const OrderTracking() ,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
 elevatedButtonTheme: const ElevatedButtonThemeData(
@@ -98,7 +98,7 @@ elevatedButtonTheme: const ElevatedButtonThemeData(
           hoverColor: Colors.transparent,
           fontFamily: AppConstants.fontFamily,
           appBarTheme: const AppBarTheme(color: AppConstants.appColor , foregroundColor: Colors.white , centerTitle: true) ,
-          scaffoldBackgroundColor: const Color(0xffECF0F4),
+          scaffoldBackgroundColor: AppConstants.backgroundOfLightTheme
         ),
       ),
     );

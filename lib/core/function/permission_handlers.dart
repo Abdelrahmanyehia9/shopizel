@@ -29,7 +29,8 @@ class PermissionHandlers{
 
 
 
-  Future<bool>checkLocationPermission()async=>_checkPermission(Permission.location) ;
+  Future<bool>checkLocationPermission()async=>await _checkPermission(Permission.location) ;
+   Future<bool>checkImagePermission()async=>await _checkPermission(Permission.photos) ;
 
 
 

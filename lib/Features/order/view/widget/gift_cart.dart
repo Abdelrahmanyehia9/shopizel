@@ -172,7 +172,8 @@ class _GiftCartTextFieldState extends State<GiftCartTextField> {
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
+
   }
 }

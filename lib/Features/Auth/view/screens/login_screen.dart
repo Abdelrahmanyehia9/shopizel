@@ -6,7 +6,7 @@ import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
 import 'package:shoppizel/core/database/local/shared_prefrences.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import 'package:shoppizel/core/function/snackbars.dart';
+import 'package:shoppizel/core/widgets/snackbars.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../home/view/screens/home_screen.dart';

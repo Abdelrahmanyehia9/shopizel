@@ -30,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
           InkWell(
               splashColor: Colors.grey.withOpacity(0.5),
               onTap: () async {
-                await CartRepo().getCartEmpty().whenComplete(() {
+                await BlocProvider.of<CartCubit>(context).cartRepo.getCartEmpty().whenComplete(() {
                   BlocProvider.of<CartCubit>(context).fetchCartProducts();
                 });
               },
@@ -273,14 +273,19 @@ class _CartScreenState extends State<CartScreen> {
                     onAdd: ()=>_onAdd(index , items) ,
                     model: items[index],
                     removeItemFromCart: () async {
+                      setState(() {
+                        isProcessing = true;
+                      });
                       await repo.removeFromCart(items[index]).whenComplete(
                         () {
                           BlocProvider.of<CartCubit>(context)
                               .fetchCartProducts();
                         },
+
                       );
 
                       setState(() {
+                        isProcessing = false ;
                         items.removeAt(index);
                       });
                     },

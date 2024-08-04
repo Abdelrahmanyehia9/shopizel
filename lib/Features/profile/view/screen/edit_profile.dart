@@ -8,11 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/profile/controller/profile_state.dart';
-import 'package:shoppizel/Features/profile/view/screen/pick_image.dart';
+import 'package:shoppizel/core/service/pick_image.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 
-import '../../../../core/function/snackbars.dart';
+import '../../../../core/widgets/snackbars.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../Auth/data/model/user_model.dart';
 

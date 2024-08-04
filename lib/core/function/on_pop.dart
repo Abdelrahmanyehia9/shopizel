@@ -7,7 +7,7 @@ Future<bool> onWillPop(BuildContext context , String desc) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Are you sure?'),
+        title: const Text('Are you sure?'),
         content:  Text(desc),
         actions: [
           TextButton(
@@ -15,14 +15,14 @@ Future<bool> onWillPop(BuildContext context , String desc) async {
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: Text('No'),
+            child: const Text('No'),
           ),
           TextButton(
             style: TextButton.styleFrom(foregroundColor: AppConstants.appColor),
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: Text('Yes'),
+            child: const Text('Yes'),
           ),
         ],
       );

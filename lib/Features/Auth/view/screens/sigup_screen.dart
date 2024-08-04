@@ -7,7 +7,7 @@ import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/function/validation.dart';
 import '../../../../core/utils/screen_dimentions.dart';
-import '../../../../core/function/snackbars.dart';
+import '../../../../core/widgets/snackbars.dart';
 import '../../../../core/widgets/primary_button.dart';
 
 import '../widgets/auth_container.dart';

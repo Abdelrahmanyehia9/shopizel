@@ -1,11 +1,13 @@
 import 'dart:io';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shoppizel/core/function/permission_handlers.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import '../../../../core/service/image_picker.dart';
+import '../widgets/snackbars.dart';
 
 class ChooseImagePicker extends StatefulWidget {
   final GestureTapCallback? onRemove ;
@@ -28,13 +30,16 @@ class _ChooseImagePickerState extends State<ChooseImagePicker> {
     setState(() {
       _imageFile = pickedFile;
     });
-
     if (_imageFile != null) {
       Navigator.pop(context);
       widget.onSelected(_imageFile!);
 
     }
+
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,5 +112,24 @@ class _ChooseImagePickerState extends State<ChooseImagePicker> {
         ],
       ),
     );
+  }
+}
+
+
+
+
+class ImagePickerService{
+  final ImagePicker _picker = ImagePicker();
+
+  Future<File?> pickImage(ImageSource source) async {
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      if (pickedFile != null) {
+        return File(pickedFile.path);
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+    return null;
   }
 }

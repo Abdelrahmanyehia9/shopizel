@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/core/database/local/shared_prefrences.dart';
 import 'package:shoppizel/core/function/permission_handlers.dart';
+import 'package:shoppizel/core/utils/app_constants.dart';
 
 import '../../../Auth/view/screens/login_screen.dart';
 import '../../onBoarding/on_boarding_screen.dart';
@@ -48,6 +49,11 @@ Future.delayed(const Duration(seconds: 3)  , ()async{
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return  Scaffold(
+      backgroundColor: AppConstants.appColor,
+      body: Center(child:
+        SizedBox(height: 150, width: 150 ,
+        child: Image.asset("assets/images/logo.png"),),),
+    );
   }
 }

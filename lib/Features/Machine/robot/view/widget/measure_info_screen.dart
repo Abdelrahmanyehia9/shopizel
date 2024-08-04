@@ -8,7 +8,7 @@ import 'package:shoppizel/core/function/predict_size.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 import 'package:wheel_slider/wheel_slider.dart';
-import '../../../../../core/function/snackbars.dart';
+import '../../../../../core/widgets/snackbars.dart';
 import '../screen/measure_screen.dart';
 
 class MeasureInfoScreen extends StatefulWidget {

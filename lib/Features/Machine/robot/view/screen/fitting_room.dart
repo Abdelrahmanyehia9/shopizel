@@ -7,11 +7,11 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/fitting_room_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/data/repo/fitting_room_repo.dart';
 import 'package:shoppizel/Features/home/data/model/product_model.dart';
-import '../../../../../core/service/upload_img_cloud.dart';
+import 'package:shoppizel/core/service/ImageHelper.dart';
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../core/utils/screen_dimentions.dart';
 import '../../../../../core/widgets/primary_button.dart';
-import '../../../../profile/view/screen/pick_image.dart';
+import '../../../../../core/service/pick_image.dart';
 import '../widget/fit_model.dart';
 import '../widget/measure_info_screen.dart';
 
@@ -144,7 +144,7 @@ class _FittingRoomState extends State<FittingRoom> {
                   });
                     FittingRoomRepo repo = BlocProvider.of<FittingRoomCubit>(context).repo ;
                   List<ProductModel> items = await repo.getTopProducts() ;
-                  String? imgModel = await uploadToCloud(image: _selectedImg!) ;
+                  String? imgModel = await ImageHelper.uploadImage(image: _selectedImg!) ;
 print(imgModel) ;
                  Navigator.push(context, MaterialPageRoute(builder: (_) => widget.isMeasure == true ?  MeasureInfoScreen(imgModel : imgModel) : FitModel(imgModel: imgModel!, products : items)));
                   setState(() {

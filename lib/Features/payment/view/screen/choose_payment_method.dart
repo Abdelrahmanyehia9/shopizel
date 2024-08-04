@@ -11,7 +11,7 @@ import 'package:shoppizel/Features/order/view/screen/order_confirmed.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/promo/controller/promo_cubit.dart';
 import 'package:shoppizel/Features/promo/controller/promo_state.dart';
-import 'package:shoppizel/core/function/snackbars.dart';
+import 'package:shoppizel/core/widgets/snackbars.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/cart/controller/cart_cubit.dart';
 import 'package:shoppizel/Features/cart/controller/cart_state.dart';
 import 'package:shoppizel/Features/cart/data/model/cart_model.dart';
-import 'package:shoppizel/core/function/snackbars.dart';
+import 'package:shoppizel/core/widgets/snackbars.dart';
 
 import '../../../../core/utils/screen_dimentions.dart';
 

@@ -14,7 +14,6 @@ import 'package:shoppizel/core/widgets/see_all.dart';
 import 'package:shoppizel/Features/home/view/widgets/home/stores_list.dart';
 import 'package:shoppizel/core/utils/app_constants.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
-import 'package:shoppizel/searching.dart';
 
 import '../../../../../core/widgets/loading_failure.dart';
 import '../../../../../core/widgets/loading.dart';

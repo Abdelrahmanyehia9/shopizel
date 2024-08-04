@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shoppizel/Features/Auth/view/widgets/auth_textfeild.dart';
-import 'package:shoppizel/Features/Machine/Visual%20Search/controller/search_by_photo_cubit.dart';
 import 'package:shoppizel/Features/Machine/Visual%20Search/view/search_by_photo_screen.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/generate_outfit_cubit.dart';
 import 'package:shoppizel/Features/Machine/robot/controller/generate_outfit_state.dart';
 import 'package:shoppizel/Features/Machine/robot/data/model/generate_outfit_model.dart';
-import 'package:shoppizel/core/service/download_image_to%20fike.dart';
-import 'package:shoppizel/core/service/upload_img_cloud.dart';
+import 'package:shoppizel/core/service/ImageHelper.dart';
 import 'package:shoppizel/core/utils/screen_dimentions.dart';
 import 'package:shoppizel/core/widgets/primary_button.dart';
 
-import '../../../../../core/function/snackbars.dart';
+import '../../../../../core/widgets/snackbars.dart';
 import '../../../../../core/utils/app_constants.dart';
 
 class GenerateOutfit extends StatefulWidget {
@@ -121,7 +118,7 @@ class _GenerateOutfitState extends State<GenerateOutfit> {
                           child: PrimaryButton(
                             label: "Show Similar",
                             onTap: () async{
-                              File image = await downloadImage(state.model.output!.last, "downloaded_image.jpg") ;
+                              File image = await ImageHelper.downloadImage(state.model.output!.last, "downloaded_image.jpg") ;
                               Navigator.push(context, MaterialPageRoute(builder: (_)=> SearchByPhotoScreen( photo: image,  ))) ;
                               
                               

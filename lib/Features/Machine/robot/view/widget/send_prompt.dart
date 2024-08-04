@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/screen_dimentions.dart';
-import '../../../../profile/view/screen/pick_image.dart';
+import '../../../../../core/service/pick_image.dart';
 
 class SendPrompt extends StatefulWidget {
   final TextEditingController textController ;
