@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shoppizel/Features/order/view/screen/order_tracking.dart';
 import 'package:shoppizel/Features/rate/view/widget/rate_products.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/screen_dimentions.dart';
@@ -64,8 +65,10 @@ class OrderItem extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey, fontSize: 12),
                 ),
                 const Spacer(),
-                orderModel.orderStatus == "Accepted"?  TextButton.icon(
-                  onPressed: () {},
+                orderModel.orderStatus != "Completed"?  TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=> OrderTracking(orderID: orderModel.orderId))) ;
+                  },
                   label: const Text("follow"),
                   icon: const Icon(Icons.location_on_outlined),
                   style: TextButton.styleFrom(

@@ -22,3 +22,19 @@ class GetOrderSuccess extends OrderState {
 }
 class GetOrderFailure extends OrderState{}
 class GetOrderLoading extends OrderState{}
+
+
+
+
+class GetOrderByIDSuccess extends OrderState{
+ final OrderModel order ;
+
+  GetOrderByIDSuccess({required this.order});
+}
+class GetOrderByIDFailure extends OrderState{
+ final String errorMessage  ;
+
+  GetOrderByIDFailure({required this.errorMessage});
+
+}
+class GetOrderByIDLoading extends OrderState{}

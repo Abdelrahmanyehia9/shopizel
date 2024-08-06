@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:shoppizel/Features/home/view/screens/home_screen.dart';
 import 'package:shoppizel/Features/order/controller/order_cubit.dart';
 import 'package:shoppizel/Features/profile/controller/profile_cubit.dart';
 import 'package:shoppizel/Features/rate/controller/rate_cubit.dart';
 import 'package:shoppizel/Features/rate/controller/rate_state.dart';
 import 'package:shoppizel/Features/rate/data/rate_model.dart';
+import 'package:shoppizel/Features/rate/view/screen/my_rates.dart';
 import 'package:shoppizel/Features/rate/view/widget/description_rate.dart';
 import 'package:shoppizel/Features/rate/view/widget/product_rating_stars.dart';
 import 'package:shoppizel/core/widgets/snackbars.dart';
@@ -112,7 +114,9 @@ class _RateProductsState extends State<RateProducts> {
                               rates.add(model);
                             }
                             BlocProvider.of<RateCubit>(context)
-                                .addNewRate(rates);
+                                .addNewRate(rates).whenComplete((){
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const HomeScreen() )  , (route)=>false)  ;
+                            });
                           },
                         ),
                       );

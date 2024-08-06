@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppizel/Features/order/controller/order_state.dart';
 import 'package:shoppizel/Features/order/data/order_repo.dart';
@@ -36,6 +36,17 @@ class OrderCubit extends Cubit<OrderState>{
          print(e.toString()) ;
        }
   }
+Future<void>getOrderByID(String orderID)async{
+    emit(GetOrderByIDLoading()) ;
+    try {
+      OrderModel model = await repo.getOrderByID(orderID) ;
+      emit(GetOrderByIDSuccess(order: model)) ;
 
+
+    }catch(e){
+      emit(GetOrderByIDFailure(errorMessage: e.toString())) ;
+    }
+
+}
 
 }

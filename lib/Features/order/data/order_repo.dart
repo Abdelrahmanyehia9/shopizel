@@ -52,7 +52,10 @@ class OrderRepo {
    Future<void>markOrderAsRated(String orderId)async{
     await _fireStore.collection("orders").doc(orderId).update({"isRated":true}) ;
    }
-
+Future<OrderModel>getOrderByID(String orderID)async{
+    var response = await _fireStore.collection("orders").doc(orderID).get() ;
+    return OrderModel.fromJson(response.data()!) ;
+}
 }
 
 

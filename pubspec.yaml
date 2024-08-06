@@ -78,6 +78,7 @@ dependencies:
   shared_preferences: ^2.3.0
   introduction_screen: ^3.1.14
   easy_stepper: ^0.8.5+1
+  flutter_native_splash: ^2.4.1
 
 
 dev_dependencies:
