@@ -1,16 +1,21 @@
-# shoppizel
+# 👗 SmartFit – AI-Powered Fashion App
 
-A new Flutter project.
+**SmartFit** is an intelligent mobile app that transforms the way users shop for fashion. Built with **Flutter** and powered by **Firebase** and advanced **AI models**, the app allows users to search for clothes using images, virtually try outfits, detect their clothing size from a photo, and shop seamlessly in Arabic and English.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🔐 **User Authentication** – Email, Google, and phone sign-in using Firebase.
+- 🔍 **Smart Image Search** – Find similar clothes using a single photo.
+- 📷 **Virtual Try-On** – Try clothes virtually using your personal photo.
+- 📐 **AI Body Size Detection** – Know your exact size from an image.
+- 💬 **AI Chatbot Assistant** – Get help, style tips, and size recommendations.
+- 🛒 **E-commerce Integration** – Add to cart, wishlist, checkout, and orders.
+- 💳 **Secure Payments** – Stripe or PayPal integration.
+- 🌍 **Multi-language Support** – Arabic 🇸🇦 and English 🇺🇸.
+- 🔔 **Push Notifications** – Realtime alerts with Firebase Cloud Messaging.
+- 🎨 **Modern UI/UX** – Clean, minimal, user-friendly design.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
